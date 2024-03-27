@@ -4,36 +4,55 @@ import java.util.Date;
 
 public class Users {
 private int id;
-private String fullName;
 private String userName;
-private String password;
-private String gender;
-private Date birthday;
+private String fullName;
 private String email;
 private String phoneNumber;
 private String address;
 private String image;
-private String securityCode;
-private boolean status;
+private String password;
 private int roleId;
+private boolean status;
+private String gender;
+private Date birthday;
+private String securityCode;
 
-public Users(int id, String fullName, String userName, String password, String gender, Date birthday, String email,
-		String phoneNumber, String address, String image, String securityCode, boolean status, int roleId) {
+
+public Users(int id, String userName, String fullName, String email, String phoneNumber, String address, String image,
+		String password, int roleId, boolean status, String gender, Date birthday, String securityCode) {
 	super();
 	this.id = id;
-	this.fullName = fullName;
 	this.userName = userName;
-	this.password = password;
-	this.gender = gender;
-	this.birthday = birthday;
+	this.fullName = fullName;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
 	this.address = address;
 	this.image = image;
-	this.securityCode = securityCode;
-	this.status = status;
+	this.password = password;
 	this.roleId = roleId;
+	this.status = status;
+	this.gender = gender;
+	this.birthday = birthday;
+	this.securityCode = securityCode;
 }
+
+public Users(String userName, String fullName, String email, String phoneNumber, String address, String image,
+		String password, int roleId, boolean status, String gender, Date birthday, String securityCode) {
+	super();
+	this.userName = userName;
+	this.fullName = fullName;
+	this.email = email;
+	this.phoneNumber = phoneNumber;
+	this.address = address;
+	this.image = image;
+	this.password = password;
+	this.roleId = roleId;
+	this.status = status;
+	this.gender = gender;
+	this.birthday = birthday;
+	this.securityCode = securityCode;
+}
+
 public Users() {
 	super();
 }
