@@ -44,343 +44,478 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/user/css/reset.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/user/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/user/css/responsive.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
 </head>
 <body class="js">
 	<!-- Start chung -->
-	<!-- Preloader -->
-	<div class="preloader">
-		<div class="preloader-inner">
-			<div class="preloader-icon">
-				<span></span>
-				<span></span>
-			</div>
-		</div>
-	</div>
-	<!-- End Preloader -->
-	
-	
-	<!-- Header -->
-	<header class="header shop">
-		<!-- Topbar -->
-		<div class="topbar">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-4 col-md-12 col-12">
-						<!-- Top Left -->
-						<div class="top-left">
-							<ul class="list-main">
-								<li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
-								<li><i class="ti-email"></i> support@shophub.com</li>
-							</ul>
-						</div>
-						<!--/ End Top Left -->
-					</div>
-					<div class="col-lg-8 col-md-12 col-12">
-						<!-- Top Right -->
-						<div class="right-content">
-							<ul class="list-main">
-								<li><i class="ti-location-pin"></i> Store location</li>
-								<li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-								<li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
-							</ul>
-						</div>
-						<!-- End Top Right -->
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- End Topbar -->
-		<div class="middle-inner">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-2 col-md-2 col-12">
-						<!-- Logo -->
-						<div class="logo">
-							<a href="${pageContext.request.contextPath }/home"><img src="images/logo.png" alt="logo"></a>
-						</div>
-						<!--/ End Logo -->
-						<!-- Search Form -->
-						<div class="search-top">
-							<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
-							<!-- Search Form -->
-							<div class="search-top">
-								<form class="search-form">
-									<input type="text" placeholder="Search here..." name="search">
-									<button value="search" type="submit"><i class="ti-search"></i></button>
-								</form>
-							</div>
-							<!--/ End Search Form -->
-						</div>
-						<!--/ End Search Form -->
-						<div class="mobile-nav"></div>
-					</div>
-					<div class="col-lg-8 col-md-7 col-12">
-						<div class="search-bar-top">
-							<div class="search-bar">
-								<select>
-									<option selected="selected">All Category</option>
-									<option>watch</option>
-									<option>mobile</option>
-									<option>kid’s item</option>
-								</select>
-								<form>
-									<input name="search" placeholder="Search Products Here....." type="search">
-									<button class="btnn"><i class="ti-search"></i></button>
-								</form>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-2 col-md-3 col-12">
-						<div class="right-bar">
-							<!-- Search Form -->
-							<div class="sinlge-bar">
-								<a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-							</div>
-							<div class="sinlge-bar">
-								<a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-							</div>
-							<div class="sinlge-bar shopping">
-								<a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
-								<!-- Shopping Item -->
-								<div class="shopping-item">
-									<div class="dropdown-cart-header">
-										<span>2 Items</span>
-										<a href="#">View Cart</a>
-									</div>
-									<ul class="shopping-list">
-										<li>
-											<a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-											<a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-											<h4><a href="#">Woman Ring</a></h4>
-											<p class="quantity">1x - <span class="amount">$99.00</span></p>
-										</li>
-										<li>
-											<a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-											<a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-											<h4><a href="#">Woman Necklace</a></h4>
-											<p class="quantity">1x - <span class="amount">$35.00</span></p>
-										</li>
-									</ul>
-									<div class="bottom">
-										<div class="total">
-											<span>Total</span>
-											<span class="total-amount">$134.00</span>
-										</div>
-										<a href="checkout.html" class="btn animate">Checkout</a>
-									</div>
-								</div>
-								<!--/ End Shopping Item -->
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Header Inner -->
-		<div class="header-inner">
-			<div class="container">
-				<div class="cat-nav-head">
-					<div class="row">
-						<div class="col-lg-3">
-							<div class="all-category">
-								<h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="true"></i>CATEGORIES</h3>
-								<ul class="main-category">
-									<li><a href="#">New Arrivals <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-										<ul class="sub-category">
-											<li><a href="#">accessories</a></li>
-											<li><a href="#">best selling</a></li>
-											<li><a href="#">top 100 offer</a></li>
-											<li><a href="#">sunglass</a></li>
-											<li><a href="#">watch</a></li>
-											<li><a href="#">man’s product</a></li>
-											<li><a href="#">ladies</a></li>
-											<li><a href="#">westrn dress</a></li>
-											<li><a href="#">denim </a></li>
-										</ul>
-									</li>
-									<li class="main-mega"><a href="#">best selling <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-										<ul class="mega-menu">
-											<li class="single-menu">
-												<a href="#" class="title-link">Shop Kid's</a>
-												<div class="image">
-													<img src="https://via.placeholder.com/225x155" alt="#">
-												</div>
-												<div class="inner-link">
-													<a href="#">Kids Toys</a>
-													<a href="#">Kids Travel Car</a>
-													<a href="#">Kids Color Shape</a>
-													<a href="#">Kids Tent</a>
-												</div>
-											</li>
-											<li class="single-menu">
-												<a href="#" class="title-link">Shop Men's</a>
-												<div class="image">
-													<img src="https://via.placeholder.com/225x155" alt="#">
-												</div>
-												<div class="inner-link">
-													<a href="#">Watch</a>
-													<a href="#">T-shirt</a>
-													<a href="#">Hoodies</a>
-													<a href="#">Formal Pant</a>
-												</div>
-											</li>
-											<li class="single-menu">
-												<a href="#" class="title-link">Shop Women's</a>
-												<div class="image">
-													<img src="https://via.placeholder.com/225x155" alt="#">
-												</div>
-												<div class="inner-link">
-													<a href="#">Ladies Shirt</a>
-													<a href="#">Ladies Frog</a>
-													<a href="#">Ladies Sun Glass</a>
-													<a href="#">Ladies Watch</a>
-												</div>
-											</li>
-										</ul>
-									</li>
-									<li><a href="#">accessories</a></li>
-									<li><a href="#">top 100 offer</a></li>
-									<li><a href="#">sunglass</a></li>
-									<li><a href="#">watch</a></li>
-									<li><a href="#">man’s product</a></li>
-									<li><a href="#">ladies</a></li>
-									<li><a href="#">westrn dress</a></li>
-									<li><a href="#">denim </a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-lg-9 col-12">
-							<div class="menu-area">
-								<!-- Main Menu -->
-								<nav class="navbar navbar-expand-lg">
-									<div class="navbar-collapse">	
-										<div class="nav-inner">	
-											<ul class="nav main-menu menu navbar-nav">
-													<li class="active"><a href="#">Home</a></li>
-													<li><a href="#">Product</a></li>												
-													<li><a href="#">Service</a></li>
-													<li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
-														<ul class="dropdown">
-															<li><a href="${pageContext.request.contextPath }/shopgrid">Shop Grid</a></li>
-															<li><a href="${pageContext.request.contextPath }/cart">Cart</a></li>
-															<li><a href="${pageContext.request.contextPath }/checkout">Checkout</a></li>
-														</ul>
-													</li>
-													<li><a href="#">Pages</a></li>									
-													<li><a href="#">Blog<i class="ti-angle-down"></i></a>
-														<ul class="dropdown">
-															<li><a href="${pageContext.request.contextPath }/blogsinglesidebar">Blog Single Sidebar</a></li>
-														</ul>
-													</li>
-													<li><a href="${pageContext.request.contextPath }/contact">Contact Us</a></li>
-												</ul>
-										</div>
-									</div>
-								</nav>
-								<!--/ End Main Menu -->	
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--/ End Header Inner -->
-	</header>
-	<!--/ End Header -->
+    <!-- Preloader -->
+    <div class="preloader">
+      <div class="preloader-inner">
+        <div class="preloader-icon">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <!-- End Preloader -->
+
+    <!-- Header -->
+    <header class="header shop">
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4 col-md-12 col-12">
+              <!-- Top Left -->
+              <div class="top-left">
+                <ul class="list-main">
+                  <li><i class="ti-headphone-alt"></i>0835169543</li>
+                  <li><i class="ti-email"></i>petshop@gmail.com</li>
+                </ul>
+              </div>
+              <!--/ End Top Left -->
+            </div>
+            <div class="col-lg-8 col-md-12 col-12">
+              <!-- Top Right -->
+            <div class="right-content">
+                <div class="list-main-right">
+                  <span
+                    ><i class="ti-location-pin"></i>Linh Xuân, Tp.Thủ Đức</span
+                  >
+                  <span>
+                    <i class="ti-alarm-clock"></i> <a href="#">Giảm giá</a>
+                  </span>
+                  <div class="list-main-right-login">
+                  <c:if test="${sessionScope.user ==null }">
+                  <span class="header-icon-label">
+                        <i class="ti-power-off"></i
+><a href="${pageContext.request.contextPath}/login">Đăng nhập/Đăng ký</a>
+                        </span>
+                  </c:if>
+                  <c:if test="${sessionScope.user !=null }">
+                    <a
+                      href="${pageContext.request.contextPath}/thongtintaikhoan"
+                    >
+                      <span class="header-icon-label">
+                        <i class="ti-power-off"></i>
+                        ${sessionScope.user.fullName }</span
+                      >
+                      <div class="dropdown-content">
+                        <a
+                          href="${pageContext.request.contextPath}/thongtintaikhoan"
+                          >Tài khoản của tôi</a
+                        >
+                        <a
+                          href="${pageContext.request.contextPath}/changepassword?action=changepassword"
+                          >Đổi mật khẩu</a
+                        >
+                        <a
+                          href="${pageContext.request.contextPath}/tinhtrangdonhang"
+                          >Thông tin đơn hàng</a
+                        >
+                        <a
+                          href="${pageContext.request.contextPath}/login?action=logout"
+                          >Đăng xuất</a
+                        >
+                      </div>
+                    </a>
+                    </c:if>
+                  </div>
+                </div>
+              </div>
+              <!-- End Top Right -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Topbar -->
+      <div class="middle-inner">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-2 col-md-2 col-12">
+              <!-- Logo -->
+              <div class="logo">
+                <a href="index.html"
+                  ><img src="images/logo.png" alt="logo"
+                /></a>
+              </div>
+              <!--/ End Logo -->
+              <!-- Search Form -->
+              <div class="search-top">
+                <div class="top-search">
+                  <a href="#0"><i class="ti-search"></i></a>
+                </div>
+                <!-- Search Form -->
+                <div class="search-top">
+                  <form class="search-form">
+                    <input
+                      type="text"
+                      placeholder="Search here..."
+                      name="search"
+                    />
+                    <button value="search" type="submit">
+                      <i class="ti-search"></i>
+                    </button>
+                  </form>
+                </div>
+                <!--/ End Search Form -->
+              </div>
+              <!--/ End Search Form -->
+              <div class="mobile-nav"></div>
+            </div>
+            <div class="col-lg-8 col-md-7 col-12">
+              <div class="search-bar-top">
+                <div class="search-bar">
+                  <select>
+                    <option selected="selected">Tất cả</option>
+                    <option>Chó</option>
+                    <option>Mèo</option>
+                    <option>Thú cưng khác</option>
+                  </select>
+                  <form>
+                    <input
+                      name="search"
+                      placeholder="Tìm kiếm thú cưng....."
+                      type="search"
+                    />
+                    <button class="btnn"><i class="ti-search"></i></button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-12">
+              <div class="right-bar">
+                <!-- Search Form -->
+                <div class="sinlge-bar">
+                  <a href="#" class="single-icon"
+                    ><i class="fa fa-heart-o" aria-hidden="true"></i
+                  ></a>
+                </div>
+                <div class="sinlge-bar">
+                  <a href="#" class="single-icon"
+                    ><i class="fa fa-user-circle-o" aria-hidden="true"></i
+                  ></a>
+                </div>
+                <div class="sinlge-bar shopping">
+                  <a href="#" class="single-icon"
+                    ><i class="ti-bag"></i>
+                    <span class="total-count">2</span></a
+                  >
+                  <!-- Shopping Item -->
+                  <div class="shopping-item">
+                    <div class="dropdown-cart-header">
+                      <span>2 sản phẩm</span>
+                      <a href="#">Giỏ hàng</a>
+                    </div>
+                    <ul class="shopping-list">
+                      <li>
+                        <a href="#" class="remove" title="Remove this item"
+                          ><i class="fa fa-remove"></i
+                        ></a>
+                        <a class="cart-img" href="#"
+                          ><img src="https://via.placeholder.com/70x70" alt="#"
+                        /></a>
+                        <h4><a href="#">Tên sản phẩm</a></h4>
+                        <p class="quantity">
+                          Số lượng - <span class="amount">Giá</span>
+                        </p>
+                      </li>
+                      <li>
+                        <a href="#" class="remove" title="Remove this item"
+                          ><i class="fa fa-remove"></i
+                        ></a>
+                        <a class="cart-img" href="#"
+                          ><img src="https://via.placeholder.com/70x70" alt="#"
+                        /></a>
+                        <h4><a href="#">Woman Necklace</a></h4>
+                        <p class="quantity">
+                          1x - <span class="amount">$35.00</span>
+                        </p>
+                      </li>
+                    </ul>
+                    <div class="bottom">
+                      <div class="total">
+                        <span>Tổng</span>
+                        <span class="total-amount">$134.00</span>
+                      </div>
+                      <a href="checkout.html" class="btn animate">Thanh toán</a>
+                    </div>
+                  </div>
+                  <!--/ End Shopping Item -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Header Inner -->
+      <div class="header-inner">
+        <div class="container">
+          <div class="cat-nav-head">
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="all-category">
+                  <h3 class="cat-heading">
+                    <i class="fa fa-bars"></i>DANH MỤC
+                  </h3>
+                  <ul class="main-category">
+                    <li>
+                      <a href="#"
+                        >Thú cưng mới
+                        <i class="fa fa-angle-right"></i
+                      ></a>
+                      <ul class="sub-category">
+                        <li><a href="#">accessories</a></li>
+                        <li><a href="#">best selling</a></li>
+                        <li><a href="#">top 100 offer</a></li>
+                        <li><a href="#">sunglass</a></li>
+                        <li><a href="#">watch</a></li>
+                        <li><a href="#">man’s product</a></li>
+                        <li><a href="#">ladies</a></li>
+                        <li><a href="#">westrn dress</a></li>
+                        <li><a href="#">denim </a></li>
+                      </ul>
+                    </li>
+                    <li class="main-mega">
+                      <a href="#"
+                        >Giảm giá
+                        <i class="fa fa-angle-right" aria-hidden="true"></i
+                      ></a>
+                      <ul class="mega-menu">
+                        <li class="single-menu">
+                          <a href="#" class="title-link">Shop Kid's</a>
+                          <div class="image">
+                            <img
+                              src="https://via.placeholder.com/225x155"
+                              alt="#"
+                            />
+                          </div>
+                          <div class="inner-link">
+                            <a href="#">Kids Toys</a>
+                            <a href="#">Kids Travel Car</a>
+                            <a href="#">Kids Color Shape</a>
+                            <a href="#">Kids Tent</a>
+                          </div>
+                        </li>
+                        <li class="single-menu">
+                          <a href="#" class="title-link">Shop Men's</a>
+                          <div class="image">
+                            <img
+                              src="https://via.placeholder.com/225x155"
+                              alt="#"
+                            />
+                          </div>
+                          <div class="inner-link">
+                            <a href="#">Watch</a>
+                            <a href="#">T-shirt</a>
+                            <a href="#">Hoodies</a>
+                            <a href="#">Formal Pant</a>
+                          </div>
+                        </li>
+                        <li class="single-menu">
+                          <a href="#" class="title-link">Shop Women's</a>
+                          <div class="image">
+                            <img
+                              src="https://via.placeholder.com/225x155"
+                              alt="#"
+                            />
+                          </div>
+                          <div class="inner-link">
+                            <a href="#">Ladies Shirt</a>
+                            <a href="#">Ladies Frog</a>
+                            <a href="#">Ladies Sun Glass</a>
+                            <a href="#">Ladies Watch</a>
+                          </div>
+                        </li>
+                      </ul>
+                    </li>
+                    <li><a href="#">accessories</a></li>
+                    <li><a href="#">top 100 offer</a></li>
+                    <li><a href="#">sunglass</a></li>
+                    <li><a href="#">watch</a></li>
+                    <li><a href="#">man’s product</a></li>
+                    <li><a href="#">ladies</a></li>
+                    <li><a href="#">westrn dress</a></li>
+                    <li><a href="#">denim </a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-9 col-12">
+                <div class="menu-area">
+                  <!-- Main Menu -->
+                  <nav class="navbar navbar-expand-lg">
+                    <div class="navbar-collapse">
+                      <div class="nav-inner">
+                        <ul class="nav main-menu menu navbar-nav">
+                          <li class="active"><a href="#">Trang chủ</a></li>
+                          <li><a href="#">Thú cưng</a></li>
+                          <li><a href="#">Dịch vụ</a></li>
+                          <li>
+                            <a href="#"
+                              >Shop<i class="ti-angle-down"></i
+                              ><span class="new">Mới</span></a
+                            >
+                            <ul class="dropdown">
+                              <li><a href="${pageContext.request.contextPath}/shopgrid">Lọc</a></li>
+                              <li><a href="${pageContext.request.contextPath}/cart">Giỏ hàng</a></li>
+                              <li><a href="${pageContext.request.contextPath}/checkout">Thanh toán</a></li>
+                            </ul>
+                          </li>
+                          <li><a href="#">Trang</a></li>
+                          <li>
+                            <a href="#">Tin tức<i class="ti-angle-down"></i></a>
+                            <ul class="dropdown">
+                              <li>
+                                <a href="${pageContext.request.contextPath}/blogsinglesidebar"
+                                  >Tin tức hot nhất</a
+                                >
+                              </li>
+                            </ul>
+                          </li>
+                          <li><a href="${pageContext.request.contextPath}/contact">Liên hệ</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+                  <!--/ End Main Menu -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/ End Header Inner -->
+    </header>
+    <!--/ End Header -->
+    <!-- End chung -->
+
 	<!-- End chung -->
 	<jsp:include page="${p}"></jsp:include>
-<footer class="footer">
-		<!-- Footer Top -->
-		<div class="footer-top section">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-5 col-md-6 col-12">
-						<!-- Single Widget -->
-						<div class="single-footer about">
-							<div class="logo">
-								<a href="${pageContext.request.contextPath }/home"><img src="images/logo2.png" alt="#"></a>
-							</div>
-							<p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-							<p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
-						</div>
-						<!-- End Single Widget -->
-					</div>
-					<div class="col-lg-2 col-md-6 col-12">
-						<!-- Single Widget -->
-						<div class="single-footer links">
-							<h4>Information</h4>
-							<ul>
-								<li><a href="#">About Us</a></li>
-								<li><a href="#">Faq</a></li>
-								<li><a href="#">Terms & Conditions</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Help</a></li>
-							</ul>
-						</div>
-						<!-- End Single Widget -->
-					</div>
-					<div class="col-lg-2 col-md-6 col-12">
-						<!-- Single Widget -->
-						<div class="single-footer links">
-							<h4>Customer Service</h4>
-							<ul>
-								<li><a href="#">Payment Methods</a></li>
-								<li><a href="#">Money-back</a></li>
-								<li><a href="#">Returns</a></li>
-								<li><a href="#">Shipping</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-							</ul>
-						</div>
-						<!-- End Single Widget -->
-					</div>
-					<div class="col-lg-3 col-md-6 col-12">
-						<!-- Single Widget -->
-						<div class="single-footer social">
-							<h4>Get In Tuch</h4>
-							<!-- Single Widget -->
-							<div class="contact">
-								<ul>
-									<li>NO. 342 - London Oxford Street.</li>
-									<li>012 United Kingdom.</li>
-									<li>info@eshop.com</li>
-									<li>+032 3456 7890</li>
-								</ul>
-							</div>
-							<!-- End Single Widget -->
-							<ul>
-								<li><a href="#"><i class="ti-facebook"></i></a></li>
-								<li><a href="#"><i class="ti-twitter"></i></a></li>
-								<li><a href="#"><i class="ti-flickr"></i></a></li>
-								<li><a href="#"><i class="ti-instagram"></i></a></li>
-							</ul>
-						</div>
-						<!-- End Single Widget -->
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- End Footer Top -->
-		<div class="copyright">
-			<div class="container">
-				<div class="inner">
-					<div class="row">
-						<div class="col-lg-6 col-12">
-							<div class="left">
-								<p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
-							</div>
-						</div>
-						<div class="col-lg-6 col-12">
-							<div class="right">
-								<img src="images/payments.png" alt="#">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- /End Footer Area -->
+    <!-- Start Footer Area -->
+    <footer class="footer">
+      <!-- Footer Top -->
+      <div class="footer-top section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer about">
+                <div class="logo">
+                  <a href="index.html"
+                    ><img src="images/logo2.png" alt="#"
+                  /></a>
+                </div>
+                <p class="text">
+                  Đó là protein, không phải cuộc đua, là cực hình, không cần
+                  thiết Anh ấy là một cầu thủ bóng đá tuyệt vời. Đó là một ngày
+                  cuối tuần. Vì Chúa của tôi ai là người phát triển, là người
+                  vận chuyển, dễ đau buồn, sợ hãi.
+                </p>
+                <p class="call">
+                  Thắc mắc? Gọi cho chúng tôi 24/7<span
+                    ><a href="tel:123456789">0835169543</a></span
+                  >
+                </p>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+            <div class="col-lg-2 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer links">
+                <h4>Thông tin</h4>
+                <ul>
+                  <li><a href="#">Về chúng tôi</a></li>
+                  <li><a href="#">Câu hỏi</a></li>
+                  <li><a href="#">Điều khoản & điều kiện</a></li>
+                  <li><a href="#">Liên hệ</a></li>
+                  <li><a href="#">Giúp đỡ</a></li>
+                </ul>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+            <div class="col-lg-2 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer links">
+                <h4>Dịch vụ khách hàng</h4>
+                <ul>
+                  <li><a href="#">Phương thức thanh toán</a></li>
+                  <li><a href="#">Hoàn tiền</a></li>
+                  <li><a href="#">Trả hàng</a></li>
+                  <li><a href="#">Giao hàng</a></li>
+                  <li><a href="#">Chính sách bảo mật</a></li>
+                </ul>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+              <!-- Single Widget -->
+              <div class="single-footer social">
+                <h4>Liên lạc</h4>
+                <!-- Single Widget -->
+                <div class="contact">
+                  <ul>
+                    <li>Chung cư HT Pearl</li>
+                    <li>Linh Xuân, Tp.Thủ Đức</li>
+                    <li>petshop@gmail.com</li>
+                    <li>0835169543</li>
+                  </ul>
+                </div>
+                <!-- End Single Widget -->
+                <ul>
+                  <li>
+                    <a href="https://www.facebook.com/truong.lechi.902/"
+                      ><i class="ti-facebook"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="https://www.tiktok.com/@lechitruong23211"
+                      ><i class="ti-twitter"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="ti-flickr"></i></a>
+                  </li>
+                  <li>
+                    <a href="https://www.instagram.com/emg_dniw/"
+                      ><i class="ti-instagram"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+              <!-- End Single Widget -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Footer Top -->
+      <div class="copyright">
+        <div class="container">
+          <div class="inner">
+            <div class="row">
+              <div class="col-lg-6 col-12">
+                <div class="left">
+                  <p>
+                    Copyright © 2020
+                    <a href="http://www.wpthemesgrid.com" target="_blank"
+                      >PetShop</a
+                    >
+                    - All Rights Reserved.
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-6 col-12">
+                <div class="right">
+                  <img src="images/payments.png" alt="#" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- /End Footer Area -->
  
 	<!-- Jquery -->
     <script src="${pageContext.request.contextPath}/assets/user/js/jquery.min.js"></script>
@@ -414,5 +549,9 @@
 	<script src="${pageContext.request.contextPath}/assets/user/js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="${pageContext.request.contextPath}/assets/user/js/active.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+		integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
