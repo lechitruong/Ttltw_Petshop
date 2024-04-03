@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.demo.entities.Item"%>
+<%@page import="com.demo.models.ItemModel"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +23,8 @@
 	
 	<!-- StyleSheet -->
 	
+	<!-- Font Awasome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/user/css/bootstrap.css">
 	<!-- Magnific Popup -->
@@ -198,49 +204,52 @@
                     ><i class="fa fa-user-circle-o" aria-hidden="true"></i
                   ></a>
                 </div>
+                <%
+                  HttpSession session2 = request.getSession();
+                  List<Item> cart = new ArrayList<>();
+                  if(session2.getAttribute("cart") != null){
+                	  cart =(List<Item>) session2.getAttribute("cart");
+                  }
+                  int i =-1;
+                  %>
                 <div class="sinlge-bar shopping">
-                  <a href="#" class="single-icon"
+                  <a href="${pageContext.request.contextPath}/cart" class="single-icon"
                     ><i class="ti-bag"></i>
-                    <span class="total-count">2</span></a
+                    <span class="total-count"><%= cart == null? 0 : cart.size() %></span></a
                   >
+                  
                   <!-- Shopping Item -->
                   <div class="shopping-item">
                     <div class="dropdown-cart-header">
-                      <span>2 sản phẩm</span>
-                      <a href="#">Giỏ hàng</a>
+                      <span><%= cart == null? 0 : cart.size() %></span>
+                      <a href="${pageContext.request.contextPath}/cart">Giỏ hàng</a>
                     </div>
                     <ul class="shopping-list">
+                    <%
+                    for(Item item: cart){
+                    %>
                       <li>
-                        <a href="#" class="remove" title="Remove this item"
+                        <a href="${pageContext.request.contextPath }/cart?action=removeToCart&id=<%= ++i %>" class="remove" title="Remove this item"
                           ><i class="fa fa-remove"></i
                         ></a>
                         <a class="cart-img" href="#"
-                          ><img src="https://via.placeholder.com/70x70" alt="#"
+                          ><img src="${pageContext.request.contextPath}/assets/user/images/anhcho/<%= item.getPet().getImage() %>" alt="#"
                         /></a>
-                        <h4><a href="#">Tên sản phẩm</a></h4>
+                        <h4><a href="#"><%= item.getPet().getPetName() %></a></h4>
                         <p class="quantity">
-                          Số lượng - <span class="amount">Giá</span>
+                          <%= item.getQuantity() %> - <span class="amount"><%= item.getPet().getMoney() * item.getQuantity() %> triệu đồng</span>
                         </p>
                       </li>
-                      <li>
-                        <a href="#" class="remove" title="Remove this item"
-                          ><i class="fa fa-remove"></i
-                        ></a>
-                        <a class="cart-img" href="#"
-                          ><img src="https://via.placeholder.com/70x70" alt="#"
-                        /></a>
-                        <h4><a href="#">Woman Necklace</a></h4>
-                        <p class="quantity">
-                          1x - <span class="amount">$35.00</span>
-                        </p>
-                      </li>
+                      <%
+                      }
+                      %>
                     </ul>
                     <div class="bottom">
                       <div class="total">
                         <span>Tổng</span>
-                        <span class="total-amount">$134.00</span>
+                        <span class="total-amount"><%= ItemModel.total(cart) %> triệu đồng</span>
                       </div>
-                      <a href="checkout.html" class="btn animate">Thanh toán</a>
+                      <a href="${pageContext.request.contextPath}/checkout" class="btn animate">Thanh toán</a>
                     </div>
                   </div>
                   <!--/ End Shopping Item -->
@@ -549,6 +558,7 @@
 	<script src="${pageContext.request.contextPath}/assets/user/js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="${pageContext.request.contextPath}/assets/user/js/active.js"></script>
+	<!-- Jquery -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
 		integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
