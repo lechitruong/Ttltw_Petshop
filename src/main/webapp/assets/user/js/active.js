@@ -35,6 +35,12 @@ Version:1.0
 
 [End Activation Code]
 =========================================*/
+
+// su kien click image thumbnail
+function changeImage(clickedImage) {
+  var mainImage = document.getElementById("mainImage");
+  mainImage.src = clickedImage.src;
+}
 (function ($) {
   "use strict";
   $(document).on("ready", function () {
@@ -307,7 +313,7 @@ Version:1.0
   /*====================================
 	18. Nice Select JS
 	======================================*/
-  $("select").niceSelect();
+ $("select").not('#district, #ward, #gender').niceSelect();
 
   /*=====================================
 	 Others JS

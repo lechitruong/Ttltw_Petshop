@@ -317,7 +317,6 @@ public class PetModel {
 		}
 		return result;
 	}
-
 	public static void main(String[] args) {
 		PetModel petModel = new PetModel();
 //			System.out.println(petModel.findTop10());

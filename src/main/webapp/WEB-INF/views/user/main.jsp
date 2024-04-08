@@ -159,7 +159,7 @@
       							s+= '<div class="col-xl-3 col-lg-4 col-md-4 col-12">';
       							s+= '<div class="single-product">';
       							s+= '<div class="product-img">';
-      							s+= '<a href="product-details.html">';
+      							s+= '<a href="${pageContext.request.contextPath }/petdetail?id='+pet[i].id+'">';
       							s+= '<img class="default-img" src="${pageContext.request.contextPath}/assets/user/images/anhcho/'+ pet[i].image+'" alt="#" />';
       							s+= '<img class="hover-img" src="${pageContext.request.contextPath}/assets/user/images/anhcho/'+ pet[i].image+'" alt="#" />';
       							s+= '<span class="new">New</span>';
@@ -202,7 +202,7 @@
                       <div class="col-xl-3 col-lg-4 col-md-4 col-12">
                         <div class="single-product">
                           <div class="product-img">
-                            <a href="product-details.html">
+                            <a href="${pageContext.request.contextPath }/petdetail?id=<%=pet.getId() %>">
                               <img class="default-img" src="${pageContext.request.contextPath}/assets/user/images/anhcho/<%= pet.getImage() %>" alt="#" />
                               <img class="hover-img" src="${pageContext.request.contextPath}/assets/user/images/anhcho/<%= pet.getImage() %>" alt="#" />
                               <span class="new">New</span>
