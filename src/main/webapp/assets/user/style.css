@@ -36,17 +36,16 @@ Version:1.0
 21. Footer CSS
 ========================================*/
 .single-product .product-img {
-    position: relative;
-    width: 100%;
-    height: 180px; /* Đặt chiều cao cố định cho hình ảnh */
+  position: relative;
+  width: 100%;
+  height: 180px; /* Đặt chiều cao cố định cho hình ảnh */
 }
 
 .single-product .product-img img {
-    width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của phần tử cha */
-    height: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều cao của phần tử cha */
-    object-fit: cover; 
+  width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của phần tử cha */
+  height: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều cao của phần tử cha */
+  object-fit: cover;
 }
-
 
 .header.shop .list-main-right {
   position: relative;
@@ -863,17 +862,18 @@ Version:1.0
   margin-right: 15px;
   font-size: 22px;
 }
-.header.shop .cat-heading:hover + .main-category, .header.shop .main-category:hover{
-	display:block; 
+.header.shop .cat-heading:hover + .main-category,
+.header.shop .main-category:hover {
+  display: block;
 }
 
 .header.shop .main-category {
   position: absolute;
-  display:none;
+  display: none;
   left: 0;
   top: 64px;
   background: #fff;
-  z-index:100;
+  z-index: 100;
   width: 100%;
   -webkit-box-shadow: 0px 5px 15px #0000000a;
   -moz-box-shadow: 0px 5px 15px #0000000a;
@@ -1821,14 +1821,14 @@ Version:1.0
   display: inline-block;
 }
 .nav-main .nav-tabs .nav-item .filterByCategory {
-  background:transparent !important;
-  font-size:15px !important;
-  padding:10px !important;
-  color:#333 !important;
-  border:none !important;
-  outline:none !important;
-  font-weight:bold;
-  cursor:pointer;
+  background: transparent !important;
+  font-size: 15px !important;
+  padding: 10px !important;
+  color: #333 !important;
+  border: none !important;
+  outline: none !important;
+  font-weight: bold;
+  cursor: pointer;
 }
 .product-area .nav-tabs li a {
   color: #333;
@@ -2330,8 +2330,6 @@ Version:1.0
   float: left;
   margin: 4px 5px 0 0;
   font-weight: 500;
-}
-.shop .single-shorter option {
 }
 .shop .nice-select {
   clear: initial;
@@ -3340,9 +3338,7 @@ Version:1.0
   border: none;
   background: #f6f7fb;
 }
-.shop.checkout .form .form-group input:hover {
-}
-.shop.checkout .nice-select {
+.shop.checkout .select_option {
   width: 100%;
   height: 45px;
   line-height: 50px;
@@ -3351,17 +3347,15 @@ Version:1.0
   border-radius: 0px;
   border: none;
 }
-.shop.checkout .nice-select .list {
+.shop.checkout .select_option .list {
   width: 100%;
   height: 300px;
   overflow: scroll;
 }
-.shop.checkout .nice-select .list li {
-}
-.shop.checkout .nice-select .list li.option {
+.shop.checkout .select_option .list li.option {
   color: #333;
 }
-.shop.checkout .nice-select .list li.option:hover {
+.shop.checkout .select_option .list li.option:hover {
   background: #f6f7fb;
   color: #333;
 }
@@ -4479,6 +4473,30 @@ Version:1.0
   margin-top: 30px;
   background: #fff;
 }
+.blog-single .blog-single-main .image #mainImage {
+  width: 800px;
+  height: 400px;
+  object-fit: contain;
+  box-shadow: 2px -2px 4px rgba(0, 0, 0, 0.7);
+}
+/* css pet details*/
+.blog-single .blog-single-main .image-thumbnail {
+  display: flex;
+  margin: 10px;
+  justify-content: space-evenly;
+}
+.blog-single .blog-single-main .image-thumbnail .image {
+  width: 60px;
+  height: 60px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  overflow: hidden;
+}
+.blog-single .blog-single-main .image-thumbnail .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 .blog-single .blog-detail {
   background: #fff;
 }
@@ -4501,6 +4519,24 @@ Version:1.0
   border-bottom: 1px solid #dddddd6e;
   padding-bottom: 20px;
   margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.blog-single .blog-meta .blog-meta-buy {
+  background-color: black;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  padding: 5px 5px;
+  cursor: pointer;
+  color: white;
+}
+.blog-single .blog-meta .blog-meta-buy:hover {
+  background-color: orange;
+}
+.blog-single .content .content-infomation .content-infomation-child {
+  margin: 10px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 .blog-single .blog-meta .author i {
   color: #f7941d;

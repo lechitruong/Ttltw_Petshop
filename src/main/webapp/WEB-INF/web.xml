@@ -10,8 +10,18 @@
   	<description></description>
   	<servlet-class>com.demo.servlets.user.HomeServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>PetDetailServlet</servlet-name>
+  	<display-name>PetDetailServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.demo.servlets.user.PetDetailServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>HomeServlet</servlet-name>
   	<url-pattern>/HomeServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>PetDetailServlet</servlet-name>
+  	<url-pattern>/PetDetailServlet</url-pattern>
   </servlet-mapping>
 </web-app>

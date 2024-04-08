@@ -110,7 +110,7 @@
                       >
                       <div class="dropdown-content">
                         <a
-                          href="${pageContext.request.contextPath}/thongtintaikhoan"
+                          href="${pageContext.request.contextPath}/personalinformation"
                           >Tài khoản của tôi</a
                         >
                         <a
@@ -174,8 +174,8 @@
             <div class="col-lg-8 col-md-7 col-12">
               <div class="search-bar-top">
                 <div class="search-bar">
-                  <select>
-                    <option selected="selected">Tất cả</option>
+                  <select class="select_option">
+                    <option  selected="selected">Tất cả</option>
                     <option>Chó</option>
                     <option>Mèo</option>
                     <option>Thú cưng khác</option>
@@ -358,8 +358,8 @@
                     <div class="navbar-collapse">
                       <div class="nav-inner">
                         <ul class="nav main-menu menu navbar-nav">
-                          <li class="active"><a href="#">Trang chủ</a></li>
-                          <li><a href="#">Thú cưng</a></li>
+                          <li class="active"><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
+                          <li><a href="${pageContext.request.contextPath}/shopgrid">Thú cưng</a></li>
                           <li><a href="#">Dịch vụ</a></li>
                           <li>
                             <a href="#"
