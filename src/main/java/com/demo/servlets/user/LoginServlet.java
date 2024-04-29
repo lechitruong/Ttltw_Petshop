@@ -1,6 +1,9 @@
 package com.demo.servlets.user;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,9 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.demo.entities.Log;
 import com.demo.entities.Users;
+import com.demo.helpers.ConfigIP;
+import com.demo.helpers.IPAddressUtil;
 import com.demo.helpers.MailHelper;
 import com.demo.helpers.RandomStringHelper;
+import com.demo.models.LogModel;
 import com.demo.models.RoleModel;
 import com.demo.models.UserModel;
 
@@ -127,8 +134,10 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		UserModel userModel = new UserModel();
+		LogModel logModel = new LogModel();
 		Users user = userModel.findUserByUserName(username);
 		if (userModel.checkLogin(username, password)) {
+			logModel.create(new Log(IPAddressUtil.getPublicIPAddress(),"info",ConfigIP.ipconfig(request).getCountryLong(),new Timestamp(new Date().getTime()), null, null));
 			if (user.getRoleId() == 1) {
 				request.getSession().setAttribute("user", userModel.findUserByUserName(username));
 				response.sendRedirect("admin/home");

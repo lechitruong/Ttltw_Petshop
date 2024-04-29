@@ -28,7 +28,6 @@ public class UserModel {
 				user.setFullName(resultSet.getString("fullName"));
 				user.setEmail(resultSet.getString("email"));
 				user.setPhoneNumber(resultSet.getString("phoneNumber"));
-				user.setAddress(resultSet.getString("address"));
 				user.setImage(resultSet.getString("image"));
 				user.setPassword(resultSet.getString("password"));
 				user.setRoleId(resultSet.getInt("roleId"));
@@ -62,7 +61,6 @@ public class UserModel {
 				user.setFullName(resultSet.getString("fullName"));
 				user.setEmail(resultSet.getString("email"));
 				user.setPhoneNumber(resultSet.getString("phoneNumber"));
-				user.setAddress(resultSet.getString("address"));
 				user.setImage(resultSet.getString("image"));
 				user.setPassword(resultSet.getString("password"));
 				user.setStatus(resultSet.getBoolean("status"));
@@ -85,19 +83,18 @@ public class UserModel {
 		boolean result = true;
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
-					"insert into users(userName, fullName,email,phoneNumber, address, image, password, roleId, status,gender,birthday,securityCode) values (?,?,?,?,?,?,?,?,?,?,?,?)");
+					"insert into users(userName, fullName,email,phoneNumber, image, password, roleId, status,gender,birthday,securityCode) values (?,?,?,?,?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, user.getUserName());
 			preparedStatement.setString(2, user.getFullName());
 			preparedStatement.setString(3, user.getEmail());
 			preparedStatement.setString(4, user.getPhoneNumber());
-			preparedStatement.setString(5, user.getAddress());
-			preparedStatement.setString(6, user.getImage());
-			preparedStatement.setString(7, user.getPassword());
-			preparedStatement.setInt(8, user.getRoleId());
-			preparedStatement.setBoolean(9, user.isStatus());
-			preparedStatement.setString(10, user.getGender());
-			preparedStatement.setDate(11, new java.sql.Date(user.getBirthday().getTime()));
-			preparedStatement.setString(12, user.getSecurityCode());
+			preparedStatement.setString(5, user.getImage());
+			preparedStatement.setString(6, user.getPassword());
+			preparedStatement.setInt(7, user.getRoleId());
+			preparedStatement.setBoolean(8, user.isStatus());
+			preparedStatement.setString(9, user.getGender());
+			preparedStatement.setDate(10, new java.sql.Date(user.getBirthday().getTime()));
+			preparedStatement.setString(11, user.getSecurityCode());
 			result = preparedStatement.executeUpdate() > 0;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -115,21 +112,20 @@ public class UserModel {
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection()
 					.prepareStatement("update users set username = ?, fullname = ?, "
-							+ "email = ?, phoneNumber = ?, address = ?, image = ?, password = ? ,roleId = ?,status =?,gender =?, birthday=?, securityCode=?"
+							+ "email = ?, phoneNumber = ?, image = ?, password = ? ,roleId = ?,status =?,gender =?, birthday=?, securityCode=?"
 							+ " where id = ? ");
 			preparedStatement.setString(1, user.getUserName());
 			preparedStatement.setString(2, user.getFullName());
 			preparedStatement.setString(3, user.getEmail());
 			preparedStatement.setString(4, user.getPhoneNumber());
-			preparedStatement.setString(5, user.getAddress());
-			preparedStatement.setString(6, user.getImage());
-			preparedStatement.setString(7, user.getPassword());
-			preparedStatement.setInt(8, user.getRoleId());
-			preparedStatement.setBoolean(9, user.isStatus());
-			preparedStatement.setString(10, user.getGender());
-			preparedStatement.setDate(11, new java.sql.Date(user.getBirthday().getTime()));
-			preparedStatement.setString(12, user.getSecurityCode());
-			preparedStatement.setInt(13, user.getId());
+			preparedStatement.setString(5, user.getImage());
+			preparedStatement.setString(6, user.getPassword());
+			preparedStatement.setInt(7, user.getRoleId());
+			preparedStatement.setBoolean(8, user.isStatus());
+			preparedStatement.setString(9, user.getGender());
+			preparedStatement.setDate(10, new java.sql.Date(user.getBirthday().getTime()));
+			preparedStatement.setString(11, user.getSecurityCode());
+			preparedStatement.setInt(12, user.getId());
 			result = preparedStatement.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -172,7 +168,6 @@ public class UserModel {
 				user.setFullName(resultSet.getString("fullName"));
 				user.setEmail(resultSet.getString("email"));
 				user.setPhoneNumber(resultSet.getString("phoneNumber"));
-				user.setAddress(resultSet.getString("address"));
 				user.setImage(resultSet.getString("image"));
 				user.setRoleId(resultSet.getInt("roleId"));
 				user.setStatus(resultSet.getBoolean("status"));
@@ -204,7 +199,6 @@ public class UserModel {
 				user.setFullName(resultSet.getString("fullName"));
 				user.setEmail(resultSet.getString("email"));
 				user.setPhoneNumber(resultSet.getString("phoneNumber"));
-				user.setAddress(resultSet.getString("address"));
 				user.setImage(resultSet.getString("image"));
 				user.setPassword(resultSet.getString("password"));
 				user.setStatus(resultSet.getBoolean("status"));
@@ -236,7 +230,6 @@ public class UserModel {
 				user.setFullName(resultSet.getString("fullName"));
 				user.setEmail(resultSet.getString("email"));
 				user.setPhoneNumber(resultSet.getString("phoneNumber"));
-				user.setAddress(resultSet.getString("address"));
 				user.setImage(resultSet.getString("image"));
 				user.setPassword(resultSet.getString("password"));
 				user.setStatus(resultSet.getBoolean("status"));
@@ -274,7 +267,7 @@ public class UserModel {
 //		System.out.println(BCrypt.checkpw("123", "$2a$10$GQtaPy7y2Q3gsPhA.QlJueoo0wGjy.hNK5/U/GTqqxXMGEjtDnkRi"));
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 //		System.out.println(userModel.create(new Users("username1", "fullName1","email1","phoneNumber1", "address1", "image1", "password1", 2, false,"gender1", new java.util.Date(),"123456")));
-		System.out.println(userModel.update(new Users(6, "username2", "fullName1","email1","phoneNumber1", "address1", "image1", "password1", 2, true,"gender1", new java.util.Date(),"123456")));
+		System.out.println(userModel.update(new Users(6, "username2", "fullName1","email1","phoneNumber1", "image1", "password1", 2, true,"gender1", new java.util.Date(),"123456")));
 //		System.out.println(BCrypt.hashpw("Truong11232@", BCrypt.gensalt()));
 	}
 }
