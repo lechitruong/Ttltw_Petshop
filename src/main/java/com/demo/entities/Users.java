@@ -8,7 +8,6 @@ private String userName;
 private String fullName;
 private String email;
 private String phoneNumber;
-private String address;
 private String image;
 private String password;
 private int roleId;
@@ -18,7 +17,7 @@ private Date birthday;
 private String securityCode;
 
 
-public Users(int id, String userName, String fullName, String email, String phoneNumber, String address, String image,
+public Users(int id, String userName, String fullName, String email, String phoneNumber, String image,
 		String password, int roleId, boolean status, String gender, Date birthday, String securityCode) {
 	super();
 	this.id = id;
@@ -26,7 +25,6 @@ public Users(int id, String userName, String fullName, String email, String phon
 	this.fullName = fullName;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
-	this.address = address;
 	this.image = image;
 	this.password = password;
 	this.roleId = roleId;
@@ -36,14 +34,13 @@ public Users(int id, String userName, String fullName, String email, String phon
 	this.securityCode = securityCode;
 }
 
-public Users(String userName, String fullName, String email, String phoneNumber, String address, String image,
+public Users(String userName, String fullName, String email, String phoneNumber, String image,
 		String password, int roleId, boolean status, String gender, Date birthday, String securityCode) {
 	super();
 	this.userName = userName;
 	this.fullName = fullName;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
-	this.address = address;
 	this.image = image;
 	this.password = password;
 	this.roleId = roleId;
@@ -92,12 +89,6 @@ public String getPhoneNumber() {
 public void setPhoneNumber(String phoneNumber) {
 	this.phoneNumber = phoneNumber;
 }
-public String getAddress() {
-	return address;
-}
-public void setAddress(String address) {
-	this.address = address;
-}
 public String getImage() {
 	return image;
 }
@@ -138,7 +129,7 @@ public void setBirthday(Date birthday) {
 public String toString() {
 	return "Users [id=" + id + ", fullName=" + fullName + ", userName=" + userName + ", password=" + password
 			+ ", gender=" + gender + ", birthday=" + birthday + ", email=" + email + ", phoneNumber=" + phoneNumber
-			+ ", address=" + address + ", image=" + image + ", securityCode=" + securityCode + ", status=" + status
+			+ ", image=" + image + ", securityCode=" + securityCode + ", status=" + status
 			+ ", roleId=" + roleId + "]";
 }
 
