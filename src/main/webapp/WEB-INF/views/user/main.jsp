@@ -170,13 +170,13 @@
       							s+= '<a title="Wishlist" href="#"><i class="ti-heart"></i><span>Thêm vào yêu thích</span></a>';
       							s+= '</div>';
       							s+= '<div class="product-action-2">';
-      							s+= '<a title="Add to cart" href="#">Thêm vào giỏ hàng</a>';
+      							s+= '<a title="Add to cart" href="${pageContext.request.contextPath}/cart?action=addToCart&id='+pet[i].id+'">Thêm vào giỏ hàng</a>';
       							s+= '</div>';
       							s+= '</div>';
       							s+= '</div>';	
       							s+= '<div class="product-content">';
       							s+= '<h3>';
-      							s+= '<a href="product-details.html">'+pet[i].petName+'</a>';
+      							s+= '<a href="${pageContext.request.contextPath}/petdetail">'+pet[i].petName+'</a>';
       							s+= '</h3>';	
       							s+= '<div class="product-price">';	
       							s+= '<span>'+pet[i].money+' triệu đồng</span>';

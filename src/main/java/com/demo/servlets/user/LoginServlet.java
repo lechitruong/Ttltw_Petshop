@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.demo.entities.Address;
 import com.demo.entities.Log;
 import com.demo.entities.Users;
 import com.demo.helpers.ConfigIP;
 import com.demo.helpers.IPAddressUtil;
 import com.demo.helpers.MailHelper;
 import com.demo.helpers.RandomStringHelper;
+import com.demo.models.AddressModel;
 import com.demo.models.LogModel;
 import com.demo.models.RoleModel;
 import com.demo.models.UserModel;
@@ -76,17 +78,12 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String securityCode = request.getParameter("securityCode");
 		UserModel userModel = new UserModel();
-		RoleModel roleModel = new RoleModel();
 		Users user = userModel.findUserByUserName(username);
 		if (user.getSecurityCode().equalsIgnoreCase(securityCode) && user.getUserName().equalsIgnoreCase(username)) {
-			int newRoleId = 2;
-			if(roleModel.checkRoleIDExists(2)) {
 				user.setStatus(true);	
-				user.setRoleId(newRoleId);
 				if (userModel.update(user)) {
 					response.sendRedirect("login");
 				}	
-			}
 		} else {
 			request.getSession().setAttribute("error", "xac thuc khong thanh cong");
 			response.sendRedirect("login?action=message");
@@ -134,6 +131,7 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		UserModel userModel = new UserModel();
+		AddressModel addressModel = new AddressModel();
 		LogModel logModel = new LogModel();
 		Users user = userModel.findUserByUserName(username);
 		if (userModel.checkLogin(username, password)) {
@@ -142,6 +140,9 @@ public class LoginServlet extends HttpServlet {
 				request.getSession().setAttribute("user", userModel.findUserByUserName(username));
 				response.sendRedirect("admin/home");
 			} else {
+				if(addressModel.findAddressByIdUser(userModel.findUserByUserName(username).getId()) == null) {
+					addressModel.create(new Address("", "", "", "", userModel.findUserByUserName(username).getId()));
+				}
 				request.getSession().setAttribute("user", userModel.findUserByUserName(username));
 				response.sendRedirect("home");
 			}
@@ -168,7 +169,7 @@ public class LoginServlet extends HttpServlet {
 		user.setBirthday(new java.util.Date());
 		if (userModel.create(user)) {
 			MailHelper.MailHelper(email, "Xác thực tài khoản của bạn",
-					"Bạn hãy bấm vào " + "<a href='http://localhost:8080/PetShop/login?action=verify&username="
+					"Bạn hãy bấm vào " + "<a href='http://localhost:8080/projectGroup2/login?action=verify&username="
 							+ username + "" + "&securityCode=" + securityCode
 							+ "'>liên kết</a> này để xác thực tài khoản");
 			response.sendRedirect("login?action=message");

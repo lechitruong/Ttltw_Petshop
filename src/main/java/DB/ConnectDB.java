@@ -26,4 +26,8 @@ public class ConnectDB {
 			}
 		}
 	}
+	public static void main(String[] args) {
+		ConnectDB connectDB = new ConnectDB();
+		System.out.println(connectDB.connection());
+	}
 }

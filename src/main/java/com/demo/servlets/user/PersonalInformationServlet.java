@@ -1,17 +1,33 @@
 package com.demo.servlets.user;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import com.demo.entities.Address;
+import com.demo.entities.Users;
+import com.demo.helpers.UploadFileHelper;
+import com.demo.models.AddressModel;
+import com.demo.models.UserModel;
 
 /**
  * Servlet implementation class HomeServlet
  */
 @WebServlet("/personalinformation")
+@MultipartConfig(
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 10,
+        fileSizeThreshold = 1024 * 1024 * 10
+)
 public class PersonalInformationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -41,8 +57,67 @@ public class PersonalInformationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action = request.getParameter("action");
+		if(action.equalsIgnoreCase("update")) {
+			doPost_Update(request, response);
+		}
 	}
+	protected void doPost_Update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Set character encoding
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        UserModel userModel = new UserModel();
+        AddressModel addressModel = new AddressModel();
+        Users user = (Users) request.getSession().getAttribute("user");
+        String fullName = request.getParameter("fullName");
+        String birthdayString = request.getParameter("birthday");
+        String gender = request.getParameter("gender");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String country = request.getParameter("country");
+        String district = request.getParameter("district");
+        String ward = request.getParameter("ward");
+        String userAddress = request.getParameter("address");
+        String avatar = user.getImage();
+        Part file = request.getPart("file");
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if(userModel.findUserById(user.getId()) == null) {
+			avatar = "Unknown_person.jpg";
+			
+			if(file != null && file.getSize() > 0) {
+				avatar = UploadFileHelper.uploadFile("assets/user/images",request,file);
+			} 
+			user.setImage(avatar);
+		} else {
+			avatar = userModel.findUserById(user.getId()).getImage();
+			if(file != null && file.getSize() > 0) {
+				avatar = UploadFileHelper.uploadFile("assets/user/images",request,file);
+			} 
+		
+			user.setImage(avatar);
+		}
+        try {
+            user.setFullName(new String(fullName.getBytes("ISO-8859-1"), "UTF-8"));
+            Date birthday = dateFormat.parse(birthdayString);
+            String formattedBirthday = dateFormat.format(birthday);
+            user.setBirthday(birthday);
+            user.setGender(new String(gender.getBytes("ISO-8859-1"), "UTF-8"));
+            user.setPhoneNumber(new String(phoneNumber.getBytes("ISO-8859-1"), "UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Address userAddressObj = addressModel.findAddressByIdUser(user.getId());
+        userAddressObj.setCountry(new String(country.getBytes("ISO-8859-1"), "UTF-8"));
+        userAddressObj.setDistrict(new String(district.getBytes("ISO-8859-1"), "UTF-8"));
+        userAddressObj.setWard(new String(ward.getBytes("ISO-8859-1"), "UTF-8"));
+        userAddressObj.setAddress(new String(userAddress.getBytes("ISO-8859-1"), "UTF-8"));
+        if (userModel.update(user) && addressModel.update(userAddressObj)) {
+            request.getSession().removeAttribute("user");
+            request.getSession().setAttribute("user", userModel.findUserById(user.getId()));
+            request.getSession().setAttribute("msg-if", "Cập nhật thành công");
+        } else {
+            request.getSession().setAttribute("msg-if", "Cập nhật thất bại");
+        }
+        response.sendRedirect("personalinformation");
+    }
 }
