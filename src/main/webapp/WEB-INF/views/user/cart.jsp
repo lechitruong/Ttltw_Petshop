@@ -16,9 +16,9 @@
                     <div class="bread-inner">
                         <ul class="bread-list">
                             <li>
-                                <a href="index1.html">Trang chủ<i class="ti-arrow-right"></i></a>
+                                <a href="${pageContext.request.contextPath }/home">Trang chủ<i class="ti-arrow-right"></i></a>
                             </li>
-                            <li class="active"><a href="blog-single.html">Giỏ hàng</a></li>
+                            <li class="active"><a href="${pageContext.request.contextPath }/cart">Giỏ hàng</a></li>
                         </ul>
                     </div>
                 </div>

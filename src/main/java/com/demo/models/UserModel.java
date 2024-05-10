@@ -265,9 +265,8 @@ public class UserModel {
 //		System.out.println(userModel.checkLogin("admin1", "123"));
 //		System.out.println(userModel.findAllAdmin(true));
 //		System.out.println(BCrypt.checkpw("123", "$2a$10$GQtaPy7y2Q3gsPhA.QlJueoo0wGjy.hNK5/U/GTqqxXMGEjtDnkRi"));
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 //		System.out.println(userModel.create(new Users("username1", "fullName1","email1","phoneNumber1", "address1", "image1", "password1", 2, false,"gender1", new java.util.Date(),"123456")));
-		System.out.println(userModel.update(new Users(6, "username2", "fullName1","email1","phoneNumber1", "image1", "password1", 2, true,"gender1", new java.util.Date(),"123456")));
-//		System.out.println(BCrypt.hashpw("Truong11232@", BCrypt.gensalt()));
+//	System.out.println(userModel.update(new Users(6, "username2", "fullName1","email1","phoneNumber1", "image1", "password1", 2, true,"gender1", new java.util.Date(),"123456")));
+		System.out.println(BCrypt.hashpw("123", BCrypt.gensalt()));
 	}
 }

@@ -313,7 +313,7 @@ function changeImage(clickedImage) {
   /*====================================
 	18. Nice Select JS
 	======================================*/
- $("select").not('#district, #ward, #gender').niceSelect();
+ $("select").not('#country,#district, #ward, #gender').niceSelect();
 
   /*=====================================
 	 Others JS
