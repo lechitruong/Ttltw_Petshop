@@ -53,12 +53,12 @@ public class AddressModel {
 		}
 		return result;
 	}
-	// tim address dua vao id
+	// tim address dua vao id(dung cho information)
 		public Address findAddressByIdUser(int idUser) {
 			Address address = null;
 			try {
 				PreparedStatement preparedStatement = ConnectDB.connection()
-						.prepareStatement("select * from address where idUser = ? ");
+						.prepareStatement("select * from address where idUser = ? limit 1");
 				preparedStatement.setInt(1, idUser);
 				ResultSet resultSet = preparedStatement.executeQuery();
 				while (resultSet.next()) {
@@ -79,6 +79,6 @@ public class AddressModel {
 			return address;
 		}
 		public static void main(String[] args) {
-			System.out.println(new AddressModel().findAddressByIdUser(3));
+			System.out.println(new AddressModel().findAddressByIdUser(5));
 		}
 }

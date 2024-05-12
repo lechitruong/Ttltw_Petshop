@@ -155,7 +155,7 @@
 													khoản của tôi</a> <a
 													href="${pageContext.request.contextPath}/changepassword?action=changepassword">Đổi
 													mật khẩu</a> <a
-													href="${pageContext.request.contextPath}/tinhtrangdonhang">Thông
+													href="${pageContext.request.contextPath}/orderstatus">Thông
 													tin đơn hàng</a> <a
 													href="${pageContext.request.contextPath}/login?action=logout">Đăng
 													xuất</a>
@@ -254,7 +254,7 @@
 										for (Item item : cart) {
 										%>
 										<li><a
-											href="${pageContext.request.contextPath }/cart?action=removeToCart&id=<%= ++i %>"
+											href="${pageContext.request.contextPath }/cart?action=removeToCart&index=<%= ++i %>"
 											class="remove" title="Remove this item"><i
 												class="fa fa-remove"></i></a> <a class="cart-img" href="#"><img
 												src="${pageContext.request.contextPath}/assets/user/images/anhcho/<%= item.getPet().getImage() %>"
