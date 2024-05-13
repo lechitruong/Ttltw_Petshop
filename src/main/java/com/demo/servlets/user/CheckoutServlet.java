@@ -70,7 +70,7 @@ public class CheckoutServlet extends HttpServlet {
 	}
 
 	protected void doPost_Dathang(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String fullName = request.getParameter("fullName");
+	    // String fullName = request.getParameter("fullName");
 	    String phoneNumber = request.getParameter("phoneNumber");
 	    String email = request.getParameter("email");
 	    String country = request.getParameter("country_checkout");
@@ -102,7 +102,8 @@ public class CheckoutServlet extends HttpServlet {
 	        }
 	    }
 
-	    if (orderModel.create(new Orders(phoneNumber, email, note, new Timestamp(new Date().getTime()), itemModel.total(cart) + 0.1, 0, user.getId(), orderAddress.getId()))) {
+	    if (orderModel.create(new Orders(phoneNumber, email, new String(note.getBytes("ISO-8859-1"), "UTF-8"), new Timestamp(new Date().getTime()), itemModel.total(cart) + 0.1, 0, user.getId(), orderAddress.getId()))) {
+	    	request.getSession().removeAttribute("cart");
 	        int orderId = orderModel.getLastOrder().getId(); 
 	        for (int i = 0; i < cart.size(); i++) {
 	            OrderDetails orderDetail = new OrderDetails();
@@ -110,7 +111,6 @@ public class CheckoutServlet extends HttpServlet {
 	            orderDetail.setQuantity(cart.get(i).getQuantity());
 	            orderDetail.setPetId(cart.get(i).getPet().getId());
 	            orderDetail.setMoney(cart.get(i).getPet().getMoney());
-	            orderDetail.setStatus(0);
 	            if (orderDetailModel.create(orderDetail)) {
 	                System.out.println("true - orderdetails");
 	            } else {

@@ -37,6 +37,7 @@ public class PetModel {
 				pet.setMoney(resultSet.getDouble("money"));
 				pet.setPetBirthday(resultSet.getDate("petBirthday"));
 				pet.setImage(resultSet.getString("image"));
+				pet.setStatus(resultSet.getBoolean("status"));
 				pet.setCategoryId(resultSet.getInt("categoryId"));
 				pet.setCatalogId(resultSet.getInt("catalogId"));
 				pets.add(pet);
@@ -50,7 +51,41 @@ public class PetModel {
 		}
 		return pets;
 	}
+	// ham lay danh sach tat ca pet con trong cua hang
+	public List<Pets> findAllExist(boolean status) {
+		List<Pets> pets = new ArrayList<>();
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement("select * from pets where status = ? ");
+			preparedStatement.setBoolean(1, status);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Pets pet = new Pets();
+				pet.setId(resultSet.getInt("id"));
+				pet.setPetName(resultSet.getString("petName"));
+				pet.setPetType(resultSet.getString("petType"));
+				pet.setPetGender(resultSet.getString("petGender"));
+				pet.setDescription(resultSet.getString("description"));
+				pet.setDetail(resultSet.getString("detail"));
+				pet.setMade(resultSet.getString("made"));
+				pet.setAmount(resultSet.getInt("amount"));
+				pet.setMoney(resultSet.getDouble("money"));
+				pet.setPetBirthday(resultSet.getDate("petBirthday"));
+				pet.setImage(resultSet.getString("image"));
+				pet.setStatus(resultSet.getBoolean("status"));
+				pet.setCategoryId(resultSet.getInt("categoryId"));
+				pet.setCatalogId(resultSet.getInt("catalogId"));
+				pets.add(pet);
 
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			pets = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
+		return pets;
+	}
+// tim kiem theo ten hien 5 pet
 	public List<Pets> findByName(String keyword) {
 		List<Pets> pets = new ArrayList<>();
 		try {
@@ -71,6 +106,7 @@ public class PetModel {
 				pet.setMoney(resultSet.getDouble("money"));
 				pet.setPetBirthday(resultSet.getDate("petBirthday"));
 				pet.setImage(resultSet.getString("image"));
+				pet.setStatus(resultSet.getBoolean("status"));
 				pet.setCategoryId(resultSet.getInt("categoryId"));
 				pet.setCatalogId(resultSet.getInt("catalogId"));
 				pets.add(pet);
@@ -106,6 +142,7 @@ public class PetModel {
 				pet.setMoney(resultSet.getDouble("money"));
 				pet.setPetBirthday(resultSet.getDate("petBirthday"));
 				pet.setImage(resultSet.getString("image"));
+				pet.setStatus(resultSet.getBoolean("status"));
 				pet.setCategoryId(resultSet.getInt("categoryId"));
 				pet.setCatalogId(resultSet.getInt("catalogId"));
 			}
@@ -136,6 +173,7 @@ public class PetModel {
 				pet.setMoney(resultSet.getDouble("money"));
 				pet.setPetBirthday(resultSet.getDate("petBirthday"));
 				pet.setImage(resultSet.getString("image"));
+				pet.setStatus(resultSet.getBoolean("status"));
 				pet.setCategoryId(resultSet.getInt("categoryId"));
 				pet.setCatalogId(resultSet.getInt("catalogId"));
 				pets.add(pet);
@@ -180,6 +218,7 @@ public class PetModel {
 				pet.setMoney(resultSet.getDouble("money"));
 				pet.setPetBirthday(resultSet.getDate("petBirthday"));
 				pet.setImage(resultSet.getString("image"));
+				pet.setStatus(resultSet.getBoolean("status"));
 				pet.setCategoryId(resultSet.getInt("categoryId"));
 				pet.setCatalogId(resultSet.getInt("catalogId"));
 				pets.add(pet);
@@ -213,6 +252,7 @@ public class PetModel {
 				pet.setMoney(resultSet.getDouble("money"));
 				pet.setPetBirthday(resultSet.getDate("petBirthday"));
 				pet.setImage(resultSet.getString("image"));
+				pet.setStatus(resultSet.getBoolean("status"));
 				pet.setCategoryId(resultSet.getInt("categoryId"));
 				pet.setCatalogId(resultSet.getInt("catalogId"));
 				pets.add(pet);
@@ -248,7 +288,7 @@ public class PetModel {
 		boolean result = true;
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
-					"insert into pets(petName, petType,petGender,description, detail, made, amount, money, petBirthday, image, categoryPetId, catalogId) values (?,?,?,?,?,?,?,?,?,?,?,?)");
+					"insert into pets(petName, petType,petGender,description, detail, made, amount, money, petBirthday, image,status=?, categoryPetId, catalogId) values (?,?,?,?,?,?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, pet.getPetName());
 			preparedStatement.setString(2, pet.getPetType());
 			preparedStatement.setString(3, pet.getPetGender());
@@ -259,8 +299,9 @@ public class PetModel {
 			preparedStatement.setDouble(8, pet.getMoney());
 			preparedStatement.setDate(9, new java.sql.Date(pet.getPetBirthday().getTime()));
 			preparedStatement.setString(10, pet.getImage());
-			preparedStatement.setInt(11, pet.getCategoryId());
-			preparedStatement.setInt(12, pet.getCatalogId());
+			preparedStatement.setBoolean(11, pet.isStatus());
+			preparedStatement.setInt(12, pet.getCategoryId());
+			preparedStatement.setInt(13, pet.getCatalogId());
 			result = preparedStatement.executeUpdate() > 0;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -277,7 +318,7 @@ public class PetModel {
 		boolean result = true;
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
-					"update pets set petName =?, petType=?,petGender=?,description=?, detail=?, made=?, amount=?, money=?, petBirthday=?, image=?, categoryId=?, catalogId=? where id = ? ");
+					"update pets set petName =?, petType=?,petGender=?,description=?, detail=?, made=?, amount=?, money=?, petBirthday=?, image=?,status=?, categoryId=?, catalogId=? where id = ? ");
 			preparedStatement.setString(1, pet.getPetName());
 			preparedStatement.setString(2, pet.getPetType());
 			preparedStatement.setString(3, pet.getPetGender());
@@ -288,9 +329,10 @@ public class PetModel {
 			preparedStatement.setDouble(8, pet.getMoney());
 			preparedStatement.setDate(9, new java.sql.Date(pet.getPetBirthday().getTime()));
 			preparedStatement.setString(10, pet.getImage());
-			preparedStatement.setInt(11, pet.getCategoryId());
-			preparedStatement.setInt(12, pet.getCatalogId());
-			preparedStatement.setInt(13, pet.getId());
+			preparedStatement.setBoolean(11, pet.isStatus());
+			preparedStatement.setInt(12, pet.getCategoryId());
+			preparedStatement.setInt(13, pet.getCatalogId());
+			preparedStatement.setInt(14, pet.getId());
 			result = preparedStatement.executeUpdate() > 0;
 		} catch (Exception e) {
 			e.printStackTrace();

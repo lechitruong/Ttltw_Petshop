@@ -53,7 +53,7 @@ public class AddressModel {
 		}
 		return result;
 	}
-	// tim address dua vao id(dung cho information)
+	// tim address dua vao idUser(dung cho information)-> cai dau tien
 		public Address findAddressByIdUser(int idUser) {
 			Address address = null;
 			try {
@@ -78,6 +78,32 @@ public class AddressModel {
 			}
 			return address;
 		}
+		// tim address dua vao idAddress
+		public Address findAddressById(int id) {
+			Address address = null;
+			try {
+				PreparedStatement preparedStatement = ConnectDB.connection()
+						.prepareStatement("select * from address where id = ?");
+				preparedStatement.setInt(1, id);
+				ResultSet resultSet = preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					address = new Address();
+					address.setId(resultSet.getInt("id"));
+					address.setCountry(resultSet.getString("country"));
+					address.setDistrict(resultSet.getString("district"));
+					address.setWard(resultSet.getString("ward"));
+					address.setAddress(resultSet.getString("address"));
+					address.setIdUser(resultSet.getInt("idUser"));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				address = null;
+			} finally {
+				ConnectDB.disconnect();
+			}
+			return address;
+		}
+		
 		public static void main(String[] args) {
 			System.out.println(new AddressModel().findAddressByIdUser(5));
 		}

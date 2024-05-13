@@ -6,25 +6,22 @@ public class OrderDetails {
 	private int orderId;
 	private int petId;
 	private double money;
-	private int status;
-public OrderDetails(int id, int quantity, int orderId, int petId, double money, int status) {
+public OrderDetails(int id, int quantity, int orderId, int petId, double money) {
 		super();
 		this.id = id;
 		this.quantity = quantity;
 		this.orderId = orderId;
 		this.petId = petId;
 		this.money = money;
-		this.status = status;
 	}
 
 
-public OrderDetails(int quantity, int orderId, int petId, double money, int status) {
+public OrderDetails(int quantity, int orderId, int petId, double money) {
 	super();
 	this.quantity = quantity;
 	this.orderId = orderId;
 	this.petId = petId;
 	this.money = money;
-	this.status = status;
 }
 
 
@@ -62,21 +59,16 @@ public void setMoney(double money) {
 	this.money = money;
 }
 
-public int getStatus() {
-	return status;
-}
-
-
-public void setStatus(int status) {
-	this.status = status;
-}
-
 
 @Override
 public String toString() {
 	return "OrderDetails [id=" + id + ", quantity=" + quantity + ", orderId=" + orderId + ", petId=" + petId
-			+ ", money=" + money + ", status=" + status + "]";
+			+ ", money=" + money + "]";
 }
+
+
+
+
 
 
 
