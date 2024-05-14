@@ -14,10 +14,11 @@ private int amount;
 private double money;
 private Date petBirthday;
 private String image;
+private boolean status;
 private int categoryId;
 private int catalogId;
 public Pets(int id, String petName, String petType, String petGender, String description, String detail, String made,
-		int amount, double money, Date petBirthday, String image, int categoryId, int catalogId) {
+		int amount, double money, Date petBirthday, String image,boolean status, int categoryId, int catalogId) {
 	super();
 	this.id = id;
 	this.petName = petName;
@@ -30,9 +31,29 @@ public Pets(int id, String petName, String petType, String petGender, String des
 	this.money = money;
 	this.petBirthday = petBirthday;
 	this.image = image;
+	this.status =status;
 	this.categoryId = categoryId;
 	this.catalogId = catalogId;
 }
+
+public Pets(String petName, String petType, String petGender, String description, String detail, String made,
+		int amount, double money, Date petBirthday, String image, boolean status, int categoryId, int catalogId) {
+	super();
+	this.petName = petName;
+	this.petType = petType;
+	this.petGender = petGender;
+	this.description = description;
+	this.detail = detail;
+	this.made = made;
+	this.amount = amount;
+	this.money = money;
+	this.petBirthday = petBirthday;
+	this.image = image;
+	this.status = status;
+	this.categoryId = categoryId;
+	this.catalogId = catalogId;
+}
+
 public Pets() {
 	super();
 }
@@ -114,12 +135,22 @@ public int getCatalogId() {
 public void setCatalogId(int catalogId) {
 	this.catalogId = catalogId;
 }
+
+public boolean isStatus() {
+	return status;
+}
+
+public void setStatus(boolean status) {
+	this.status = status;
+}
+
 @Override
 public String toString() {
 	return "Pets [id=" + id + ", petName=" + petName + ", petType=" + petType + ", petGender=" + petGender
 			+ ", description=" + description + ", detail=" + detail + ", made=" + made + ", amount=" + amount
-			+ ", money=" + money + ", petBirthday=" + petBirthday + ", image=" + image + ", categoryId=" + categoryId
-			+ ", catalogId=" + catalogId + "]";
+			+ ", money=" + money + ", petBirthday=" + petBirthday + ", image=" + image + ", status=" + status
+			+ ", categoryId=" + categoryId + ", catalogId=" + catalogId + "]";
 }
+
 
 }

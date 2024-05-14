@@ -4,6 +4,7 @@
 <%@page import="com.demo.models.ItemModel"%>
 <%@page import="com.demo.models.AddressModel"%>
 <%@page import="java.util.List"%>
+<%@page import="java.math.BigDecimal"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <!DOCTYPE html>
@@ -160,6 +161,7 @@ display:none;
 				<%
 				HttpSession session2 = request.getSession();
 				List<Item> cart = (List<Item>) session2.getAttribute("cart");
+				ItemModel itemModel = new ItemModel();
 				%>
 				<div class="col-lg-4 col-12">
 					<div class="order-details">
@@ -168,11 +170,9 @@ display:none;
 							<h2>Tổng giỏ hàng</h2>
 							<div class="content">
 								<ul>
-									<li>Tổng hàng<span><%=ItemModel.total(cart)%>
-											triệu đồng</span></li>
-									<li>(+) Giao hàng<span>0.1 triệu đồng</span></li>
-									<li class="last">Tổng<span><%=ItemModel.total(cart) + 0.1%>
-											triệu đồng</span></li>
+									 <li>Tổng hàng<span id="totalAmount"><%= itemModel.total(cart) %></span> (triệu đồng)</li>
+      <li>(+) Giao hàng<span id="shippingFee">0.1</span> (triệu đồng)</li>
+      <li class="last">Tổng<span class="finalAmount">0.00</span> (triệu đồng)</li>
 								</ul>
 							</div>
 						</div>
@@ -201,14 +201,14 @@ display:none;
 						<!-- Payment Method Widget -->
 						<div class="single-widget payement">
   <div id="method1" class="content" style="display:none;">
-    <span>Quý khách vui lòng quét mã dưới đây để thanh toán số tiền <%=ItemModel.total(cart) + 0.1%> triệu đồng</span> 
+    <span>Quý khách vui lòng quét mã dưới đây để thanh toán số tiền <%= itemModel.total(cart) + 0.1 %> triệu đồng</span> 
     <img src="${pageContext.request.contextPath}/assets/user/images/qrcode.jpg" alt="QR Code" />
   </div>
   <div id="method2" class="content" style="display:none;">
-    <span>Quý khách vui lòng thanh toán số tiền <%=ItemModel.total(cart) + 0.1%> triệu đồng khi nhận hàng</span>
+    <span>Quý khách vui lòng thanh toán số tiền <%= itemModel.total(cart) + 0.1 %> triệu đồng khi nhận hàng</span>
   </div>
   <div id="method3" class="content" style="display:none;">
-    <span>Quý khách vui lòng quét mã dưới đây để thanh toán số tiền <%=ItemModel.total(cart) + 0.1%> triệu đồng</span> 
+    <span>Quý khách vui lòng quét mã dưới đây để thanh toán số tiền <%= itemModel.total(cart) + 0.1 %> triệu đồng</span> 
     <img src="${pageContext.request.contextPath}/assets/user/images/qrcode.jpg" alt="QR Code" />
   </div>
 </div>
@@ -335,5 +335,36 @@ display:none;
 		  });
 		});
 	</script>
+	<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Lấy phần tử chứa tổng giá trị sản phẩm trong giỏ hàng
+  var totalAmountElement = document.getElementById('totalAmount');
+
+  // Lấy giá trị tổng hàng từ phần tử có id="totalAmount"
+  var totalAmount = parseFloat(totalAmountElement.innerText);
+
+  // Lấy giá trị phí vận chuyển từ phần tử có id="shippingFee"
+  var shippingFee = parseFloat(document.getElementById('shippingFee').innerText);
+
+  // Tính tổng giá trị cả phí vận chuyển
+  var finalAmount = totalAmount + shippingFee;
+
+  // Định dạng giá trị theo dạng tiền tệ với 2 số thập phân
+  var formattedFinalAmount = finalAmount.toFixed(2);
+
+  // Gán giá trị đã định dạng vào phần tử finalAmountElement
+  totalAmountElement.innerText = totalAmount.toFixed(2); // Định dạng totalAmount với 2 số thập phân
+  document.querySelector('.finalAmount').innerText = formattedFinalAmount; // Đặt giá trị finalAmount đã định dạng vào phần tử finalAmount
+//Lấy các phần tử div chứa thông tin phương thức thanh toán
+  var method1Element = document.getElementById('method1');
+  var method2Element = document.getElementById('method2');
+  var method3Element = document.getElementById('method3');
+
+  // In giá trị vào phần tử span của mỗi phương thức thanh toán
+  method1Element.querySelector('span').innerText = "Quý khách vui lòng quét mã dưới đây để thanh toán số tiền " + formattedFinalAmount + " triệu đồng";
+  method2Element.querySelector('span').innerText = "Quý khách vui lòng thanh toán số tiền " + formattedFinalAmount + " triệu đồng khi nhận hàng";
+  method3Element.querySelector('span').innerText = "Quý khách vui lòng quét mã dưới đây để thanh toán số tiền " + formattedFinalAmount + " triệu đồng";
+});
+</script>
 </body>
 </html>

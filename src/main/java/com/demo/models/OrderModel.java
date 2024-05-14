@@ -110,7 +110,7 @@ public class OrderModel {
 			return result;
 		}
 
-		// tim order dua vao id
+		// tim order dua vao id cua order
 		public Orders findOrderById(int id) {
 			Orders order = null;
 			try {
@@ -165,5 +165,34 @@ public class OrderModel {
 			}
 			return null;
 		}
+		// ham lay ra danh sach order cua nguoi dung
+		public List<Orders> findAllByUserId(int id) {
+			List<Orders> orders = new ArrayList<>();
+			try {
+				PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement("select * from orders where userId = ?");
+				preparedStatement.setInt(1, id);
+				ResultSet resultSet = preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					Orders order = new Orders();
+					order.setId(resultSet.getInt("id"));
+					order.setPhoneNumber(resultSet.getString("phoneNumber"));
+					order.setEmail(resultSet.getString("email"));
+					order.setNote(resultSet.getString("note"));
+					order.setOrderDate(resultSet.getTimestamp("orderDate"));
+					order.setTotalMoney(resultSet.getDouble("totalMoney"));
+					order.setStatus(resultSet.getInt("status"));
+					order.setUserId(resultSet.getInt("userId"));
+					order.setAddressId(resultSet.getInt("addressId"));
+					orders.add(order);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				orders = null;
+			} finally {
+				ConnectDB.disconnect();
+			}
+			return orders;
+		}
+
 
 }
