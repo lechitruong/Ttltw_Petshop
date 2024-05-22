@@ -46,8 +46,7 @@ public class UserModel {
 		return users;
 	}
 
-// tra ve danh sach dua check isAdmin
-	public List<Users> findAllAdmin(int roleId) {
+	public List<Users> findAllRole(int roleId) {
 		List<Users> users = new ArrayList<>();
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection()

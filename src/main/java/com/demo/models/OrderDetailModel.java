@@ -144,4 +144,35 @@ public class OrderDetailModel {
 				}
 				return orderDetails;
 			}
+			public int quantity(int categoryID) {
+				int quantity = 0;
+				try {
+					PreparedStatement ps = ConnectDB.connection().prepareStatement("SELECT sum(quantity) sum FROM orderdetails ord, pets p WHERE ord.petId = p.id and p.categoryPetId = ? ");
+					ps.setInt(1, categoryID);
+					ResultSet resultSet = ps.executeQuery();
+					while(resultSet.next()) {
+						quantity = resultSet.getInt("sum");
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					quantity = 0;
+				}
+				return quantity;
+			}
+			public int quantity1() {
+				int quantity = 0;
+				try {
+					PreparedStatement ps = ConnectDB.connection().prepareStatement("SELECT sum(quantity) sum FROM orderdetails ord, pets p WHERE ord.petId = p.id ");
+					ResultSet resultSet = ps.executeQuery();
+					while(resultSet.next()) {
+						quantity = resultSet.getInt("sum");
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					quantity = 0;
+				}
+				return quantity;
+			}
 }

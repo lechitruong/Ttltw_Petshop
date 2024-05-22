@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.demo.entities.OrderDetails;
 import com.demo.entities.Orders;
 import com.demo.entities.Users;
 
@@ -193,6 +194,26 @@ public class OrderModel {
 			}
 			return orders;
 		}
+		public List<OrderDetails> getAllOrderdetails() {
+			List<OrderDetails> ordersList = new ArrayList<>();
 
+			try {
+				PreparedStatement ps = ConnectDB.connection().prepareStatement("SELECT * FROM orderdetails");
+				ResultSet rs = ps.executeQuery();
+
+				while (rs.next()) {
+					OrderDetails orderDetails = new OrderDetails();
+					orderDetails.setId(rs.getInt("id"));
+					orderDetails.setOrderId(rs.getInt("orderId"));
+					orderDetails.setPetId(rs.getInt("petId"));
+					orderDetails.setMoney(rs.getInt("money"));
+					orderDetails.setQuantity(rs.getInt("quantity"));
+					ordersList.add(orderDetails);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return ordersList;
+		}
 
 }
