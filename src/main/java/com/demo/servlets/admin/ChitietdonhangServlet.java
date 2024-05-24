@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.demo.entities.OrderDetails;
-import com.demo.models.OrderDetailsModel;
+import com.demo.models.OrderDetailModel;
 
 /**
  * Servlet implementation class LoginAdminServlet
@@ -54,8 +54,8 @@ public class ChitietdonhangServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		System.out.println(id);
 		int idOrder = Integer.parseInt(id);
-		OrderDetailsModel orderDetailsModel = new OrderDetailsModel();
-		List<OrderDetails> orderDetails =  orderDetailsModel.getAllOrderdetailsById(idOrder);
+		OrderDetailModel orderDetailsModel = new OrderDetailModel();
+		List<OrderDetails> orderDetails =  orderDetailsModel.findAllByOrderId(idOrder);
 		System.out.println(orderDetails);
 		if(orderDetails != null) {
 			request.getSession().setAttribute("orderdetails", orderDetails);

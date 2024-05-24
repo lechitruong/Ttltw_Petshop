@@ -67,7 +67,7 @@ public class EditUserServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		user.setId(userId);
 		user.setFullName(new String(fullName.getBytes("ISO-8859-1"), "UTF-8"));
-		user.setAddress(new String(address.getBytes("ISO-8859-1"), "UTF-8"));
+//		user.setAddress(new String(address.getBytes("ISO-8859-1"), "UTF-8"));
 		user.setUserName(new String(username.getBytes("ISO-8859-1"), "UTF-8"));
 		if (userModel.update(user)) {
 			request.getSession().setAttribute("message", "Update thanh cong");

@@ -147,7 +147,7 @@ public class OrderDetailModel {
 			public int quantity(int categoryID) {
 				int quantity = 0;
 				try {
-					PreparedStatement ps = ConnectDB.connection().prepareStatement("SELECT sum(quantity) sum FROM orderdetails ord, pets p WHERE ord.petId = p.id and p.categoryPetId = ? ");
+					PreparedStatement ps = ConnectDB.connection().prepareStatement("SELECT sum(quantity) sum FROM orderdetails ord, pets p WHERE ord.petId = p.id and p.categoryId = ? ");
 					ps.setInt(1, categoryID);
 					ResultSet resultSet = ps.executeQuery();
 					while(resultSet.next()) {

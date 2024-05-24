@@ -62,6 +62,7 @@ public class UserModel {
 				user.setPhoneNumber(resultSet.getString("phoneNumber"));
 				user.setImage(resultSet.getString("image"));
 				user.setPassword(resultSet.getString("password"));
+				user.setRoleId(resultSet.getInt("roleId"));
 				user.setStatus(resultSet.getBoolean("status"));
 				user.setGender(resultSet.getString("gender"));
 				user.setBirthday(resultSet.getDate("birthday"));
@@ -200,6 +201,7 @@ public class UserModel {
 				user.setPhoneNumber(resultSet.getString("phoneNumber"));
 				user.setImage(resultSet.getString("image"));
 				user.setPassword(resultSet.getString("password"));
+				user.setRoleId(resultSet.getInt("roleId"));
 				user.setStatus(resultSet.getBoolean("status"));
 				user.setGender(resultSet.getString("gender"));
 				user.setBirthday(resultSet.getDate("birthday"));
@@ -231,6 +233,7 @@ public class UserModel {
 				user.setPhoneNumber(resultSet.getString("phoneNumber"));
 				user.setImage(resultSet.getString("image"));
 				user.setPassword(resultSet.getString("password"));
+				user.setRoleId(resultSet.getInt("roleId"));
 				user.setStatus(resultSet.getBoolean("status"));
 				user.setGender(resultSet.getString("gender"));
 				user.setBirthday(resultSet.getDate("birthday"));

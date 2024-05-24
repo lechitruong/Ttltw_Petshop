@@ -363,7 +363,7 @@ public class PetModel {
 		PetModel petModel = new PetModel();
 //			System.out.println(petModel.findTop10());
 //			System.out.println(petModel.findPetById(1));
-		System.out.println(petModel.findAllByCategory(1));
+// 		System.out.println(petModel.findAllByCategory(1));
 //			System.out.println(userModel.checkLogin("acc2", "123"));
 //			System.out.println(BCrypt.checkpw("123", "$2a$10$GQtaPy7y2Q3gsPhA.QlJueoo0wGjy.hNK5/U/GTqqxXMGEjtDnkRi"));
 //			System.out.println(BCrypt.hashpw("123", BCrypt.gensalt()));

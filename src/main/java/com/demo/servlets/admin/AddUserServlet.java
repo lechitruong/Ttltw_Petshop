@@ -69,7 +69,7 @@ public class AddUserServlet extends HttpServlet {
 		user.setFullName(new String(fullName.getBytes("ISO-8859-1"), "UTF-8"));
 		user.setEmail(new String(email.getBytes("ISO-8859-1"), "UTF-8"));
 		user.setPhoneNumber(new String(phoneNumber.getBytes("ISO-8859-1"), "UTF-8"));
-		user.setAddress(new String(address.getBytes("ISO-8859-1"), "UTF-8"));
+//		user.setAddress(new String(address.getBytes("ISO-8859-1"), "UTF-8"));
 		user.setStatus(true);
 		if (userModel.create(user)) {
 			request.getSession().setAttribute("message", "Tao thanh cong");
