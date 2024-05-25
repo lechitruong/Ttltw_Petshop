@@ -1,14 +1,14 @@
 package com.demo.entities;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
-public class Comments {
+public class CommentCustom {
 	private int id;
-	private int userId;
+	private String userId;
 	private int petId;
 	private String note;
-	private Date createDate;
-	public Comments(int id, int userId, int petId, String note, Date createDate) {
+	private Timestamp createDate;
+	public CommentCustom(int id, String userId, int petId, String note, Timestamp createDate) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -16,15 +16,15 @@ public class Comments {
 		this.note = note;
 		this.createDate = createDate;
 	}
-	public Comments() {
-		super();
-	}
-	public Comments(int userId, int petId, String note, Date createDate) {
+	public CommentCustom(String userId, int petId, String note, Timestamp createDate) {
 		super();
 		this.userId = userId;
 		this.petId = petId;
 		this.note = note;
 		this.createDate = createDate;
+	}
+	public CommentCustom() {
+		super();
 	}
 	public int getId() {
 		return id;
@@ -32,10 +32,10 @@ public class Comments {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public int getPetId() {
@@ -50,18 +50,17 @@ public class Comments {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public Date getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 	@Override
 	public String toString() {
-		return "Reviews [id=" + id + ", userId=" + userId + ", petId=" + petId + ", note=" + note + ", createDate="
-				+ createDate + "]";
+		return "CommentCustom [id=" + id + ", userId=" + userId + ", petId=" + petId + ", note=" + note
+				+ ", createDate=" + createDate + "]";
 	}
-
-
-
+	
+	
 }
