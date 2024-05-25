@@ -51,10 +51,10 @@
                       <tr>
                         <td scope="row"><%= order.getId() %></td>
                          <td><%= order.getUserId() %></td>
-                        <td><%= order.getFullName() %></td>
+                        <td>Nhap ten</td>
                         <td><%= order.getEmail() %></td>
                         <td><%= order.getPhoneNumber() %></td>
-                        <td><%= order.getAddress() %></td>
+                        <td>Dia chi</td>
                          <td><%= order.getNote() %></td>
                          <td><%= order.getTotalMoney() %></td>
                           <td><%= order.getOrderDate() %>  </td>
@@ -62,7 +62,7 @@
                         <button class="btn btn-success"><i class="fa"></i><a href="${pageContext.request.contextPath}/admin/chitietdonhang?action=chitietdonhang&id=<%= order.getId() %>">Chi tiết</a></button>
                         </td>  				
         				 <td>
-                         <button class="btn btn-danger" type="submit"><%= order.isStatus()?"Đã duyệt":"Duyệt đơn hàng" %></button>
+                         <button class="btn btn-danger" type="submit">Trang thai</button>
                         </td>
                      </tr>
                      </form>

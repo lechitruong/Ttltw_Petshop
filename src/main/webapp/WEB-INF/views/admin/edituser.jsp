@@ -42,7 +42,7 @@ Users user = (Users) request.getAttribute("user");
 							<div class="form-group">
 								<label for="input-5">Address</label> <input type="date"
 									class="form-control" id="input-6" placeholder="Ngày tạo"
-									value="<%=user.getAddress()%>" name="address">
+									value="" name="address">
 							</div>
 
 							<div class="form-group">

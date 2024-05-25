@@ -210,30 +210,10 @@
                     <div class="reply-head">
                       <h2 class="reply-title">Để lại bình luận</h2>
                       <!-- Comment Form -->
-                      <form class="form" action="#">
+                      <form class="form" action="${pageContext.request.contextPath }/petdetail?action=addcomment" method="post">
                         <div class="row">
-                          <div class="col-lg-6 col-md-6 col-12">
-                            <div class="form-group">
-                              <label>Tên<span>*</span></label>
-                              <input
-                                type="text"
-                                name="name"
-                                placeholder=""
-                                required="required"
-                              />
-                            </div>
-                          </div>
-                          <div class="col-lg-6 col-md-6 col-12">
-                            <div class="form-group">
-                              <label>Email<span>*</span></label>
-                              <input
-                                type="email"
-                                name="email"
-                                placeholder=""
-                                required="required"
-                              />
-                            </div>
-                          </div>
+                        <c:if test="${sessionScope.user != null}")>
+                          <input type="text">                      
                           <div class="col-12">
                             <div class="form-group">
                               <label>Bình luận của bạn<span>*</span></label>
@@ -250,6 +230,10 @@
                               </button>
                             </div>
                           </div>
+                          </c:if>
+                          <c:if test="${sessionScope.user == null }">
+                          <span>Bạn chưa đăng nhập, vui lòng đăng nhập để gửi bình luận!</span>
+                          </c:if>
                         </div>
                       </form>
                       <!-- End Comment Form -->

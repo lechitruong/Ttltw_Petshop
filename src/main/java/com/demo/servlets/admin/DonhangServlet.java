@@ -46,7 +46,7 @@ public class DonhangServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setAttribute("p", "../admin/showorder.jsp");
 		OrderModel orderModel = new OrderModel();
-		List<Orders> orders = orderModel.getAll();
+		List<Orders> orders = orderModel.findAll();
 		request.setAttribute("orders", orders);
 		request.getRequestDispatcher("/WEB-INF/views/layout/admin.jsp").forward(request, response);
 	}
@@ -68,8 +68,8 @@ public class DonhangServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		int idOrder = Integer.parseInt(id);
 		OrderModel orderModel = new OrderModel();
-		Orders order = orderModel.get(idOrder);
-		order.setStatus(true);
+		Orders order = orderModel.findOrderById(idOrder);
+		order.setStatus(0);
 		if(orderModel.update(order)) {
 			response.sendRedirect("donhang");
 		}

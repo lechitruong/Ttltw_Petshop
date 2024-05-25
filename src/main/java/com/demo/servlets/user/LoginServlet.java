@@ -138,12 +138,14 @@ public class LoginServlet extends HttpServlet {
 			logModel.create(new Log(IPAddressUtil.getPublicIPAddress(),"info",ConfigIP.ipconfig(request).getCountryLong(),new Timestamp(new Date().getTime()), null, null));
 			if (user.getRoleId() == 1) {
 				request.getSession().setAttribute("user", userModel.findUserByUserName(username));
+				System.out.println("1");
 				response.sendRedirect("admin/home");
 			} else {
 				if(addressModel.findAddressByIdUser(userModel.findUserByUserName(username).getId()) == null) {
 					addressModel.create(new Address("", "", "", "", userModel.findUserByUserName(username).getId()));
 				}
 				request.getSession().setAttribute("user", userModel.findUserByUserName(username));
+				System.out.println("2");
 				response.sendRedirect("home");
 			}
 		} else {

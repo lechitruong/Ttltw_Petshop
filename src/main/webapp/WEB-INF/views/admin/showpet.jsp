@@ -1,3 +1,5 @@
+<%@page import="com.demo.models.CommentModel"%>
+<%@page import="com.demo.entities.Comments"%>
 <%@page import="com.demo.models.CatalogModel"%>
 <%@page import="com.demo.models.CategoryModel"%>
 <%@ page import="java.util.List"%>
@@ -13,6 +15,7 @@ response.setHeader("Expires", "0");
 List<Pets> pets = (List<Pets>) request.getAttribute("pets");
 CategoryModel categoryModel = new CategoryModel();
 CatalogModel catalogModel = new CatalogModel();
+CommentModel commentModel = new CommentModel();
 
 if (session.getAttribute("admin-username") == null) {
 	response.sendRedirect(request.getContextPath() + "/admin/login");
@@ -51,6 +54,7 @@ if (session.getAttribute("admin-username") == null) {
 										<th scope="col">Loại</th>
 										<th scope="col">Chuyên mục</th>
 										<th scope="col">Hành động</th>
+										<th scope="col">Bình luận</th>
 									</tr>
 								</thead>
 								<%
@@ -78,6 +82,12 @@ if (session.getAttribute("admin-username") == null) {
 											</button>
 
 											<button class="btn btn-success">
+												<a
+													href="${pageContext.request.contextPath}/admin/editsanpham?id=<%= pet.getId() %>">Sửa</a>
+											</button>
+										</td>
+										<td>
+										<button class="btn btn-warning">
 												<a
 													href="${pageContext.request.contextPath}/admin/editsanpham?id=<%= pet.getId() %>">Sửa</a>
 											</button>

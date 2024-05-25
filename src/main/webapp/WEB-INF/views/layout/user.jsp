@@ -69,13 +69,19 @@
 	href="${pageContext.request.contextPath}/assets/user/style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/user/css/responsive.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+<script>
+  $(document).ready(function () {
+	  $("#autocomplete").autocomplete({
+          source: ['ActionScript', 'AppleScript', 'Asp', 'BASIC', 'C', 'C++', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'Python', 'Ruby', 'Scala', 'Scheme']
+      });
+  });
+</script>
 <script>
   $( function() {
     $( "#datepicker" ).datepicker({
@@ -99,6 +105,7 @@
   });
 
   </script>
+
 </head>
 <body class="js">
 	<!-- Start chung -->
@@ -181,24 +188,6 @@
 								src="images/logo.png" alt="logo" /></a>
 						</div>
 						<!--/ End Logo -->
-						<!-- Search Form -->
-						<div class="search-top">
-							<div class="top-search">
-								<a href="#0"><i class="ti-search"></i></a>
-							</div>
-							<!-- Search Form -->
-							<div class="search-top">
-								<form class="search-form">
-									<input type="text" placeholder="Search here..." name="search" />
-									<button value="search" type="submit">
-										<i class="ti-search"></i>
-									</button>
-								</form>
-							</div>
-							<!--/ End Search Form -->
-						</div>
-						<!--/ End Search Form -->
-						<div class="mobile-nav"></div>
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
@@ -209,13 +198,12 @@
 									<option>Mèo</option>
 									<option>Thú cưng khác</option>
 								</select>
-								<form>
-									<input name="search" placeholder="Tìm kiếm thú cưng....."
-										type="search" />
-									<button class="btnn">
-										<i class="ti-search"></i>
-									</button>
-								</form>
+								<div class="search" style="display:flex;">
+									<input id="autocomplete" placeholder="Tìm kiếm thú cưng....."/>
+									<input style="width:72px;"
+						type="image" value="timkiem"
+						src="${pageContext.request.contextPath}/assets/user/images/search-icon.png" />
+								</div>
 							</div>
 						</div>
 					</div>

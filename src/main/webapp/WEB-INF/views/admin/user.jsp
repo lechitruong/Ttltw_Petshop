@@ -52,7 +52,7 @@ if (session.getAttribute("admin-username") == null) {
 										<td><%=user.getFullName()%></td>
 										<td><%=user.getEmail()%></td>
 										<td><%=user.getPhoneNumber()%></td>
-										<td><%=user.getAddress()%></td>
+										<td>dia chi</td>
 										<td>
 											<button class="btn btn-danger">
 												<a
