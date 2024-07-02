@@ -66,7 +66,6 @@ public class AddUserServlet extends HttpServlet {
 		String phoneNumber = request.getParameter("phoneNumber");
 		String email = request.getParameter("email");
 		String address = request.getParameter("address");
-
 		user.setFullName(new String(fullName.getBytes("ISO-8859-1"), "UTF-8"));
 		user.setEmail(new String(email.getBytes("ISO-8859-1"), "UTF-8"));
 		user.setPhoneNumber(new String(phoneNumber.getBytes("ISO-8859-1"), "UTF-8"));

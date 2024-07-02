@@ -27,6 +27,9 @@
 <!-- StyleSheet -->
 
 <!-- Font Awasome -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 	integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
@@ -69,42 +72,29 @@
 	href="${pageContext.request.contextPath}/assets/user/style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/user/css/responsive.css">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.7.1.js"
-	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-	crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
 <script>
-  $(document).ready(function () {
-	  $("#autocomplete").autocomplete({
-          source: ['ActionScript', 'AppleScript', 'Asp', 'BASIC', 'C', 'C++', 'Clojure', 'COBOL', 'ColdFusion', 'Erlang', 'Fortran', 'Groovy', 'Haskell', 'Java', 'JavaScript', 'Lisp', 'Perl', 'PHP', 'Python', 'Ruby', 'Scala', 'Scheme']
-      });
-  });
-</script>
-<script>
-  $( function() {
-    $( "#datepicker" ).datepicker({
+$(document).ready(function () {
+	$('#datepicker').datepicker({
         dateFormat: 'yy-mm-dd'
     });
-    
-    $.noConflict();
-    jQuery(function($) {
-        $('#datepicker').datepicker({
-            dateFormat: 'yy-mm-dd'
-        });
-    });
-    
-    
-  } );
-  $.noConflict();
-  jQuery(function($) {
-      $('#datepicker').datepicker({
-          dateFormat: 'yy-mm-dd'
-      });
-  });
-
-  </script>
+	$("#timkiem").autocomplete({
+	    minLength: 0,
+	    source: '${pageContext.request.contextPath}/autocomplete',
+	    select: function( event, ui ) {
+			
+	      return false;
+	    }
+	  }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+		    return $( "<li style='background-color: white; list-style-type: none; margin-left:-30px !important; width:324px; position: relative; z-index: 2;'>" )
+		      .append( "<a style='text-decoration: none;background:none;border:none; color: black;' href='${pageContext.request.contextPath}/petdetail?id=" + item.id + "'><div><img src='${pageContext.request.contextPath}/assets/user/images/anhcho/" + item.image + "' height='50' width='60'> &nbsp;" + item.petName + "</div></a>" )
+		      .appendTo( ul );
+	    };
+});
+	
+</script>
 
 </head>
 <body class="js">
@@ -198,12 +188,13 @@
 									<option>Mèo</option>
 									<option>Thú cưng khác</option>
 								</select>
-								<div class="search" style="display:flex;">
-									<input id="autocomplete" placeholder="Tìm kiếm thú cưng....."/>
-									<input style="width:72px;"
-						type="image" value="timkiem"
-						src="${pageContext.request.contextPath}/assets/user/images/search-icon.png" />
-								</div>
+								
+									<input name="search" id="timkiem" placeholder="Tìm kiếm thú cưng....."
+										type="search" />
+									<button class="btnn">
+										<i class="ti-search"></i>
+									</button>
+								
 							</div>
 						</div>
 					</div>
@@ -504,12 +495,12 @@
 	<!-- /End Footer Area -->
 
 	<!-- Jquery -->
-	<script
-		src="${pageContext.request.contextPath}/assets/user/js/jquery.min.js"></script>
+	<%-- <script
+		src="${pageContext.request.contextPath}/assets/user/js/jquery.min.js"></script> --%>
 	<script
 		src="${pageContext.request.contextPath}/assets/user/js/jquery-migrate-3.0.0.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/user/js/jquery-ui.min.js"></script>
+<%-- 	<script
+		src="${pageContext.request.contextPath}/assets/user/js/jquery-ui.min.js"></script> --%>
 	<!-- Popper JS -->
 	<script
 		src="${pageContext.request.contextPath}/assets/user/js/popper.min.js"></script>
@@ -553,10 +544,10 @@
 	<script
 		src="${pageContext.request.contextPath}/assets/user/js/active.js"></script>
 	<!-- Jquery -->
-	<script
+<!-- 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
 		integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 	<script>

@@ -1,6 +1,8 @@
 package com.demo.servlets.user;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -35,15 +37,15 @@ public class CommentServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		if(action == null) {
 			doGet_Index(request, response);
-		}else if(action.equalsIgnoreCase("comment")) {
-			doGet_Comment(request, response);
+		}else if(action.equalsIgnoreCase("loadcomment")) {
+			doGet_LoadComment(request, response);
 		}
 	}
 	protected void doGet_Index(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("p", "../admin/showcomment.jsp");
 		request.getRequestDispatcher("/WEB-INF/views/layout/admin.jsp").forward(request, response);
 	}
-	protected void doGet_Comment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet_LoadComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
 		CommentModel commentModel = new CommentModel();
 		List<Comments> comments = commentModel.findCommentByPet(Integer.parseInt(id));
@@ -55,8 +57,8 @@ public class CommentServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 
 }
