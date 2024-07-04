@@ -134,7 +134,7 @@
 										<label for="ward">Xã/Phường<span>*</span></label> <select
 											class="select_option" name="ward" id="ward">
 											<option id=""
-												value="<%=addressModel.findAddressByIdUser(user.getId()).getWard()%>"><%=addressModel.findAddressByIdUser(user.getId()).getDistrict()%></option>
+												value="<%=addressModel.findAddressByIdUser(user.getId()).getWard()%>"><%=addressModel.findAddressByIdUser(user.getId()).getWard()%></option>
 										</select>
 									</div>
 								</div>

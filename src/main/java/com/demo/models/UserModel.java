@@ -139,7 +139,46 @@ public class UserModel {
 		}
 		return result;
 	}
-
+// ham dang ky ben admin
+		public boolean createByAdmin(Users user) {
+			boolean result = true;
+			try {
+				PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
+						"insert into users(userName, fullName,email,phoneNumber, password, roleId, status) values (?,?,?,?,?,?,?)");
+				preparedStatement.setString(1, user.getUserName());
+				preparedStatement.setString(2, user.getFullName());
+				preparedStatement.setString(3, user.getEmail());
+				preparedStatement.setString(4, user.getPhoneNumber());
+				preparedStatement.setString(5, user.getPassword());
+				preparedStatement.setInt(6, user.getRoleId());
+				preparedStatement.setBoolean(7, user.isStatus());
+				result = preparedStatement.executeUpdate() > 0;
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				result = false;
+			} finally {
+				ConnectDB.disconnect();
+			}
+			return result;
+		}
+// ham check xem email da ton tai trong danh sach email tk chua
+		public boolean isExistEmail(String email) {
+			String query = "SELECT COUNT(*) FROM users WHERE email = ?";
+	        try {
+	             PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(query) ;
+	             preparedStatement.setString(1, email);
+	            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+	                if (resultSet.next()) {
+	                    int count = resultSet.getInt(1);
+	                    return count > 0;
+	                }  
+	        }
+	        }catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return false;
+		}
 // ham update
 	public boolean update(Users user) {
 		boolean result = true;
@@ -305,13 +344,7 @@ public class UserModel {
 //	System.out.println(userModel.update(new Users(6, "username2", "fullName1","email1","phoneNumber1", "image1", "password1", 2, true,"gender1", new java.util.Date(),"123456")));
 //		System.out.println(BCrypt.hashpw("123", BCrypt.gensalt()));
 //		System.out.println(userModel.findUsersByPetId(1));
-int i =10;
-if(i++ == i++) {
-	System.out.println("E"+ i);
-}else {
-	System.out.println("N"+ i);
-
-}
+//System.out.println(userModel.isExistEmail("21130591@st.hcmuaf.edu.v"));
 
 	}
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.demo.entities.Users;
+import com.demo.models.AddressModel;
 import com.demo.models.UserModel;
 
 /**
@@ -65,19 +66,29 @@ public class AddUserServlet extends HttpServlet {
 		String fullName = request.getParameter("fullName");
 		String phoneNumber = request.getParameter("phoneNumber");
 		String email = request.getParameter("email");
-		String address = request.getParameter("address");
+		String username = request.getParameter("userName");
+		String password = request.getParameter("password");
+		AddressModel addressModel = new AddressModel();
 		user.setFullName(new String(fullName.getBytes("ISO-8859-1"), "UTF-8"));
 		user.setEmail(new String(email.getBytes("ISO-8859-1"), "UTF-8"));
 		user.setPhoneNumber(new String(phoneNumber.getBytes("ISO-8859-1"), "UTF-8"));
 //		user.setAddress(new String(address.getBytes("ISO-8859-1"), "UTF-8"));
 		user.setStatus(true);
-		if (userModel.create(user)) {
-			request.getSession().setAttribute("message", "Tao thanh cong");
-			response.sendRedirect("quanliuser");
-		} else {
-			request.getSession().setAttribute("message", "Tao that bai");
-			response.sendRedirect("quanliuser");
-		}
+		user.setRoleId(2);
+		user.setUserName(new String(username.getBytes("ISO-8859-1"), "UTF-8"));
+		String passwordBcrypt = BCrypt.hashpw(password, BCrypt.gensalt());
+		user.setPassword(new String(passwordBcrypt.getBytes("ISO-8859-1"), "UTF-8"));
+		if (userModel.isExistEmail(email)) {
+	        request.getSession().setAttribute("message", "Email đã tồn tại");
+	        response.sendRedirect("quanliuser");
+	    } else {
+	        if (userModel.createByAdmin(user)) {
+	            request.getSession().setAttribute("message", "Tạo thành công");
+	            response.sendRedirect("quanliuser");
+	        } else {
+	            request.getSession().setAttribute("message", "Tạo thất bại");
+	            response.sendRedirect("quanliuser");
+	        }
+	    }
 	}
-
 }

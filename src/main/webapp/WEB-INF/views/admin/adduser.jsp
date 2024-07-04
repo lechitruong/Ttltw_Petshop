@@ -26,10 +26,6 @@
                     <input type="text" class="form-control" id="input-3" placeholder="Nhập số điện thoại" name="phoneNumber">
                   </div>
                   <div class="form-group">
-                    <label for="input-4">Địa chỉ</label>
-                    <input type="text" class="form-control" id="input-4" placeholder="Nhập địa chỉ" name="address">
-                  </div>
-                 <%-- <div class="form-group">
                     <label for="input-5">Username</label>
                     <input type="text" class="form-control" id="input-5" placeholder="Nhập username" name="userName">
                   </div>
@@ -47,7 +43,6 @@
                     	}
 					</script>                   
                   </div>
-                  --%> 
                   <div class="form-group">
                     <button type="submit" class="btn btn-light px-5"><i class="icon-lock"></i> Đăng ký</button>
                   </div>
