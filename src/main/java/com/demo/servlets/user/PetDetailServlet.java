@@ -2,6 +2,10 @@ package com.demo.servlets.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,9 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.demo.entities.Comments;
 import com.demo.entities.Pets;
 import com.demo.models.CommentModel;
 import com.demo.models.PetModel;
+import com.demo.models.UserModel;
 import com.google.gson.Gson;
 
 /**
@@ -54,16 +60,45 @@ public class PetDetailServlet extends HttpServlet {
 		response.setContentType("application/json; charset=utf-8");
 		int petId = Integer.parseInt(request.getParameter("petId"));
 		CommentModel commentModel = new CommentModel();
+		UserModel userModel = new UserModel();
 		PrintWriter printWriter = response.getWriter();
 		Gson gson = new Gson();
-		printWriter.print(gson.toJson(commentModel.newComment(petId)));
+	    Map<String, Object> data= new HashMap<>();
+	    data.put("comments", commentModel.newComment(petId));
+	    data.put("users", userModel.findUsersByPetId(petId));
+		printWriter.print(gson.toJson(data));
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String action = request.getParameter("action");
+          if(action.equalsIgnoreCase("addcomment")) {
+			doPost_AddComment(request, response);
+		}
+	}
+	protected void doPost_AddComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		String petID = request.getParameter("petId");
+		String userID = request.getParameter("userId");
+		if(request.getSession().getAttribute("user") == null) {
+			response.sendRedirect("login");
+		}
+		int petId = Integer.parseInt(petID);
+		int userId = Integer.parseInt(userID);
+		String note = request.getParameter("note");
+		System.out.println(note);
+		CommentModel commentModel = new CommentModel();
+		Comments comment = new Comments();
+		comment.setPetId(petId);
+		comment.setUserId(userId);
+		comment.setNote(new String(note.getBytes("ISO-8859-1"), "UTF-8"));
+		comment.setCreateDate(new Timestamp(new Date().getTime()));
+		if(commentModel.create(comment)) {
+			response.sendRedirect("petdetail?id="+petId);
+		} else {
+			response.sendRedirect("login");
+		}
+		
 	}
 
 }

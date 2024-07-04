@@ -46,39 +46,39 @@ public class UserModel {
 		return users;
 	}
 	// lay ra danh sach user co comment con pet do
-	public List<Users> findUsersByPetId(int petId) {
-		List<Users> users = new ArrayList<>();
-		try {
-			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement("SELECT DISTINCT u.* " +
-					"FROM users u " +
-					"JOIN comments c ON u.id = c.userId " +
-					"WHERE c.petId = ?");
-			preparedStatement.setInt(1, petId);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				Users user = new Users();
-				user.setId(resultSet.getInt("id"));
-				user.setUserName(resultSet.getString("userName"));
-				user.setFullName(resultSet.getString("fullName"));
-				user.setEmail(resultSet.getString("email"));
-				user.setPhoneNumber(resultSet.getString("phoneNumber"));
-				user.setImage(resultSet.getString("image"));
-				user.setPassword(resultSet.getString("password"));
-				user.setRoleId(resultSet.getInt("roleId"));
-				user.setStatus(resultSet.getBoolean("status"));
-				user.setGender(resultSet.getString("gender"));
-				user.setBirthday(resultSet.getDate("birthday"));
-				users.add(user);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			users = null;
-		} finally {
-			ConnectDB.disconnect();
-		}
+	 public List<Users> findUsersByPetId(int petId) {
+	        List<Users> users = new ArrayList<>();
+	        try {
+	        	PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement("SELECT DISTINCT u.* " +
+                        "FROM users u " +
+                        "JOIN comments c ON u.id = c.userId " +
+                        "WHERE c.petId = ?");
+	            preparedStatement.setInt(1, petId);
+	            ResultSet resultSet = preparedStatement.executeQuery();
+	            while (resultSet.next()) {
+	                Users user = new Users();
+	                user.setId(resultSet.getInt("id"));
+	                user.setUserName(resultSet.getString("userName"));
+	                user.setFullName(resultSet.getString("fullName"));
+	                user.setEmail(resultSet.getString("email"));
+	                user.setPhoneNumber(resultSet.getString("phoneNumber"));
+	                user.setImage(resultSet.getString("image"));
+	                user.setPassword(resultSet.getString("password"));
+	                user.setRoleId(resultSet.getInt("roleId"));
+	                user.setStatus(resultSet.getBoolean("status"));
+	                user.setGender(resultSet.getString("gender"));
+	                user.setBirthday(resultSet.getDate("birthday"));
+	                users.add(user);
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            users = null;
+	        } finally {
+	            ConnectDB.disconnect();
+	        }
 
-		return users;
-	}
+	        return users;
+	    }
 
 	public List<Users> findAllRole(int roleId) {
 		List<Users> users = new ArrayList<>();
@@ -112,7 +112,7 @@ public class UserModel {
 		return users;
 	}
 
-	// ham dang ky
+// ham dang ky
 	public boolean create(Users user) {
 		boolean result = true;
 		try {
@@ -140,7 +140,7 @@ public class UserModel {
 		return result;
 	}
 
-	// ham update
+// ham update
 	public boolean update(Users user) {
 		boolean result = true;
 		try {
@@ -170,7 +170,7 @@ public class UserModel {
 		return result;
 	}
 
-	// ham xoa user
+// ham xoa user
 	public boolean delete(int id) {
 		boolean result = true;
 		try {
@@ -218,7 +218,7 @@ public class UserModel {
 		return user;
 	}
 
-	// ham tim ra user dua vao username
+// ham tim ra user dua vao username
 	public Users findUserByUserName(String userName) {
 		Users user = null;
 		try {
@@ -282,7 +282,7 @@ public class UserModel {
 		return user;
 	}
 
-	// ham dang nhap
+// ham dang nhap
 	public boolean checkLogin(String userName, String password) {
 		Users user = findUserByUserName(userName);
 		if (user != null) {
@@ -294,13 +294,24 @@ public class UserModel {
 	}
 	public static void main(String[] args) {
 		UserModel userModel = new UserModel();
-		int i =10;
-		if(i++ == i++) {
-			System.out.println("E"+ i);
-		}else {
-			System.out.println("N"+ i);
+//		System.out.println(userModel.delete(3));
+//		System.out.println(userModel.findAll());
+//	    System.out.println(userModel.findUserById(2));
+//		System.out.println(userModel.findUserByUserName("admin1"));
+//		System.out.println(userModel.checkLogin("admin1", "123"));
+//		System.out.println(userModel.findAllAdmin(true));
+//		System.out.println(BCrypt.checkpw("123", "$2a$10$GQtaPy7y2Q3gsPhA.QlJueoo0wGjy.hNK5/U/GTqqxXMGEjtDnkRi"));
+//		System.out.println(userModel.create(new Users("username1", "fullName1","email1","phoneNumber1", "address1", "image1", "password1", 2, false,"gender1", new java.util.Date(),"123456")));
+//	System.out.println(userModel.update(new Users(6, "username2", "fullName1","email1","phoneNumber1", "image1", "password1", 2, true,"gender1", new java.util.Date(),"123456")));
+//		System.out.println(BCrypt.hashpw("123", BCrypt.gensalt()));
+//		System.out.println(userModel.findUsersByPetId(1));
+int i =10;
+if(i++ == i++) {
+	System.out.println("E"+ i);
+}else {
+	System.out.println("N"+ i);
 
-		}
+}
 
 	}
 }
