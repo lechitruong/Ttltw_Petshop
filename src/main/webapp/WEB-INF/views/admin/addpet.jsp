@@ -21,7 +21,7 @@ List<Catalogs> catalogs = catalogModel.findAll();
               <div class="card-body">
                 <div class="card-title">Thêm sản phẩm</div>
                 <hr>
-                <form method="post" action="${pageContext.request.contextPath}/admin/addsanpham?action=addpet">
+                <form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/admin/addsanpham?action=addpet">
 
 
                   <div class="form-group">
@@ -68,12 +68,39 @@ List<Catalogs> catalogs = catalogModel.findAll();
                   </div>
                   <div class="form-group">
                     <label for="input-1">Ngày sinh</label>
-                    <input type="text" class="form-control" id="createDate" placeholder="Ngày sinh" name="createDate">
+                    <input id="datepicker" type="text" class="form-control" placeholder="Ngày sinh" name="petBirthday">
                   </div>
                   <div class="form-group">
                     <label for="input-1">Ảnh</label>
-                    <input type="text" class="form-control" id="input-9" placeholder="Ảnh" name="image">
+                    <input type="file" name="files" multiple="multiple" required accept="image/*" class="form-control" id="input-9" placeholder="Ảnh" >
                   </div>
+                  <!-- Profile picture image-->
+                <div id="pictures" style="max-height: 300px; overflow: auto ;">
+                </div>
+                  <script>
+                  $(document).ready(function(){
+                    var src = [];
+                      $('#input-9').change( function(event) {
+                        if(event.target.files.length > 4){
+                           alert('Chỉ được chọn tối đa 4 tấm hình');
+                           location.reload();
+                        } else {
+                          for (var i = 0; i <  event.target.files.length; i++) {
+                        console.log(event.target.files[i].name);
+                        src[i] = URL.createObjectURL(event.target.files[i]);
+                        $('<img src="' + src[i] + '" height="200" style="margin-top: 5px"/> ').appendTo('#pictures');
+                        console.log(src[i]);
+                      }
+                        }
+                    
+                      
+                       
+                });
+                    
+                   /*  $('<p>Thành phần p</p>').appendTo('#div'); */
+                   
+                  });
+                </script>
                     <div class="form-group">
                         <label for="input-2">Loại</label>
                          <div>

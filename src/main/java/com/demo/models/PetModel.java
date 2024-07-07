@@ -288,7 +288,7 @@ public class PetModel {
 		boolean result = true;
 		try {
 			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(
-					"insert into pets(petName, petType,petGender,description, detail, made, amount, money, petBirthday, image,status=?, categoryPetId, catalogId) values (?,?,?,?,?,?,?,?,?,?,?,?)");
+					"insert into pets(petName, petType,petGender,description, detail, made, amount, money, petBirthday, image,status, categoryId, catalogId) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, pet.getPetName());
 			preparedStatement.setString(2, pet.getPetType());
 			preparedStatement.setString(3, pet.getPetGender());
@@ -297,7 +297,7 @@ public class PetModel {
 			preparedStatement.setString(6, pet.getMade());
 			preparedStatement.setInt(7, pet.getAmount());
 			preparedStatement.setDouble(8, pet.getMoney());
-			preparedStatement.setDate(9, new java.sql.Date(pet.getPetBirthday().getTime()));
+			preparedStatement.setDate(9, new java.sql.Date(pet.getPetBirthday().getDate()));
 			preparedStatement.setString(10, pet.getImage());
 			preparedStatement.setBoolean(11, pet.isStatus());
 			preparedStatement.setInt(12, pet.getCategoryId());
@@ -359,6 +359,39 @@ public class PetModel {
 		}
 		return result;
 	}
+	public Pets lastPets() {
+		Pets pet = null;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("select * from pets order by id desc limit 1");
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				pet = new Pets();
+				pet.setId(resultSet.getInt("id"));
+				pet.setPetName(resultSet.getString("petName"));
+				pet.setPetGender(resultSet.getString("petGender"));
+				pet.setDescription(resultSet.getString("description"));
+				pet.setDetail(resultSet.getString("detail"));
+				pet.setMade(resultSet.getString("made"));
+				pet.setAmount(resultSet.getInt("amount"));
+				pet.setMoney(resultSet.getDouble("money"));
+				pet.setPetBirthday(resultSet.getDate("petBirthday"));
+				pet.setImage(resultSet.getString("image"));
+				pet.setStatus(resultSet.getBoolean("status"));
+				pet.setCategoryId(resultSet.getInt("categoryId"));
+				pet.setCatalogId(resultSet.getInt("catalogId"));
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			pet = null;
+			// TODO: handle exception
+		} finally {
+			ConnectDB.disconnect();
+		}
+
+		return pet;
+	}
 	public static void main(String[] args) {
 		PetModel petModel = new PetModel();
 //			System.out.println(petModel.findTop10());
@@ -371,5 +404,6 @@ public class PetModel {
 //			System.out.println(petModel.findAllByCatalog(3, 16));
 //			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //			System.out.println(petModel.create(new Pets(1,"test1", "Lớn","Nhỏ","Oke", "Ổn", "Việt Nam", 1, 1.1, new Date(), "pet.png", 3, 4)));
+		System.out.println(petModel.lastPets());
 	}
 }
