@@ -28,16 +28,19 @@
 <link href="${pageContext.request.contextPath}/assets/admin/css/icons.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/admin/css/sidebar-menu.css" rel="stylesheet" />
 <link href="${pageContext.request.contextPath}/assets/admin/css/app-style.css" rel="stylesheet" />
+
+
 <%
 Users admin =(Users) request.getSession().getAttribute("user");
 
 %>
 <script>
-	$(function() {
-		$("#createDate").datepicker({
-			dateFormat : 'yy/mm/dd'
-		});
-	});
+$(document).ready(function () {
+	$('#datepicker').datepicker({
+        dateFormat: 'yy-mm-dd'
+    });
+});
+	
 </script>
 </head>
 <body>
@@ -81,6 +84,11 @@ Users admin =(Users) request.getSession().getAttribute("user");
         <li>
           <a href="${pageContext.request.contextPath}/admin/danhsachsanpham">
             <i class="zmdi zmdi-widgets"></i> <span>Danh Sách Sản Phẩm</span>
+          </a>
+        </li>
+        <li>
+          <a href="${pageContext.request.contextPath}/admin/quanlilog">
+            <i class="zmdi zmdi-shopping-cart"></i> <span>Quản lí Log</span>
           </a>
         </li>
         <li>
@@ -176,5 +184,6 @@ Users admin =(Users) request.getSession().getAttribute("user");
   <script src="${pageContext.request.contextPath}/assets/admin/plugins/Chart.js/Chart.min.js"></script>
   <script src="${pageContext.request.contextPath}/assets/admin/js/index.js"></script>
   <script src="${pageContext.request.contextPath}/assets/admin/plugins/summernote/dist/summernote-bs4.min.js"></script>
+
 </body>
 </html>

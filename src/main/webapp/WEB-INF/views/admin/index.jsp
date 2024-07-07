@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.NumberFormat"%>
 <%@page import="com.demo.entities.Orders"%>
 <%@page import="com.mysql.cj.x.protobuf.MysqlxCrud.Order"%>
@@ -19,16 +20,18 @@
 	  response.sendRedirect(request.getContextPath() + "/admin/login"); 
   }
   OrderModel orderModel = new OrderModel();
-  int total = 0;
-  for(Orders order : orderModel.findAll()){
-	  if(order.getStatus() != 3){
-	  total += order.getTotalMoney();		  
-	  }
+  double total = 0.0;
+  for (Orders order : orderModel.findAll()) {
+      if (order.getStatus() != 3) {
+          total += order.getTotalMoney();          
+      }
   }
-  NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new java.util.Locale("vi", "VN"));
+  DecimalFormat decimalFormatter = new DecimalFormat("#,##0.00");
 
   // Định dạng số
-  String formattedNumber = currencyFormatter.format(total);
+  String formattedNumber = decimalFormatter.format(total) + " triệu đồng";
+  %>
+%>
   
   %>
   <script>
@@ -99,7 +102,7 @@
                   <div class="progress my-3" style="height:3px;">
                     <div class="progress-bar" style="width:100%"></div>
                   </div>
-                  <p class="mb-0 text-white small-font">Lợi nhuận (theo tuần)</p>
+                  <p class="mb-0 text-white small-font">Tổng thu nhập</p>
                 </div>
               </div>
               <div class="col-12 col-lg-6 col-xl-3 border-light">

@@ -94,6 +94,9 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet_Logout(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Users user =(Users) request.getAttribute("user");
+		LogModel logModel = new LogModel();
+		logModel.create(new Log(IPAddressUtil.getPublicIPAddress(),"info",ConfigIP.ipconfig(request).getCountryLong(),new Timestamp(new Date().getTime()), "Đã đăng nhập", "Đã thoát", user.getId()));
 		request.getSession().removeAttribute("user");
 		response.sendRedirect("login");
 
@@ -135,7 +138,7 @@ public class LoginServlet extends HttpServlet {
 		LogModel logModel = new LogModel();
 		Users user = userModel.findUserByUserName(username);
 		if (userModel.checkLogin(username, password)) {
-			logModel.create(new Log(IPAddressUtil.getPublicIPAddress(),"info",ConfigIP.ipconfig(request).getCountryLong(),new Timestamp(new Date().getTime()), null, null));
+			logModel.create(new Log(IPAddressUtil.getPublicIPAddress(),"info",ConfigIP.ipconfig(request).getCountryLong(),new Timestamp(new Date().getTime()), "Chưa đăng nhập", "Đã đăng nhập", user.getId()));
 			if (user.getRoleId() == 1) {
 				request.getSession().setAttribute("user", userModel.findUserByUserName(username));
 				System.out.println("1");
