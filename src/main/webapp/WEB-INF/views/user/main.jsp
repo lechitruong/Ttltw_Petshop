@@ -167,7 +167,7 @@
       							s+= '<div class="button-head">';
       							s+= '<div class="product-action">';
       							s+= '<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class="ti-eye"></i><span>Xem chi tiết</span></a>';
-      							s+= '<a title="Wishlist" href="#"><i class="ti-heart"></i><span>Thêm vào yêu thích</span></a>';
+      							s+= '<a title="Wishlist" href="${pageContext.request.contextPath }/wishlistpet?action=wishlist&id='+pet[i].id+'"><i class="ti-heart"></i><span>Thêm vào yêu thích</span></a>';
       							s+= '</div>';
       							s+= '<div class="product-action-2">';
       							s+= '<a title="Add to cart" href="${pageContext.request.contextPath}/cart?action=addToCart&id='+pet[i].id+'">Thêm vào giỏ hàng</a>';
@@ -210,7 +210,7 @@
                             <div class="button-head">
                               <div class="product-action">
                                 <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class="ti-eye"></i><span>Xem chi tiết</span></a>
-                                <a title="Wishlist" href="#"><i class="ti-heart"></i><span>Thêm vào yêu thích</span></a>
+                                <a title="Wishlist" href="${pageContext.request.contextPath }/wishlistpet?action=wishlist&id=<%= pet.getId() %>"><i class="ti-heart"></i><span>Thêm vào yêu thích</span></a>
                               </div>
                               <div class="product-action-2">
                                 <a title="Add to cart" href="${pageContext.request.contextPath }/cart?action=addToCart&id=<%= pet.getId() %>">Thêm vào giỏ hàng</a>
