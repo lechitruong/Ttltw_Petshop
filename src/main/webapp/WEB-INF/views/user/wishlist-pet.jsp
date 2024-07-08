@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.demo.models.PetModel"%>
+<%@page import="com.demo.entities.Pets"%>
+<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Lọc sản phẩm</title>
+<title>Danh sách thú cưng yêu thích</title>
 </head>
 <body class="js">
  <!-- Breadcrumbs -->
@@ -15,11 +19,11 @@
             <div class="bread-inner">
               <ul class="bread-list">
                 <li>
-                  <a href="index1.html"
+                  <a href="${pageContext.request.contextPath }/home"
                     >Trang chủ<i class="ti-arrow-right"></i
                   ></a>
                 </li>
-                <li class="active"><a href="blog-single.html">Lọc</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath }/wishlistpet">Thú cưng yêu thích</a></li>
               </ul>
             </div>
           </div>
@@ -32,95 +36,7 @@
     <section class="product-area shop-sidebar shop section">
       <div class="container">
         <div class="row">
-          <div class="col-lg-3 col-md-4 col-12">
-            <div class="shop-sidebar">
-              <!-- Single Widget -->
-              <div class="single-widget category">
-                <h3 class="title">Danh mục</h3>
-                <ul class="categor-list">
-                  <li><a href="#">Chó</a></li>
-                  <li><a href="#">Mèo</a></li>
-                  <li><a href="#">Thú cưng khác</a></li>
-                </ul>
-              </div>
-              <!--/ End Single Widget -->
-              <!-- Shop By Price -->
-              <div class="single-widget range">
-                <h3 class="title">Mức giá</h3>
-                <div class="price-filter">
-                  <div class="price-filter-inner">
-                    <div id="slider-range"></div>
-                    <div class="price_slider_amount">
-                      <div class="label-input">
-                        <span>Phạm vi:</span
-                        ><input
-                          type="text"
-                          id="amount"
-                          name="price"
-                          placeholder="Add Your Price"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <ul class="check-box-list">
-                  <li>
-                    <label class="checkbox-inline" for="1"
-                      ><input name="news" id="1" type="checkbox" /> Dưới 2
-                      triệu<span class="count">(3)</span></label
-                    >
-                  </li>
-                  <li>
-                    <label class="checkbox-inline" for="2"
-                      ><input name="news" id="2" type="checkbox" />2 triệu - 3.5
-                      triệu<span class="count">(5)</span></label
-                    >
-                  </li>
-                  <li>
-                    <label class="checkbox-inline" for="3"
-                      ><input name="news" id="3" type="checkbox" />Hơn 3.5
-                      triệu<span class="count">(8)</span></label
-                    >
-                  </li>
-                </ul>
-              </div>
-              <!--/ End Shop By Price -->
-              <!-- Single Widget -->
-              <!-- <div class="single-widget recent-post">
-                <h3 class="title">Recent post</h3>
-                <div class="single-post first">
-                  <div class="image">
-                    <img src="https://via.placeholder.com/75x75" alt="#" />
-                  </div>
-                  <div class="content">
-                    <h5><a href="#">Girls Dress</a></h5>
-                    <p class="price">$99.50</p>
-                    <ul class="reviews">
-                      <li class="yellow"><i class="ti-star"></i></li>
-                      <li class="yellow"><i class="ti-star"></i></li>
-                      <li class="yellow"><i class="ti-star"></i></li>
-                      <li><i class="ti-star"></i></li>
-                      <li><i class="ti-star"></i></li>
-                    </ul>
-                  </div>
-                </div>
-              </div> -->
-              <!--/ End Single Widget -->
-              <!-- Single Widget -->
-              <!-- <div class="single-widget category">
-                <h3 class="title">Manufacturers</h3>
-                <ul class="categor-list">
-                  <li><a href="#">Forever</a></li>
-                  <li><a href="#">giordano</a></li>
-                  <li><a href="#">abercrombie</a></li>
-                  <li><a href="#">ecko united</a></li>
-                  <li><a href="#">zara</a></li>
-                </ul>
-              </div> -->
-              <!--/ End Single Widget -->
-            </div>
-          </div>
-          <div class="col-lg-9 col-md-8 col-12">
+          <div class="col-12">
             <div class="row">
               <div class="col-12">
                 <!-- Shop Top -->
@@ -159,51 +75,59 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-4 col-md-6 col-12">
-                <div class="single-product">
-                  <div class="product-img">
-                    <a href="product-details.html">
-                      <img
-                        class="default-img"
-                        src="https://via.placeholder.com/550x750"
-                        alt="#"
-                      />
-                      <img
-                        class="hover-img"
-                        src="https://via.placeholder.com/550x750"
-                        alt="#"
-                      />
-                    </a>
-                    <div class="button-head">
-                      <div class="product-action">
-                        <a
-                          data-toggle="modal"
-                          data-target="#exampleModal"
-                          title="Quick View"
-                          href="#"
-                          ><i class="ti-eye"></i><span>Theo dõi</span></a
-                        >
-                        <a title="Wishlist" href="#"
-                          ><i class="ti-heart"></i
-                          ><span>Thêm vào yêu thích</span></a
-                        >
+          <div class="col-12">
+            <div class="product-info">
+              <div class="nav-main">
+                <!-- Tab Nav -->
+                
+                <!--/ End Tab Nav -->
+              </div>
+              
+              <div class="tab-content" id="myTabContent">
+                <!-- Start Single Tab -->
+                <!-- Cho -->
+                <div class="tab-pane fade show active" id="man" role="tabpanel">
+                  <div class="tab-single">
+                    <div class="row">
+                    <c:forEach var="item" items="${sessionScope.wishlistpets }" varStatus="i">
+                      <div class="col-xl-3 col-lg-4 col-md-4 col-12">
+                        <div class="single-product">
+                          <div class="product-img">
+                            <a href="${pageContext.request.contextPath }/petdetail?id=${item.id}">
+                              <img class="default-img" src="${pageContext.request.contextPath}/assets/user/images/anhcho/${item.image}" alt="#" />
+                              <img class="hover-img" src="${pageContext.request.contextPath}/assets/user/images/anhcho/${item.image}" alt="#" />
+                              <span class="new">New</span>
+                            </a>
+                            <div class="button-head">
+                              <div class="product-action">
+                                <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class="ti-eye"></i><span>Xem chi tiết</span></a>
+                                 <a href="${pageContext.request.contextPath }/wishlistpet?action=remove&id=${i.index}"><i class="ti-trash remove-icon"></i></a>
+                              </div>
+                              <div class="product-action-2">
+                                <a title="Add to cart" href="${pageContext.request.contextPath }/cart?action=addToCart&id=${item.id}">Thêm vào giỏ hàng</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="product-content">
+                            <h3>
+                              <a href="product-details.html">${item.petName}</a>
+                            </h3>
+                            <div class="product-price">
+                              <span>${item.money} triệu đồng</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div class="product-action-2">
-                        <a title="Add to cart" href="#">Thêm giỏ hàng</a>
+</c:forEach>
                       </div>
-                    </div>
-                  </div>
-                  <div class="product-content">
-                    <h3>
-                      <a href="product-details.html">Women Hot Collection</a>
-                    </h3>
-                    <div class="product-price">
-                      <span>$29.00</span>
                     </div>
                   </div>
                 </div>
+                <!--/ End Single Tab -->
+                
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -247,6 +171,7 @@
     <!-- End Shop Newsletter -->
 
     <!-- Modal -->
+    <!-- Bấm vào xem qua sản phẩm -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">

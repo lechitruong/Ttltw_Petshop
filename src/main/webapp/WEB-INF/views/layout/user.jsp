@@ -202,7 +202,7 @@ $(document).ready(function () {
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a href="#" class="single-icon"><i
+								<a href="${pageContext.request.contextPath }/wishlistpet" class="single-icon"><i
 									class="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar">
