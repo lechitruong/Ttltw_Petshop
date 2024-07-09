@@ -97,6 +97,11 @@ $(document).ready(function () {
           </a>
         </li>
         <li>
+          <a href="${pageContext.request.contextPath}/admin/quanlinhaphang">
+            <i class="zmdi zmdi-shopping-cart"></i> <span>Quản lí Nhập Hàng</span>
+          </a>
+        </li>
+        <li>
           <a href="${pageContext.request.contextPath}/admin/review">
             <i class="zmdi zmdi-calendar-check"></i> <span>Review</span>
           </a>   
