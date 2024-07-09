@@ -56,7 +56,7 @@ public class DanhsachNhaphang extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		WarehouseInvoiceModel warehouseInvoiceModel = new WarehouseInvoiceModel();
 		warehouseInvoiceModel.delete(id);
-		response.sendRedirect("admin/quanlinhaphang");
+		response.sendRedirect("quanlinhaphang");
 
 	}
 
@@ -66,52 +66,7 @@ public class DanhsachNhaphang extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String action = request.getParameter("action");
-		if (action.equalsIgnoreCase("confirm")) {
-			doPost_Confirm(request, response);
-		} else if (action.equalsIgnoreCase("add")) {
-			doPost_Add(request, response);
-		}
-	}
-
-	protected void doPost_Confirm(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
-		WarehouseInvoiceModel warehouseInvoiceModel = new WarehouseInvoiceModel();
-		WarehouseInvoice warehouseInvoice = warehouseInvoiceModel.findInvoiceByID(id);
-		warehouseInvoice.setStatus(true);
-		if (warehouseInvoiceModel.update(warehouseInvoice)) {
-			PetModel petModel = new PetModel();
-			Pets pet = petModel.findPetById(warehouseInvoice.getPetId());
-			pet.setAmount(pet.getAmount() + warehouseInvoice.getQuantity());
-			pet.setMoney(warehouseInvoice.getPrice());
-			if (petModel.update(pet)) {
-				request.getSession().setAttribute("msg-invoice", "Nhập hàng thành công");
-				response.sendRedirect("admin/quanlinhaphang");
-			} else {
-				request.getSession().setAttribute("msg-invoice", "Nhập hàng không thành công");
-				response.sendRedirect("admin/quanlinhaphang");
-			}
-		}
-	}
-
-	protected void doPost_Add(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
-		WarehouseInvoiceModel warehouseInvoiceModel = new WarehouseInvoiceModel();
-		WarehouseInvoice warehouseInvoice = new WarehouseInvoice();
-		int petId = Integer.parseInt(request.getParameter("petId"));
-		int quantity = Integer.parseInt(request.getParameter("quantity"));
-		double price = Integer.parseInt(request.getParameter("petId"));
-		Date tradeDate = new Date();
-		warehouseInvoice.setPetId(petId);
-		warehouseInvoice.setQuantity(quantity);
-		warehouseInvoice.setPrice(price);
-		warehouseInvoice.setTradeDate(tradeDate);
-		warehouseInvoice.setStatus(false);
-		if(warehouseInvoiceModel.create(warehouseInvoice)) {
-			response.sendRedirect("admin/quanlinhaphang");
-		}
+		doGet(request, response);
 	}
 
 }

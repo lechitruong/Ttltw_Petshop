@@ -1,6 +1,6 @@
 <%@page import="com.demo.entities.WarehouseInvoice"%>
-<%@page import="com.demo.models.LogModel"%>
-<%@page import="com.demo.entities.Log"%>
+<%@page import="com.demo.models.*"%>
+<%@page import="com.demo.entities.*"%>
 <%@page import="java.util.*"%>
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
@@ -11,12 +11,22 @@ response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
 response.setHeader("Pragma", "no-cache");
 response.setHeader("Expires", "0");
 List<WarehouseInvoice> warehouseInvoices = (List<WarehouseInvoice>) request.getAttribute("warehouseInvoices");
+CategoryModel categoryModel = new CategoryModel();
+List<Categorys> categorys = categoryModel.findAll();
+CatalogModel catalogModel = new CatalogModel();
 %>
 <!-- Start header section -->
 <div class="content-wrapper">
 	<div class="container-fluid">
 
 		<div class="row mt-3">
+			<div class="col-lg-12">
+				<button class="add-catalog">
+					<a
+						href="${pageContext.request.contextPath}/admin/addwarehouseinvoice">Thêm
+						thú cưng vào kho</a>
+				</button>
+			</div>
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-body">
@@ -28,40 +38,54 @@ List<WarehouseInvoice> warehouseInvoices = (List<WarehouseInvoice>) request.getA
 									<th>Id thú cưng</th>
 									<th>Số lượng</th>
 									<th>Đơn giá</th>
-									<th>Tổng </th>
+									<th>Tổng</th>
 									<th>Ngày nhập</th>
 									<th>Trạng thái</th>
 									<th>Hành động</th>
 								</tr>
 							</thead>
 							<tbody>
-							<%
-							for (WarehouseInvoice warehouseInvoice : warehouseInvoices) {
-							%>
+								<%
+								for (WarehouseInvoice warehouseInvoice : warehouseInvoices) {
+								%>
 								<tr>
 									<td><%=warehouseInvoice.getId()%></td>
 									<td><%=warehouseInvoice.getPetId()%></td>
 									<td><%=warehouseInvoice.getQuantity()%></td>
 									<td><%=warehouseInvoice.getPrice()%></td>
 									<td><%=warehouseInvoice.getQuantity() * warehouseInvoice.getPrice()%></td>
-									<td><%=warehouseInvoice.isStatus()%></td>
+									<td><%=warehouseInvoice.getTradeDate()%></td>
+									<c:if test="<%=warehouseInvoice.isStatus() == true %>">
+										<td>Đã xác nhận</td>
+									</c:if>
+						
+									<c:if test="<%= warehouseInvoice.isStatus() == false %>">
+										<td>
+										<button class="btn btn-danger">
+												<a
+													href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=confirm&id=<%= warehouseInvoice.getId() %>">Xác nhận</a>
+									    </button>
+										</td>
+									</c:if>
 									<td>
 									<button class="btn btn-danger">
 												<a
-													href="${pageContext.request.contextPath}/admin/danhsachnhaphang?action=confirm&id=<%= warehouseInvoice.getId() %>">Xác nhận</a>
-											</button>
+												href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=edit&id=<%= warehouseInvoice.getId() %>">Sửa</a>
+									</button>
 
 											<button class="btn btn-success">
 												<a
-													href="${pageContext.request.contextPath}/admin/danhsachnhaphang?action=remove&id=<%= warehouseInvoice.getId() %>">Xoá</a>
+												href="${pageContext.request.contextPath}/admin/danhsachnhaphang?action=remove&id=<%= warehouseInvoice.getId() %>">Xoá</a>
 									</button>
 									</td>
 								</tr>
 								<%
 								}
 								%>
+							
 							<tbody>
 							
+						
 						</table>
 					</div>
 				</div>
@@ -72,5 +96,5 @@ List<WarehouseInvoice> warehouseInvoices = (List<WarehouseInvoice>) request.getA
 </div>
   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 <script>
-new DataTable('#example');
+	new DataTable('#example');
 </script>
