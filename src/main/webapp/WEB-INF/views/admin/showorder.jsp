@@ -72,12 +72,12 @@
 						<c:if test="<%= order.getStatus() == 0 %>">
 						<td>
 						<button class="btn btn-danger">
-												<a href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=edit&id=<%= order.getId() %>">Sửa</a>
+												<a href="${pageContext.request.contextPath}/admin/editorder?id=<%= order.getId() %>">Sửa</a>
 						</button>					
 						</td>
 										 <td>
                          <button class="btn btn-danger">
-												<a href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=confirm&id=<%= order.getId() %>">Chưa Xác nhận</a>
+												<a href="${pageContext.request.contextPath}/admin/editorder?action=confirm&id=<%= order.getId() %>">Chưa Xác nhận</a>
 						</button>
                         </td>  
 						</c:if> 				
