@@ -3,16 +3,19 @@
 <%@ page import="com.demo.entities.*" %>
 <%@ page import="com.demo.models.*" %>
 <%@ page import="java.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
   response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
   response.setHeader("Pragma" , "no-cache");
   response.setHeader("Expires" , "0");
-  
-  
+
+
   if (session.getAttribute("admin-username") == null){
 	  response.sendRedirect(request.getContextPath() + "/admin/login");
   }
   List<Orders> orders = (List<Orders>)request.getAttribute("orders");
+  UserModel userModel = new UserModel();
+  AddressModel addressModel = new AddressModel();
   %>
   <!-- Start header section -->
     <div class="content-wrapper">
@@ -21,7 +24,7 @@
 
 
         <div class="row">
- 
+
           <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
@@ -39,33 +42,46 @@
                          <th scope="col">Ghi chú</th>
                          <th scope="col">Tổng tiền</th>
                           <th scope="col">Ngày tạo</th>
+                          <th scope="col">Danh sách sản phẩm</th>
                           <th scope="col">Hành động</th>
                          <th scope="col">Trạng thái</th>
-                        
+
                       </tr>
                     </thead>
                     <tbody>
-                    
+
                     <% for(Orders order: orders){ %>
-                    <form method="post" action="${pageContext.request.contextPath }/admin/donhang?action=browser&id=<%= order.getId() %>">
                       <tr>
                         <td scope="row"><%= order.getId() %></td>
                          <td><%= order.getUserId() %></td>
-                        <td>Nhap ten</td>
-                        <td><%= order.getEmail() %></td>
-                        <td><%= order.getPhoneNumber() %></td>
-                        <td>Dia chi</td>
+                         <td><%= userModel.findUserById(order.getUserId()).getFullName() %></td>
+                         <td><%= order.getEmail() %></td>
+                         <td><%= order.getPhoneNumber() %></td>
+                         <td><%= addressModel.findAddressById(order.getAddressId()).getAddress()+", "+ addressModel.findAddressById(order.getAddressId()).getWard()+", "+addressModel.findAddressById(order.getAddressId()).getDistrict()+", "+addressModel.findAddressById(order.getAddressId()).getCountry() %></td>
                          <td><%= order.getNote() %></td>
-                         <td><%= order.getTotalMoney() %></td>
+                         <td><%= order.getTotalMoney() %> triệu đồng</td>
                           <td><%= order.getOrderDate() %>  </td>
                           <td>
                         <button class="btn btn-success"><i class="fa"></i><a href="${pageContext.request.contextPath}/admin/chitietdonhang?action=chitietdonhang&id=<%= order.getId() %>">Chi tiết</a></button>
-                        </td>  				
-        				 <td>
-                         <button class="btn btn-danger" type="submit">Trang thai</button>
                         </td>
+                        <c:if test="<%= order.getStatus() == 1 %>">
+										<td>Hoàn thành đơn hàng</td>
+										<td>Đã xác nhận</td>
+									</c:if>
+
+						<c:if test="<%= order.getStatus() == 0 %>">
+						<td>
+						<button class="btn btn-danger">
+												<a href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=edit&id=<%= order.getId() %>">Sửa</a>
+						</button>
+						</td>
+										 <td>
+                         <button class="btn btn-danger">
+												<a href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=confirm&id=<%= order.getId() %>">Chưa Xác nhận</a>
+						</button>
+                        </td>
+						</c:if>
                      </tr>
-                     </form>
                     <% } %>
                     </tbody>
                   </table>

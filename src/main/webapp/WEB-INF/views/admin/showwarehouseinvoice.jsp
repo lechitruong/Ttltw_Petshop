@@ -4,7 +4,7 @@
 <%@page import="java.util.*"%>
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
-<%@page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
@@ -57,27 +57,21 @@ CatalogModel catalogModel = new CatalogModel();
 									<td><%=warehouseInvoice.getTradeDate()%></td>
 									<c:if test="<%=warehouseInvoice.isStatus() == true %>">
 										<td>Đã xác nhận</td>
+										<td>Hoàn thành nhập hàng</td>
 									</c:if>
-						
+
 									<c:if test="<%= warehouseInvoice.isStatus() == false %>">
 										<td>
 										<button class="btn btn-danger">
 												<a
 													href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=confirm&id=<%= warehouseInvoice.getId() %>">Xác nhận</a>
 									    </button>
+									    <button class="btn warning">
+												<a
+													href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=edit&id=<%= warehouseInvoice.getId() %>">Xác nhận</a>
+									    </button>
 										</td>
 									</c:if>
-									<td>
-									<button class="btn btn-danger">
-												<a
-												href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=edit&id=<%= warehouseInvoice.getId() %>">Sửa</a>
-									</button>
-
-											<button class="btn btn-success">
-												<a
-												href="${pageContext.request.contextPath}/admin/danhsachnhaphang?action=remove&id=<%= warehouseInvoice.getId() %>">Xoá</a>
-									</button>
-									</td>
 								</tr>
 								<%
 								}
