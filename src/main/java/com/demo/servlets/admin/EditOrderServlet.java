@@ -19,11 +19,11 @@ import com.demo.models.PetModel;
 import com.demo.models.WarehouseInvoiceModel;
 import com.google.gson.Gson;
 
-@WebServlet("/admin/editwarehouseinvoice")
-public class EditNhaphangServlet extends HttpServlet {
+@WebServlet("/admin/editorder")
+public class EditOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public EditNhaphangServlet() {
+	public EditOrderServlet() {
 		super();
 	}
 
@@ -32,10 +32,6 @@ public class EditNhaphangServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		if (action == null) {
 			doGet_Index(request, response);
-		} else if (action.equals("getCatalogs")) {
-			getCatalogs(request, response);
-		} else if (action.equals("getPets")) {
-			getPets(request, response);
 		} else if (action.equalsIgnoreCase("confirm")) {
 			doGet_Confirm(request, response);
 		}
@@ -43,55 +39,15 @@ public class EditNhaphangServlet extends HttpServlet {
 
 	protected void doGet_Index(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		WarehouseInvoiceModel warehouseInvoiceModel = new WarehouseInvoiceModel();
-		String id = request.getParameter("id");
-		int idPet = Integer.parseInt(id);
-		WarehouseInvoice warehouseInvoice = warehouseInvoiceModel.findInvoiceByID(idPet);
-
-		PetModel petModel = new PetModel();
-		Pets pet = petModel.findPetById(warehouseInvoice.getPetId());
-		CatalogModel catalogModel = new CatalogModel();
-		Catalogs catalog = catalogModel.findCatalogById(pet.getCatalogId());
-		CategoryModel categoryModel = new CategoryModel();
-		Categorys category = categoryModel.findCategoryById(pet.getCategoryId());
-
-		request.setAttribute("warehouseInvoice", warehouseInvoice);
-		request.setAttribute("pet", pet);
-		request.setAttribute("catalog", catalog);
-		request.setAttribute("category", category);
-
-		List<Categorys> categories = categoryModel.findAll();
-		request.setAttribute("categories", categories);
-
-		request.setAttribute("p", "../admin/editwarehouseinvoice.jsp");
+		request.setAttribute("p", "../admin/editorder.jsp");
 		request.getRequestDispatcher("/WEB-INF/views/layout/admin.jsp").forward(request, response);
 	}
 
-	private void getCatalogs(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-		CatalogModel catalogModel = new CatalogModel();
-		List<Catalogs> catalogs = catalogModel.findAllByCategory(categoryId);
-		String json = new Gson().toJson(catalogs);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(json);
-	}
-
-	private void getPets(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-		int catalogId = Integer.parseInt(request.getParameter("catalogId"));
-		PetModel petModel = new PetModel();
-		List<Pets> pets = petModel.findAllByCatalog(categoryId, catalogId);
-		String json = new Gson().toJson(pets);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(json);
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getParameter("action");
-		if (action.equalsIgnoreCase("editpet")) {
+		if (action.equalsIgnoreCase("editorder")) {
 			doPost_Edit(request, response);
 		} 
 	}
