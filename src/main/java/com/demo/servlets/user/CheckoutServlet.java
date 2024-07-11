@@ -18,11 +18,13 @@ import com.demo.entities.Address;
 import com.demo.entities.Item;
 import com.demo.entities.OrderDetails;
 import com.demo.entities.Orders;
+import com.demo.entities.Pets;
 import com.demo.entities.Users;
 import com.demo.models.AddressModel;
 import com.demo.models.ItemModel;
 import com.demo.models.OrderDetailModel;
 import com.demo.models.OrderModel;
+import com.demo.models.PetModel;
 
 /**
  * Servlet implementation class HomeServlet
@@ -68,7 +70,7 @@ public class CheckoutServlet extends HttpServlet {
 			doPost_Dathang(request, response);
 		}
 	}
-
+// khi nguoi dung dat hang
 	protected void doPost_Dathang(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    // String fullName = request.getParameter("fullName");
 	    String phoneNumber = request.getParameter("phoneNumber");
@@ -112,6 +114,9 @@ public class CheckoutServlet extends HttpServlet {
 	            orderDetail.setPetId(cart.get(i).getPet().getId());
 	            orderDetail.setMoney(cart.get(i).getPet().getMoney());
 	            if (orderDetailModel.create(orderDetail)) {
+	            	PetModel petModel = new PetModel();
+	            	Pets pet = petModel.findPetById(cart.get(i).getPet().getId());
+	            	pet.setAmount(pet.getAmount() - cart.get(i).getQuantity());
 	                System.out.println("true - orderdetails");
 	            } else {
 	                System.out.println("false - orderdetails");

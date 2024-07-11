@@ -38,6 +38,7 @@ int w =0;
                 <th>Địa chỉ</th>
                 <th>Thời gian đặt</th>
                 <th>Trạng thái</th>
+                <th>Hoá đơn</th>
             </tr>
         </thead>
         <tbody>
@@ -54,12 +55,13 @@ int w =0;
                 <td><%= addressModel.findAddressById(orders.get(i).getAddressId()).getAddress()+", "+ addressModel.findAddressById(orders.get(i).getAddressId()).getWard()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getDistrict()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getCountry() %></td>
                 <td><%= orders.get(i).getOrderDate() %></td>
                 <td><%= orders.get(i).getStatus() == 0? "Đang xác nhận": orders.get(i).getStatus() == 1? "Đang giao": "Đã giao"%></td>
+                <td><%= orders.get(i).getStatus() == 0? "Đang xác nhận": orders.get(i).getStatus() == 1? "Đang giao": "Đã giao"%></td>
             </tr>       
                 <% } %>
                 </tbody>
     </table>
-     <div id="dialog-message" title="Download complete" style="display: none;">
-     <div class="order-form" style="height: 232px; width: 720px;">
+     <div id="dialog-message" title="Download complete" style="display: none; margin:50px 200px; z-index:999;">
+     <div class="order-form" style="height: 300px; width: 720px;">
 				<h3>Chi tiết đơn hàng</h3>	
 			<table id="table" class="display" style="width:100%">
         <thead>
