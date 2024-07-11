@@ -1,7 +1,6 @@
 package com.demo.entities;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Orders {
 private int id;

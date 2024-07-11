@@ -63,12 +63,11 @@
                           <td><%= order.getOrderDate() %>  </td>
                           <td>
                         <button class="btn btn-success"><i class="fa"></i><a href="${pageContext.request.contextPath}/admin/chitietdonhang?action=chitietdonhang&id=<%= order.getId() %>">Chi tiết</a></button>
-                        </td>
+                        </td> 
                         <c:if test="<%= order.getStatus() == 1 %>">
 										<td>Hoàn thành đơn hàng</td>
 										<td>Đã xác nhận</td>
 									</c:if>
-
 						<c:if test="<%= order.getStatus() == 0 %>">
 						<td>
 						<button class="btn btn-danger">
