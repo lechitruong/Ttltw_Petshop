@@ -11,10 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.demo.entities.Catalogs;
 import com.demo.entities.Categorys;
+import com.demo.entities.OrderDetails;
+import com.demo.entities.Orders;
 import com.demo.entities.Pets;
 import com.demo.entities.WarehouseInvoice;
 import com.demo.models.CatalogModel;
 import com.demo.models.CategoryModel;
+import com.demo.models.OrderDetailModel;
+import com.demo.models.OrderModel;
 import com.demo.models.PetModel;
 import com.demo.models.WarehouseInvoiceModel;
 import com.google.gson.Gson;
@@ -55,19 +59,23 @@ public class EditOrderServlet extends HttpServlet {
 	protected void doGet_Confirm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
-		WarehouseInvoiceModel warehouseInvoiceModel = new WarehouseInvoiceModel();
-		WarehouseInvoice warehouseInvoice = warehouseInvoiceModel.findInvoiceByID(id);
-		warehouseInvoice.setStatus(true);
-		if (warehouseInvoiceModel.update(warehouseInvoice)) {
-			PetModel petModel = new PetModel();
-			Pets pet = petModel.findPetById(warehouseInvoice.getPetId());
-			pet.setAmount(pet.getAmount() + warehouseInvoice.getQuantity());
-			if (petModel.update(pet)) {
-				request.getSession().setAttribute("msg-invoice", "Nhập hàng thành công");
-				response.sendRedirect("quanlinhaphang");
-			} else {
-				request.getSession().setAttribute("msg-invoice", "Nhập hàng không thành công");
-				response.sendRedirect("quanlinhaphang");
+		OrderModel orderModel = new OrderModel();
+		Orders order = orderModel.findOrderById(id);
+		OrderDetailModel orderDetailModel = new OrderDetailModel();
+		List<OrderDetails> orderDetails = orderDetailModel.findAllByOrderId(id);
+		order.setStatus(1);
+		if (orderModel.update(order)) {
+			for (OrderDetails orDetails : orderDetails) {
+				PetModel petModel = new PetModel();
+				Pets pet = petModel.findPetById(orDetails.getPetId());	
+				pet.setAmount(pet.getAmount() - orDetails.getQuantity());
+				if (petModel.update(pet)) {
+					request.getSession().setAttribute("msg-order", "Đặt hàng thành công");
+					response.sendRedirect("donhang");
+				} else {
+					request.getSession().setAttribute("msg-order", "Đặt hàng không thành công");
+					response.sendRedirect("donhang");
+				}
 			}
 		}
 	}
@@ -75,19 +83,9 @@ public class EditOrderServlet extends HttpServlet {
 	protected void doPost_Edit(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
-		WarehouseInvoiceModel warehouseInvoiceModel = new WarehouseInvoiceModel();
-		WarehouseInvoice warehouseInvoice = warehouseInvoiceModel.findInvoiceByID(id);
-		int petId = Integer.parseInt(request.getParameter("petname"));
-		int quantity = Integer.parseInt(request.getParameter("quantity"));
-		double price = Double.parseDouble(request.getParameter("price"));
-		Date tradeDate = new Date();
-		warehouseInvoice.setPetId(petId);
-		warehouseInvoice.setQuantity(quantity);
-		warehouseInvoice.setPrice(price);
-		warehouseInvoice.setTradeDate(tradeDate);
-		warehouseInvoice.setStatus(false);
-		if (warehouseInvoiceModel.update(warehouseInvoice)) {
-			response.sendRedirect("quanlinhaphang");
-		}
+		OrderModel orderModel = new OrderModel();
+		Orders order = orderModel.findOrderById(id);
+		OrderDetailModel orderDetailModel = new OrderDetailModel();
+		List<OrderDetails> orderDetails = orderDetailModel.findAllByOrderId(id);
 	}
 }

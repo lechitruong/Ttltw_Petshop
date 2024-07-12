@@ -1,6 +1,7 @@
 package com.demo.servlets.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import com.demo.entities.Item;
 import com.demo.entities.Pets;
 import com.demo.models.ItemModel;
 import com.demo.models.PetModel;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class HomeServlet
@@ -84,6 +86,8 @@ public class CartServlet extends HttpServlet {
 			throws ServletException, IOException {
 		List<Item> cart = (List<Item>) request.getSession().getAttribute("cart");
 		String petID = request.getParameter("index");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		int id = Integer.parseInt(petID);
 		cart.remove(id);
 		request.getSession().setAttribute("cart", cart);
@@ -91,25 +95,44 @@ public class CartServlet extends HttpServlet {
 		
 	}
 	protected void doGet_Plus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int index = Integer.parseInt(request.getParameter("index"));
-		List<Item> cart = 	(List<Item>) request.getSession().getAttribute("cart");
-		int quantity = cart.get(index).getQuantity()+1;
-		cart.get(index).setQuantity(quantity);
-		request.getSession().setAttribute("cart", cart);
-		response.sendRedirect("cart");
+	    int index = Integer.parseInt(request.getParameter("index"));
+	    List<Item> cart = (List<Item>) request.getSession().getAttribute("cart");
+	    
+	    if (cart != null && index >= 0 && index < cart.size()) {
+	        int quantity = cart.get(index).getQuantity() + 1;
+	        cart.get(index).setQuantity(quantity);
+	        
+	        request.getSession().setAttribute("cart", cart);
+	        
+	        // Prepare JSON response
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        PrintWriter out = response.getWriter();
+	        out.print(new Gson().toJson(cart));
+	    }
 	}
 
 	protected void doGet_Minus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int index = Integer.parseInt(request.getParameter("index"));
-		List<Item> cart = 	(List<Item>) request.getSession().getAttribute("cart");
-		if(cart.get(index).getQuantity() != 1) {
-			int quantity = cart.get(index).getQuantity()-1;
-			cart.get(index).setQuantity(quantity);
-		}else {
-			cart.remove(index);
-		}
-		request.getSession().setAttribute("cart", cart);
-		response.sendRedirect("cart");
+	    int index = Integer.parseInt(request.getParameter("index"));
+	    List<Item> cart = (List<Item>) request.getSession().getAttribute("cart");
+	    
+	    if (cart != null && index >= 0 && index < cart.size()) {
+	        if (cart.get(index).getQuantity() > 1) {
+	            int quantity = cart.get(index).getQuantity() - 1;
+	            cart.get(index).setQuantity(quantity);
+	        } else {
+	            cart.remove(index);
+	        }
+	        
+	        request.getSession().setAttribute("cart", cart);
+	        
+	        // Prepare JSON response
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        PrintWriter out = response.getWriter();
+	        out.print(new Gson().toJson(cart));
+
+	    }
 	}
 
 	/**
