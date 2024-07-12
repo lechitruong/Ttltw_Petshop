@@ -86,6 +86,18 @@ public class CheckoutServlet extends HttpServlet {
 	    AddressModel addressModel = new AddressModel();
 	    OrderModel orderModel = new OrderModel();
 	    OrderDetailModel orderDetailModel = new OrderDetailModel();
+	    PetModel petModel = new PetModel();
+	    // ktra xem sản phẩm trong giỏ hàng còn trước khi đặt hàng không
+	    for (Item item : cart) {
+	        Pets pet = petModel.findPetById(item.getPet().getId());
+	        if (pet.getAmount() < item.getQuantity()) {
+	            request.getSession().setAttribute("error-checkout", "Sản phẩm " + pet.getPetName() + " đã hết hàng hoặc không đủ số lượng.");
+	            response.sendRedirect("cart");
+	            return;
+	        }
+	    }
+	    
+	    
 	    Address orderAddress;
 	    Address existingAddress = addressModel.findAddressByIdUser(user.getId());
 	    if (existingAddress != null &&
@@ -100,7 +112,6 @@ public class CheckoutServlet extends HttpServlet {
 	            orderAddress = addressModel.findAddressByIdUser(user.getId());
 	        } else {
 	            response.sendRedirect("checkout");
-	            return;
 	        }
 	    }
 
@@ -113,8 +124,7 @@ public class CheckoutServlet extends HttpServlet {
 	            orderDetail.setQuantity(cart.get(i).getQuantity());
 	            orderDetail.setPetId(cart.get(i).getPet().getId());
 	            orderDetail.setMoney(cart.get(i).getPet().getMoney());
-	            if (orderDetailModel.create(orderDetail)) {
-	            	PetModel petModel = new PetModel();
+	            if (orderDetailModel.create(orderDetail)) {	
 	            	Pets pet = petModel.findPetById(cart.get(i).getPet().getId());
 	            	pet.setAmount(pet.getAmount() - cart.get(i).getQuantity());
 	                System.out.println("true - orderdetails");
