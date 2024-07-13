@@ -1,3 +1,4 @@
+<%@page import="com.demo.models.PicturePetModel"%>
 <%@page import="com.demo.models.CommentModel"%>
 <%@page import="com.demo.models.CatalogModel"%>
 <%@page import="com.demo.models.CategoryModel"%>
@@ -6,6 +7,8 @@
 <%@page import="com.demo.entities.Pets"%>
 <%@page import="com.demo.entities.Comments"%>
 <%@page import="com.demo.entities.Categorys"%>
+<%@page import="com.demo.entities.PicturePets"%>
+<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -53,45 +56,29 @@
             CategoryModel categoryModel = new CategoryModel();
             CommentModel commentModel = new CommentModel();
             UserModel userModel = new UserModel();
+            PicturePetModel picturePetModel = new PicturePetModel();
+            List<PicturePets> picPets =(List<PicturePets>) picturePetModel.findPostImageByPetID(id);
             
             %>
               <div class="row">
                 <div class="col-12">
                   <div class="image">
                     <img
-                      src="${pageContext.request.contextPath}/assets/user/images/anhcho/<%= pet.getImage() %>"
+                      src="${pageContext.request.contextPath}/assets/user/images/pet/<%= pet.getImage() %>"
                       alt="#"
                       id="mainImage"
                     />
                     <div class="image-thumbnail">
+                    <% for(PicturePets pic : picPets){
+                    	%>
                       <div class="image">
                         <img
-                          src="images/payment-method.png"
+                          src="${pageContext.request.contextPath }/assets/user/images/pet/<%=pic.getImage() %>"
                           alt=""
                           onclick="changeImage(this)"
                         />
                       </div>
-                      <div class="image">
-                        <img
-                          src="images/payment-method.png"
-                          alt=""
-                          onclick="changeImage(this)"
-                        />
-                      </div>
-                      <div class="image">
-                        <img
-                          src="images/payment-method.png"
-                          alt=""
-                          onclick="changeImage(this)"
-                        />
-                      </div>
-                      <div class="image">
-                        <img
-                          src="images/payment-method.png"
-                          alt=""
-                          onclick="changeImage(this)"
-                        />
-                      </div>
+                      <% } %>
                     </div>
                   </div>
                   <div class="blog-detail">

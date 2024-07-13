@@ -52,7 +52,7 @@
 						<!-- Form -->
 						<form style="display: flex" class="form" method="post"
 							enctype="multipart/form-data"
-							action="${pageContext.request.contextPath }/personalinformation?action=update">
+							action="${pageContext.request.contextPath }/personalinformation?action=update" onsubmit="return validateForm()">
 							<div class="row col-8">
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
@@ -81,7 +81,6 @@
 											style="padding-left: 10px; outline: none"
 											class="select_option" name="gender" id="gender"
 											value="${sessionScope.user.gender != null? sessionScope.user.gender:"" }">
-											<option value="" disabled selected>Chọn giới tính</option>
 											<option value="Nam"
 												${sessionScope.user.gender == 'Nam' ? 'selected' : ''}>Nam</option>
 											<option value="Nữ"
@@ -198,6 +197,43 @@ input[type="file"] {
 		</div>
 	</section>
 	<!--/ End Checkout -->
+<script>
+function validateForm() {
+    var gender = document.getElementById("gender").value;
+    var country = document.getElementById("country").value;
+    var district = document.getElementById("district").value;
+    var ward = document.getElementById("ward").value;
+    var avatar = document.getElementById("inputAvatar").value; // Lấy giá trị của trường input file
 
+    // Kiểm tra giá trị của các trường select
+    if (gender === "" || gender === "Chọn giới tính") {
+        alert("Vui lòng chọn giới tính.");
+        return false;
+    }
+
+    if (country === "") {
+        alert("Vui lòng chọn Tỉnh/Thành Phố.");
+        return false;
+    }
+
+    if (district === "") {
+        alert("Vui lòng chọn Quận/Huyện.");
+        return false;
+    }
+
+    if (ward === "") {
+        alert("Vui lòng chọn Xã/Phường.");
+        return false;
+    }
+
+    // Kiểm tra trường input file
+    if (avatar === "") {
+        alert("Vui lòng chọn ảnh đại diện.");
+        return false;
+    }
+
+    return true; // Cho phép submit form nếu đã được validate thành công
+}
+</script>
 </body>
 </html>
