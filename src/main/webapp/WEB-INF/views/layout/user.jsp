@@ -180,16 +180,11 @@ $(document).ready(function () {
 						<!--/ End Logo -->
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
+					<form action="${pageContext.request.contextPath }/showlistsearch" method="GET">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<select class="select_option">
-									<option selected="selected">Tất cả</option>
-									<option>Chó</option>
-									<option>Mèo</option>
-									<option>Thú cưng khác</option>
-								</select>
-								
-									<input name="search" id="timkiem" placeholder="Tìm kiếm thú cưng....."
+								<span style="margin-right:30px;">Tìm kiếm</span>
+									<input name="search" id="timkiem" placeholder="Nhập tên thú cưng....."
 										type="search" />
 									<button class="btnn">
 										<i class="ti-search"></i>
@@ -197,6 +192,7 @@ $(document).ready(function () {
 								
 							</div>
 						</div>
+						</form>
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">

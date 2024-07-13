@@ -17,27 +17,33 @@
 			<header>Đăng nhập</header>
 			<%
 			HttpSession session2 = request.getSession();
-			String msg = (String)(session2.getAttribute("msg"));
+			String msg = (String) (session2.getAttribute("msg"));
 			String msg1 = msg;
 			session2.removeAttribute("msg");
 			%>
 			<form action="${pageContext.request.contextPath}/login?action=login"
 				method="post" class="login">
-				<span style="color: red"> <%= msg1 == null ? "" : msg1 %>
+				<span style="color: red"> <%=msg1 == null ? "" : msg1%>
 				</span> <input type="text" name="username"
 					placeholder="Vui lòng nhập Username"> <input
 					type="password" name="password"
 					placeholder="Vui lòng nhập Mật khẩu">
 				<div style="display: flex; justify-content: space-between;">
-					<a href="${pageContext.request.contextPath}/forgotpassword?action=sendotp">Quên mật khẩu</a> 
+					<a
+						href="${pageContext.request.contextPath}/forgotpassword?action=sendotp">Quên
+						mật khẩu</a>
 				</div>
 				<input type="submit" class="button" value="Đăng nhập">
 			</form>
 			<div class="signup">
 				<span class="signup">Chưa có tài khoản? <a
-					href="${pageContext.request.contextPath}/login?action=register">Đăng ký</a>
+					href="${pageContext.request.contextPath}/login?action=register">Đăng
+						ký</a>
 				</span>
 			</div>
+			<a
+				href="#">Login
+				bằng Google</a>
 		</div>
 	</div>
 	<script

@@ -8,8 +8,8 @@
   response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
   response.setHeader("Pragma" , "no-cache");
   response.setHeader("Expires" , "0");
-
-
+  
+  
   if (session.getAttribute("admin-username") == null){
 	  response.sendRedirect(request.getContextPath() + "/admin/login");
   }
@@ -24,7 +24,7 @@
 
 
         <div class="row">
-
+ 
           <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
@@ -45,11 +45,11 @@
                           <th scope="col">Danh sách sản phẩm</th>
                           <th scope="col">Hành động</th>
                          <th scope="col">Trạng thái</th>
-
+                        
                       </tr>
                     </thead>
                     <tbody>
-
+                    
                     <% for(Orders order: orders){ %>
                       <tr>
                         <td scope="row"><%= order.getId() %></td>
@@ -68,18 +68,19 @@
 										<td>Hoàn thành đơn hàng</td>
 										<td>Đã xác nhận</td>
 									</c:if>
+						
 						<c:if test="<%= order.getStatus() == 0 %>">
 						<td>
 						<button class="btn btn-danger">
-												<a href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=edit&id=<%= order.getId() %>">Sửa</a>
-						</button>
+												<a href="${pageContext.request.contextPath}/admin/editorder?id=<%= order.getId() %>">Sửa</a>
+						</button>					
 						</td>
 										 <td>
                          <button class="btn btn-danger">
-												<a href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=confirm&id=<%= order.getId() %>">Chưa Xác nhận</a>
+												<a href="${pageContext.request.contextPath}/admin/editorder?action=confirm&id=<%= order.getId() %>">Chưa Xác nhận</a>
 						</button>
-                        </td>
-						</c:if>
+                        </td>  
+						</c:if> 				
                      </tr>
                     <% } %>
                     </tbody>
