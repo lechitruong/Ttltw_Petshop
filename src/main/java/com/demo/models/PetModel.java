@@ -51,6 +51,39 @@ public class PetModel {
 		}
 		return pets;
 	}
+	// ham lay ra danh sach pet con trong kho
+	public List<Pets> findAllWithPositiveQuantity() {
+	    List<Pets> pets = new ArrayList<>();
+	    try {
+	    	PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement("SELECT * FROM pets WHERE amount > 0");
+	        ResultSet resultSet = preparedStatement.executeQuery();
+
+	        while (resultSet.next()) {
+	            Pets pet = new Pets();
+	            pet.setId(resultSet.getInt("id"));
+	            pet.setPetName(resultSet.getString("petName"));
+	            pet.setPetType(resultSet.getString("petType"));
+	            pet.setPetGender(resultSet.getString("petGender"));
+	            pet.setDescription(resultSet.getString("description"));
+	            pet.setDetail(resultSet.getString("detail"));
+	            pet.setMade(resultSet.getString("made"));
+	            pet.setAmount(resultSet.getInt("amount"));
+	            pet.setMoney(resultSet.getDouble("money"));
+	            pet.setPetBirthday(resultSet.getDate("petBirthday"));
+	            pet.setImage(resultSet.getString("image"));
+	            pet.setStatus(resultSet.getBoolean("status"));
+	            pet.setCategoryId(resultSet.getInt("categoryId"));
+	            pet.setCatalogId(resultSet.getInt("catalogId"));
+	            pets.add(pet);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        pets = null;
+	    } finally {
+	        ConnectDB.disconnect();
+	    }
+	    return pets;
+	}
 	// ham lay danh sach tat ca pet con trong cua hang
 	public List<Pets> findAllExist(boolean status) {
 		List<Pets> pets = new ArrayList<>();
@@ -120,6 +153,44 @@ public class PetModel {
 		}
 		return pets;
 	}
+	public List<Pets> findByKeyword(String keyword) {
+        List<Pets> pets = new ArrayList<>();
+        try {
+        	PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("SELECT p.*, c.name AS categoryName, cat.name AS catalogName " +
+                           "FROM pets p " +
+                           "JOIN categorys c ON p.categoryId = c.id " +
+                           "JOIN catalogs cat ON p.catalogId = cat.id " +
+                           "WHERE p.petName LIKE ? OR c.name LIKE ? OR cat.name LIKE ?");
+            String searchPattern = "%" + keyword + "%";
+            preparedStatement.setString(1, searchPattern);
+            preparedStatement.setString(2, searchPattern);
+            preparedStatement.setString(3, searchPattern);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Pets pet = new Pets();
+                pet.setId(resultSet.getInt("id"));
+                pet.setPetName(resultSet.getString("petName"));
+                pet.setPetType(resultSet.getString("petType"));
+                pet.setPetGender(resultSet.getString("petGender"));
+                pet.setDescription(resultSet.getString("description"));
+                pet.setDetail(resultSet.getString("detail"));
+                pet.setMade(resultSet.getString("made"));
+                pet.setAmount(resultSet.getInt("amount"));
+                pet.setMoney(resultSet.getDouble("money"));
+                pet.setPetBirthday(resultSet.getDate("petBirthday"));
+                pet.setImage(resultSet.getString("image"));
+                pet.setStatus(resultSet.getBoolean("status"));
+                pet.setCategoryId(resultSet.getInt("categoryId"));
+                pet.setCatalogId(resultSet.getInt("catalogId"));
+                pets.add(pet);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pets;
+    }
+
 
 	// ham tim ra pets dua vao id
 	public Pets findPetById(int id) {

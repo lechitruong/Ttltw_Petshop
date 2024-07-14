@@ -94,7 +94,7 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet_Logout(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Users user =(Users) request.getAttribute("user");
+		Users user =(Users) request.getSession().getAttribute("user");
 		LogModel logModel = new LogModel();
 		logModel.create(new Log(IPAddressUtil.getPublicIPAddress(),"info",ConfigIP.ipconfig(request).getCountryLong(),new Timestamp(new Date().getTime()), "Đã đăng nhập", "Đã thoát", user.getId()));
 		request.getSession().removeAttribute("user");
@@ -121,7 +121,7 @@ public class LoginServlet extends HttpServlet {
 			doPost_Login(request, response);
 		} else if (action.equalsIgnoreCase("register")) {
 			doPost_Register(request, response);
-		}
+		} 
 	}
 
 	protected void doPost_Index(HttpServletRequest request, HttpServletResponse response)
@@ -156,6 +156,7 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("login");
 		}
 	}
+	
 
 	protected void doPost_Register(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -174,7 +175,7 @@ public class LoginServlet extends HttpServlet {
 		user.setBirthday(new java.util.Date());
 		if (userModel.create(user)) {
 			MailHelper.MailHelper(email, "Xác thực tài khoản của bạn",
-					"Bạn hãy bấm vào " + "<a href='http://localhost:8080/projectGroup2/login?action=verify&username="
+					"Bạn hãy bấm vào " + "<a href='http://localhost:8080/PetShop/login?action=verify&username="
 							+ username + "" + "&securityCode=" + securityCode
 							+ "'>liên kết</a> này để xác thực tài khoản");
 			response.sendRedirect("login?action=message");
