@@ -158,6 +158,22 @@ public class CommentModel {
 		}
 		return comments	;
 	}
+	public boolean delete(int id) {
+		boolean result = true;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("delete from comments where id = ?");
+			preparedStatement.setInt(1, id);
+			result = preparedStatement.executeUpdate() > 0;
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			result = false;
+		}finally {
+			ConnectDB.disconnect();
+		}
+		return result;
+	}
 	public static void main(String[] args) {
 		CommentModel commentModel = new CommentModel();
 //		System.out.println(commentModel.create(new Comments(5, 1, "hello pet", new Date())));
