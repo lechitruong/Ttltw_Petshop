@@ -102,9 +102,9 @@ $(document).ready(function () {
           </a>
         </li>
         <li>
-          <a href="${pageContext.request.contextPath}/admin/review">
-            <i class="zmdi zmdi-calendar-check"></i> <span>Review</span>
-          </a>   
+          <a href="${pageContext.request.contextPath}/admin/quanlitonkho">
+            <i class="zmdi zmdi-shopping-cart"></i> <span>Quản lí Tồn Kho</span>
+          </a>
         </li>
       </ul>
     </div>
