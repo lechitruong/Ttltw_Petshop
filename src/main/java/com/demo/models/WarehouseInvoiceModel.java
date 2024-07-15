@@ -81,7 +81,7 @@ public class WarehouseInvoiceModel {
 			preparedStatement.setInt(1, invoice.getPetId());
 			preparedStatement.setInt(2, invoice.getQuantity());
 			preparedStatement.setDouble(3, invoice.getPrice());
-			preparedStatement.setDate(4, new java.sql.Date(invoice.getTradeDate().getDate()));
+			preparedStatement.setDate(4, new java.sql.Date(invoice.getTradeDate().getTime()));
 			preparedStatement.setBoolean(5, invoice.isStatus());
 			result = preparedStatement.executeUpdate() > 0;
 		} catch (Exception e) {
@@ -101,7 +101,7 @@ public class WarehouseInvoiceModel {
 			preparedStatement.setInt(1, warehouseInvoice.getPetId());
 			preparedStatement.setInt(2, warehouseInvoice.getQuantity());
 			preparedStatement.setDouble(3, warehouseInvoice.getPrice());
-			preparedStatement.setDate(4, new java.sql.Date(warehouseInvoice.getTradeDate().getDate()));
+			preparedStatement.setDate(4, new java.sql.Date(warehouseInvoice.getTradeDate().getTime()));
 			preparedStatement.setBoolean(5, warehouseInvoice.isStatus());
 			preparedStatement.setInt(6, warehouseInvoice.getId());
 			result = preparedStatement.executeUpdate() > 0;
