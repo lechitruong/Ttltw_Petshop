@@ -63,61 +63,64 @@ public class PersonalInformationServlet extends HttpServlet {
 		}
 	}
 	protected void doPost_Update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Set character encoding
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        UserModel userModel = new UserModel();
-        AddressModel addressModel = new AddressModel();
-        Users user = (Users) request.getSession().getAttribute("user");
-        String fullName = request.getParameter("fullName");
-        String birthdayString = request.getParameter("birthday");
-        String gender = request.getParameter("gender");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String country = request.getParameter("country");
-        String district = request.getParameter("district");
-        String ward = request.getParameter("ward");
-        String userAddress = request.getParameter("address");
-        String avatar = user.getImage();
-        Part file = request.getPart("file");
+	    // Set character encoding
+	    request.setCharacterEncoding("UTF-8");
+	    response.setCharacterEncoding("UTF-8");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        if(userModel.findUserById(user.getId()) == null) {
-			avatar = "Unknown_person.jpg";
-			
-			if(file != null && file.getSize() > 0) {
-				avatar = UploadFileHelper.uploadFile("assets/user/images",request,file);
-			} 
-			user.setImage(avatar);
-		} else {
-			avatar = userModel.findUserById(user.getId()).getImage();
-			if(file != null && file.getSize() > 0) {
-				avatar = UploadFileHelper.uploadFile("assets/user/images",request,file);
-			} 
-		
-			user.setImage(avatar);
-		}
-        try {
-            user.setFullName(new String(fullName.getBytes("ISO-8859-1"), "UTF-8"));
-            Date birthday = dateFormat.parse(birthdayString);
-            String formattedBirthday = dateFormat.format(birthday);
-            user.setBirthday(birthday);
-            user.setGender(new String(gender.getBytes("ISO-8859-1"), "UTF-8"));
-            user.setPhoneNumber(new String(phoneNumber.getBytes("ISO-8859-1"), "UTF-8"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Address userAddressObj = addressModel.findAddressByIdUser(user.getId());
-        userAddressObj.setCountry(new String(country.getBytes("ISO-8859-1"), "UTF-8"));
-        userAddressObj.setDistrict(new String(district.getBytes("ISO-8859-1"), "UTF-8"));
-        userAddressObj.setWard(new String(ward.getBytes("ISO-8859-1"), "UTF-8"));
-        userAddressObj.setAddress(new String(userAddress.getBytes("ISO-8859-1"), "UTF-8"));
-        if (userModel.update(user) && addressModel.update(userAddressObj)) {
-            request.getSession().removeAttribute("user");
-            request.getSession().setAttribute("user", userModel.findUserById(user.getId()));
-            request.getSession().setAttribute("msg-if", "Cập nhật thành công");
-        } else {
-            request.getSession().setAttribute("msg-if", "Cập nhật thất bại");
-        }
-        response.sendRedirect("personalinformation");
-    }
+	    UserModel userModel = new UserModel();
+	    AddressModel addressModel = new AddressModel();
+	    Users user = (Users) request.getSession().getAttribute("user");
+
+	    String fullName = request.getParameter("fullName");
+	    String birthdayString = request.getParameter("birthday");
+	    String gender = request.getParameter("gender");
+	    String phoneNumber = request.getParameter("phoneNumber");
+	    String country = request.getParameter("country");
+	    String district = request.getParameter("district");
+	    String ward = request.getParameter("ward");
+	    String userAddress = request.getParameter("address");
+	    
+	    Part file = request.getPart("file");
+
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+	    // Xử lý avatar
+	    String avatar = user.getImage();
+	    if (file != null && file.getSize() > 0) {
+	        avatar = UploadFileHelper.uploadFile("assets/user/images", request, file);
+	        user.setImage(avatar);
+	    } else {
+	        // Nếu không có file được tải lên, giữ nguyên avatar hiện tại
+	        user.setImage(avatar);
+	    }
+
+	    try {
+	        user.setFullName(new String(fullName.getBytes("ISO-8859-1"), "UTF-8"));
+	        Date birthday = dateFormat.parse(birthdayString);
+	        String formattedBirthday = dateFormat.format(birthday);
+	        user.setBirthday(birthday);
+	        user.setGender(new String(gender.getBytes("ISO-8859-1"), "UTF-8"));
+	        user.setPhoneNumber(new String(phoneNumber.getBytes("ISO-8859-1"), "UTF-8"));
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    Address userAddressObj = addressModel.findAddressByIdUser(user.getId());
+	    userAddressObj.setCountry(new String(country.getBytes("ISO-8859-1"), "UTF-8"));
+	    userAddressObj.setDistrict(new String(district.getBytes("ISO-8859-1"), "UTF-8"));
+	    userAddressObj.setWard(new String(ward.getBytes("ISO-8859-1"), "UTF-8"));
+	    userAddressObj.setAddress(new String(userAddress.getBytes("ISO-8859-1"), "UTF-8"));
+
+	    if (userModel.update(user) && addressModel.update(userAddressObj)) {
+	        request.getSession().removeAttribute("user");
+	        request.getSession().setAttribute("user", userModel.findUserById(user.getId()));
+	        request.getSession().setAttribute("msg-if", "Cập nhật thành công");
+	    } else {
+	        request.getSession().setAttribute("msg-if", "Cập nhật thất bại");
+	    }
+	    
+	    response.sendRedirect("personalinformation");
+	}
+
+
 }

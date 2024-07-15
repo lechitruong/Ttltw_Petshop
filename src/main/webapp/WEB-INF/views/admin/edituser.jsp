@@ -1,3 +1,4 @@
+<%@page import="org.mindrot.jbcrypt.BCrypt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -20,36 +21,32 @@ Users user = (Users) request.getAttribute("user");
 							action="${pageContext.request.contextPath}/admin/edituser?action=edituser&id=<%= user.getId() %>"
 							method="post">
 							<div class="form-group">
-								<label for="input-1">ID</label> <input type="text"
-									class="form-control" id="input-1" readonly="readonly"
-									placeholder="ID" value="<%=user.getId()%>" name="id">
-							</div>
-							<div class="form-group">
 								<label for="input-1">Họ tên</label> <input type="text"
-									class="form-control" id="input-2" placeholder="Họ tên"
+									class="form-control" id="input-1" placeholder="Họ tên"
 									value="<%=user.getFullName()%>" name="fullname">
 							</div>
 							<div class="form-group">
 								<label for="input-3">Số điện thoại</label> <input type="text"
-									class="form-control" id="input-4" placeholder="Số điện thoại"
+									class="form-control" id="input-2" placeholder="Số điện thoại"
 									value="<%=user.getPhoneNumber()%>" name="phonenumber">
 							</div>
 							<div class="form-group">
-								<label for="input-3">UserName</label> <input type="text"
-									class="form-control" id="input-5" placeholder="Username"
+								<label for="input-3">Email</label> <input type="text"
+									class="form-control" id="input-3" placeholder="Email"
+									value="<%=user.getEmail()%>" name="email">
+							</div>
+							<div class="form-group">
+								<label for="input-3">Tài khoản</label> <input type="text"
+									class="form-control" id="input-4" placeholder="Tài khoản"
 									value="<%=user.getUserName()%>" name="username">
 							</div>
+							
 							<div class="form-group">
-								<label for="input-5">Address</label> <input type="date"
-									class="form-control" id="input-6" placeholder="Ngày tạo"
-									value="" name="address">
+								<label for="input-3">Mật khẩu(Đã được mã hoá)</label> <input type="text"
+									class="form-control" id="input-5" placeholder="Mật khẩu"
+									value="<%=user.getPassword() %>" name="password">
 							</div>
-
 							<div class="form-group">
-								<button class="btn btn-danger">
-									<a href="${pageContext.request.contextPath}/admin/user/list">Hủy</a>
-								</button>
-
 								<button type="submit" class="btn btn-success">Cập nhật</button>
 							</div>
 						</form>

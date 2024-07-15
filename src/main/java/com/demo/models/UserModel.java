@@ -242,6 +242,7 @@ public class UserModel {
 				user.setEmail(resultSet.getString("email"));
 				user.setPhoneNumber(resultSet.getString("phoneNumber"));
 				user.setImage(resultSet.getString("image"));
+				user.setPassword(resultSet.getString("password"));
 				user.setRoleId(resultSet.getInt("roleId"));
 				user.setStatus(resultSet.getBoolean("status"));
 				user.setGender(resultSet.getString("gender"));
