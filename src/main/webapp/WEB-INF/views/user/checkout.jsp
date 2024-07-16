@@ -179,47 +179,29 @@ display:none;
 						<!--/ End Order Widget -->
 						<!-- Order Widget -->
 						<div class="single-widget">
-  <h2>Phương thức thanh toán</h2>
-  <div class="content" style="margin:10px 25px;">
-     <div class="radio">
-            <input type="radio" id="paymentMethod1" name="payment_method" value="1" checked>
-            <label for="paymentMethod1">Quét mã QR Ngân hàng</label><br>
-            
-            <input type="radio" id="paymentMethod2" name="payment_method" value="2">
-            <label for="paymentMethod2">Thanh toán khi nhận hàng</label><br>
-            
-            <input type="radio" id="paymentMethod3" name="payment_method" value="3">
-            <label for="paymentMethod3">Thanh toán VNPay</label><br>
+        <h2>Phương thức thanh toán</h2>
+        <div class="content" style="margin:10px 25px;">
+            <div class="radio">
+                <input type="radio" id="paymentMethod1" name="payment_method" value="1" checked>
+                <label for="paymentMethod1">Quét mã QR Ngân hàng</label><br>
+                
+                <input type="radio" id="paymentMethod2" name="payment_method" value="2">
+                <label for="paymentMethod2">Thanh toán khi nhận hàng</label><br>
+                
+                <input type="radio" id="paymentMethod3" name="payment_method" value="3">
+                <label for="paymentMethod3">Thanh toán VNPay</label><br>
+            </div>
         </div>
-  </div>
-</div>
-						<!--/ End Order Widget -->
-						<!-- Payment Method Widget -->
-						<div class="single-widget payement">
-  <div id="method1" class="content" style="display:none;">
-    <span>Quý khách vui lòng quét mã dưới đây để thanh toán số tiền <%= itemModel.total(cart)%> triệu đồng</span> 
-    <img src="${pageContext.request.contextPath}/assets/user/images/qrcode.jpg" alt="QR Code" />
-  </div>
-  <div id="method2" class="content" style="display:none;">
-    <span>Quý khách vui lòng thanh toán số tiền <%= itemModel.total(cart)%> triệu đồng khi nhận hàng</span>
-  </div>
-  <div id="method3" class="content" style="display:none;">
-    <span>Quý khách vui lòng quét mã dưới đây để thanh toán số tiền <%= itemModel.total(cart)%> triệu đồng</span> 
-    <img src="${pageContext.request.contextPath}/assets/user/images/qrcode.jpg" alt="QR Code" />
-  </div>
-</div>
-						<!--/ End Payment Method Widget -->
-						<!-- Button Widget -->
-						<div class="single-widget get-button">
-							<div class="content">
-								<div class="button">
-									<button class="btn" type="submit">Đặt hàng</button>
-								</div>
-							</div>
-						</div>
-						<!--/ End Button Widget -->
-					</div>
-				</div>
+    </div>
+
+    <!-- Nút Đặt hàng -->
+    <div class="single-widget get-button">
+        <div class="content">
+            <div class="button">
+                <button id="btnDatHang" class="btn" type="button">Đặt hàng</button>
+            </div>
+        </div>
+    </div>
 				</form>
 			</div>
 		</div>
@@ -380,8 +362,29 @@ display:none;
 	            displayPaymentMethod(selectedMethodId); // Hiển thị thông tin phương thức thanh toán tương ứng
 	        });
 	    });
-	});
+	    
+	    
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy nút Đặt hàng
+        var btnDatHang = document.getElementById('btnDatHang');
 
+        // Xử lý sự kiện khi nhấn nút Đặt hàng
+        btnDatHang.addEventListener('click', function() {
+            // Lấy giá trị của phương thức thanh toán được chọn
+            var selectedMethod = document.querySelector('input[name="payment_method"]:checked').value;
+
+            // Kiểm tra nếu là phương thức thanh toán VNPay thì chuyển sang trang thanh toán VNPay
+            if (selectedMethod === '3') {
+                window.location.href = "${pageContext.request.contextPath}/payment";
+            } else {
+                // Nếu không phải phương thức VNPay thì submit form như bình thường
+                var form = document.querySelector('.form');
+                form.submit();
+            }
+        });
+    });
 </script>
 </body>
 </html>
