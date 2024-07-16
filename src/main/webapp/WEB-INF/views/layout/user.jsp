@@ -88,8 +88,8 @@ $(document).ready(function () {
 	      return false;
 	    }
 	  }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-		    return $( "<li style='background-color: white; list-style-type: none; margin-left:-30px !important; width:324px; position: relative; z-index: 2;'>" )
-		      .append( "<a style='text-decoration: none;background:none;border:none; color: black;' href='${pageContext.request.contextPath}/petdetail?id=" + item.id + "'><div><img src='${pageContext.request.contextPath}/assets/user/images/anhcho/" + item.image + "' height='50' width='60'> &nbsp;" + item.petName + "</div></a>" )
+		    return $( "<li style='background-color: white; list-style-type: none; width:350px;height:75px; position: relative; z-index: 2;'>" )
+		      .append( "<a style='text-decoration: none; border:none; color: black; display: block; width: 100%; height: 100%;' href='${pageContext.request.contextPath}/petdetail?id=" + item.id + "'><div><img src='${pageContext.request.contextPath}/assets/user/images/anhcho/" + item.image + "' height='60' width='60'> &nbsp;" + item.petName + "</div></a>" )
 		      .appendTo( ul );
 	    };
 });

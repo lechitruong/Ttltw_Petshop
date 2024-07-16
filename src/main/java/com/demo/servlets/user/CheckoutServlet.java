@@ -115,7 +115,7 @@ public class CheckoutServlet extends HttpServlet {
 	        }
 	    }
 
-	    if (orderModel.create(new Orders(phoneNumber, email, new String(note.getBytes("ISO-8859-1"), "UTF-8"), new Timestamp(new Date().getTime()), itemModel.total(cart) + 0.1, 0, user.getId(), orderAddress.getId()))) {
+	    if (orderModel.create(new Orders(phoneNumber, email, new String(note.getBytes("ISO-8859-1"), "UTF-8"), new Timestamp(new Date().getTime()), itemModel.total(cart), 0, user.getId(), orderAddress.getId()))) {
 	    	request.getSession().removeAttribute("cart");
 	        int orderId = orderModel.getLastOrder().getId(); 
 	        for (int i = 0; i < cart.size(); i++) {
