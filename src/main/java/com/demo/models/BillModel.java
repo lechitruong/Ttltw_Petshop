@@ -100,12 +100,35 @@ public class BillModel {
 			return result;
 		}
 
-		// tim order dua vao id cua order
+		// tim order dua vao id cua bill
 		public Bills findBillById(int id) {
 			Bills bill = null;
 			try {
 				PreparedStatement preparedStatement = ConnectDB.connection()
-						.prepareStatement("select * from orders where id = ? ");
+						.prepareStatement("select * from bills where id = ? ");
+				preparedStatement.setInt(1, id);
+				ResultSet resultSet = preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					bill = new Bills();
+					bill.setId(resultSet.getInt("id"));
+					bill.setOrderId(resultSet.getInt("orderId"));
+					bill.setPaymentMethod(resultSet.getInt("paymentMethod"));
+					bill.setStatus(resultSet.getBoolean("status"));
+					bill.setCreateDate(resultSet.getTimestamp("createDate"));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				bill = null;
+			} finally {
+				ConnectDB.disconnect();
+			}
+			return bill;
+		}
+		public Bills findBillByOrderId(int id) {
+			Bills bill = null;
+			try {
+				PreparedStatement preparedStatement = ConnectDB.connection()
+						.prepareStatement("select * from bills where orderId = ? ");
 				preparedStatement.setInt(1, id);
 				ResultSet resultSet = preparedStatement.executeQuery();
 				while (resultSet.next()) {

@@ -2,17 +2,41 @@
 <%@page import="com.demo.entities.OrderDetails"%>
 <%@page import="com.demo.models.AddressModel"%>
 <%@page import="com.demo.models.OrderModel"%>
+<%@page import="com.demo.models.BillModel"%>
 <%@page import="com.demo.entities.Users"%>
 <%@page import="com.demo.entities.Orders"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Tình trạng đơn hàng</title>
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
+<style>
+/* Lớp phủ toàn màn hình */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Màu nền nửa trong suốt */
+    z-index: 998; /* Đảm bảo lớp phủ ở trên các phần tử khác nhưng dưới hộp thoại */
+}
+
+#btnClose {
+    float: right;
+    margin: 5px;
+    background: transparent;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+</style>
 </head>
 <body>
 <section class="container_status">
@@ -23,6 +47,7 @@ OrderModel orderModel = new OrderModel();
 AddressModel addressModel = new AddressModel();
 Users user = (Users) request.getSession().getAttribute(("user"));
 List<Orders> orders =(List<Orders>) orderModel.findAllByUserId(user.getId());
+BillModel billModel = new BillModel();
 int z =0;
 int w =0;
 %>
@@ -37,7 +62,9 @@ int w =0;
                 <th>Tổng tiền</th>
                 <th>Địa chỉ</th>
                 <th>Thời gian đặt</th>
-                <th>Trạng thái</th>
+                <th>Trạng thái đơn hàng</th>
+                <th>Trạng thái thanh toán</th>
+                <th>Phương thức thanh toán</th>
                 <th>Hoá đơn</th>
             </tr>
         </thead>
@@ -54,14 +81,35 @@ int w =0;
                 <td><%= orders.get(i).getTotalMoney() %> triệu đồng</td>
                 <td><%= addressModel.findAddressById(orders.get(i).getAddressId()).getAddress()+", "+ addressModel.findAddressById(orders.get(i).getAddressId()).getWard()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getDistrict()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getCountry() %></td>
                 <td><%= orders.get(i).getOrderDate() %></td>
-                <td><%= orders.get(i).getStatus() == 0? "Đang xác nhận": orders.get(i).getStatus() == 1? "Đang giao": "Đã giao"%></td>
-                <td><%= orders.get(i).getStatus() == 0? "Đang xác nhận": orders.get(i).getStatus() == 1? "Đang giao": "Đã giao"%></td>
+                <td><%= orders.get(i).getStatus() == 1? "Đang xác nhận": "Chưa xác nhận"%></td>
+                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == false %>">
+                <td>Chưa thanh toán(Vui lòng thanh toán để xác)</td>
+                <td><%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 1? "Thanh toán khi nhận hàng":"Thanh toán bằng VNPay"%></td>
+                <td>
+                <button class="btn btn-danger">
+						<a href="${pageContext.request.contextPath}/payment?id=<%= orders.get(i).getId() %>">Thanh toán để xem hoá đơn</a>
+				</button>
+                </td>
+                </c:if>
+                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == true %>">
+                 <td>Đã thanh toán</td>
+                <td>
+                <button class="btn btn-danger">
+						<a href="${pageContext.request.contextPath}/showbill?id=<%= orders.get(i).getId() %>">Xem hoá đơn</a>
+				</button>
+                </td>
+                </c:if>
             </tr>       
                 <% } %>
                 </tbody>
     </table>
-     <div id="dialog-message" title="Download complete" style="display: none; margin:50px 200px; z-index:999;">
-     <div class="order-form" style="height: 300px; width: 720px;">
+    <!-- Lớp phủ -->
+    <div id="dialog-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 998;"></div>
+     <div id="dialog-message" title="Download complete" style="display: none; margin:70px 180px; z-index:999;">
+     <button id="btnClose" style="float: right;margin:5px; background: transparent; border: none; font-size: 25px; cursor: pointer;">
+        <i class="fas fa-times"></i>
+    </button>
+     <div class="order-form" style="height: 360px; width: 720px;">
 				<h3>Chi tiết đơn hàng</h3>	
 			<table id="table" class="display" style="width:100%">
         <thead>
@@ -89,43 +137,52 @@ int w =0;
             </table>
 			</div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
 <script>
 $(document).ready(function () {
-	$('#example tbody .clickTR').click(function(){
-		$('#dialog-message').css('display','block');
-	var orderId = $(this).attr('data-id');
-	$.ajax({
-		type:'GET',
-		url: '${pageContext.request.contextPath}/dialogmessage',
-		data:{ 
-			orderId: orderId
-		},
-		success: function(data){
-			var s= '';
-			var orderdetails = data.orderdetails;
-			var pets = data.pets;
-				for (var i = 0; i < orderdetails.length; i++) {
-					s+= '<tr>';
-				 	s+= '<td>'+ (i+1) +'</td>'; 
-					s+= '<td>'+pets[i].petName +'</td>';
-					s+= '<td>'+pets[i].petType+'</td>';
-					s+= '<td>'+orderdetails[i].quantity +'</td>';
-					s+= '<td>'+orderdetails[i].money +' (triệu đồng)</td>';
-					s+= '<td>'+orderdetails[i].money * orderdetails[i].quantity+' (triệu đồng)</td>';
-				    s+= '</tr>';
-				}
-				$('#table tbody').html(s);
-			}
-			
-	
-		});
-		
-		
-	
-	});
-	});
+    $('#example tbody .clickTR').click(function(){
+        $('#dialog-overlay').css('display', 'block');
+        $('#dialog-message').css('display', 'block');
+        var orderId = $(this).attr('data-id');
+        $.ajax({
+            type: 'GET',
+            url: '${pageContext.request.contextPath}/dialogmessage',
+            data: { 
+                orderId: orderId
+            },
+            success: function(data){
+                var s = '';
+                var orderdetails = data.orderdetails;
+                var pets = data.pets;
+                for (var i = 0; i < orderdetails.length; i++) {
+                    s += '<tr>';
+                    s += '<td>' + (i + 1) + '</td>'; 
+                    s += '<td>' + pets[i].petName + '</td>';
+                    s += '<td>' + pets[i].petType + '</td>';
+                    s += '<td>' + orderdetails[i].quantity + '</td>';
+                    s += '<td>' + orderdetails[i].money + ' (triệu đồng)</td>';
+                    s += '<td>' + orderdetails[i].money * orderdetails[i].quantity + ' (triệu đồng)</td>';
+                    s += '</tr>';
+                }
+                $('#table tbody').html(s);
 
+                // Khởi tạo DataTable
+                $('#table').DataTable();
+            }
+        });
+    });
+
+
+ // Xử lý sự kiện bấm nút Đóng
+    $('#btnClose').click(function() {
+        $('#dialog-message').css('display', 'none');
+        $('#dialog-overlay').css('display', 'none');
+    });
+});
 </script>
+
 </section>
 <style>
 body {
