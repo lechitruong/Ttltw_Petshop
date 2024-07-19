@@ -16,6 +16,12 @@
   	<description></description>
   	<servlet-class>com.demo.servlets.user.CommentServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>PaymentServlet</servlet-name>
+  	<display-name>PaymentServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.demo.helpers.PaymentServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>AutoComplete</servlet-name>
   	<url-pattern>/AutoComplete</url-pattern>
@@ -23,5 +29,9 @@
   <servlet-mapping>
   	<servlet-name>CommentServlet</servlet-name>
   	<url-pattern>/CommentServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>PaymentServlet</servlet-name>
+  	<url-pattern>/PaymentServlet</url-pattern>
   </servlet-mapping>
 </web-app>
