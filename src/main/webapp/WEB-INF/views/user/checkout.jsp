@@ -181,11 +181,13 @@ display:none;
 						<div class="single-widget">
         <h2>Phương thức thanh toán</h2>
         <div class="content" style="margin:10px 25px;">
+
             <div class="radio">       
                 <input type="radio" id="paymentMethod2" name="payment_method" value="1">
                 <label for="paymentMethod2">Thanh toán khi nhận hàng</label><br>
                 
                 <input type="radio" id="paymentMethod3" name="payment_method" value="2">
+
                 <label for="paymentMethod3">Thanh toán VNPay</label><br>
             </div>
         </div>
@@ -195,7 +197,9 @@ display:none;
     <div class="single-widget get-button">
         <div class="content">
             <div class="button">
-                <button id="btnDatHang" class="btn" type="submit">Đặt hàng</button>
+
+                <button id="btnDatHang" class="btn" type="submit">Đặt hàng</button
+
             </div>
         </div>
     </div>
@@ -324,6 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
 </script>
 </body>
 </html>
