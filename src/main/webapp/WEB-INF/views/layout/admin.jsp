@@ -94,19 +94,6 @@ $(document).ready(function () {
         <li>
           <a href="${pageContext.request.contextPath}/admin/quanlibill">
             <i class="zmdi zmdi-shopping-cart"></i> <span>Quản lí Hoá đơn</span>
-<<<<<<< HEAD
-=======
-          </a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/admin/quanlinhaphang">
-            <i class="zmdi zmdi-shopping-cart"></i> <span>Quản lí Nhập Hàng</span>
-          </a>
-        </li>
-        <li>
-          <a href="${pageContext.request.contextPath}/admin/quanlitonkho">
-            <i class="zmdi zmdi-shopping-cart"></i> <span>Quản lí Tồn Kho</span>
->>>>>>> 310c0d33e599b5b2aec630d97f4cd21442fb83ef
           </a>
         </li>
         <li>
