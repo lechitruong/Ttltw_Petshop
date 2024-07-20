@@ -44,7 +44,8 @@ public class ShowBillServlet extends HttpServlet {
 
     protected void doGetIndex(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	String billIdParam = request.getParameter("id");
+        String billIdParam = request.getParameter("id");
+
         if (billIdParam != null) {
             int billId = Integer.parseInt(billIdParam);
             BillModel billModel = new BillModel();

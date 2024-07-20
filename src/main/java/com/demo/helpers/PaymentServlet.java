@@ -37,8 +37,9 @@ import java.sql.Timestamp;
  * @author CTT VNPAY
  */
 public class PaymentServlet extends HttpServlet {
-	
+
     @Override
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getParameter("action");
 		if(action == null) {
@@ -93,43 +94,55 @@ public class PaymentServlet extends HttpServlet {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		String vnp_CreateDate = formatter.format(cld.getTime());
 		vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+    
+    
 
 		cld.add(Calendar.MINUTE, 15);
 		String vnp_ExpireDate = formatter.format(cld.getTime());
 		vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 
-		List fieldNames = new ArrayList(vnp_Params.keySet());
-		Collections.sort(fieldNames);
-		StringBuilder hashData = new StringBuilder();
-		StringBuilder query = new StringBuilder();
-		Iterator itr = fieldNames.iterator();
-		while (itr.hasNext()) {
-			String fieldName = (String) itr.next();
-			String fieldValue = (String) vnp_Params.get(fieldName);
-			if ((fieldValue != null) && (fieldValue.length() > 0)) {
-				// Build hash data
-				hashData.append(fieldName);
-				hashData.append('=');
-				hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
-				// Build query
-				query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
-				query.append('=');
-				query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
-				if (itr.hasNext()) {
-					query.append('&');
-					hashData.append('&');
-				}
-			}
-		}
-		String queryUrl = query.toString();
-		String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hashData.toString());
-		queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
-		String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
-		System.out.println(paymentUrl);
-		resp.sendRedirect(paymentUrl);
+
+        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String vnp_CreateDate = formatter.format(cld.getTime());
+        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+
+        cld.add(Calendar.MINUTE, 15);
+        String vnp_ExpireDate = formatter.format(cld.getTime());
+        vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
+
+        List fieldNames = new ArrayList(vnp_Params.keySet());
+        Collections.sort(fieldNames);
+        StringBuilder hashData = new StringBuilder();
+        StringBuilder query = new StringBuilder();
+        Iterator itr = fieldNames.iterator();
+        while (itr.hasNext()) {
+            String fieldName = (String) itr.next();
+            String fieldValue = (String) vnp_Params.get(fieldName);
+            if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                // Build hash data
+                hashData.append(fieldName);
+                hashData.append('=');
+                hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                // Build query
+                query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
+                query.append('=');
+                query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                if (itr.hasNext()) {
+                    query.append('&');
+                    hashData.append('&');
+                }
+            }
+        }
+        String queryUrl = query.toString();
+        String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hashData.toString());
+        queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
+        String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
+        System.out.println(paymentUrl);
+        resp.sendRedirect(paymentUrl);
     }
     protected void doGet_PaymentInfo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-  		req.getRequestDispatcher("/WEB-INF/views/user/paymentsuccess.jsp").forward(req, resp);
-  	}
+        req.getRequestDispatcher("/WEB-INF/views/user/paymentsuccess.jsp").forward(req, resp);
+    }
 
 }
