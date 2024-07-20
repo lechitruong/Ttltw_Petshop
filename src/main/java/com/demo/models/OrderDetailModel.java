@@ -2,6 +2,7 @@ package com.demo.models;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,26 @@ public class OrderDetailModel {
 				}
 				return orderDetails;
 			}
+// ham tra ve so luong chi tiet don hang dc ban ra theo thoi gian
+			 public int getQuantityByDateRange(Timestamp startDate, Timestamp endDate) {
+			        int totalQuantity = 0;
+			        try {
+			            PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement("SELECT SUM(quantity) FROM orderDetails WHERE orderId IN " +
+			                       "(SELECT id FROM orders WHERE orderDate BETWEEN ? AND ?)");
+			            preparedStatement.setTimestamp(1, startDate);
+			            preparedStatement.setTimestamp(2, endDate);
+			            ResultSet resultSet = preparedStatement.executeQuery();
 
+			            if (resultSet.next()) {
+			                totalQuantity = resultSet.getInt(1);
+			            }
+			        } catch (Exception e) {
+			            e.printStackTrace();
+			        } finally {
+			            ConnectDB.disconnect();
+			        }
+			        return totalQuantity;
+			    }
 		// ham dang ky
 			public boolean create(OrderDetails orderDetail) {
 				boolean result = true;
@@ -175,4 +195,42 @@ public class OrderDetailModel {
 				}
 				return quantity;
 			}
+			// lay ra so luong ctdh cua don hang: 
+			 public int getQuantityByOrderId(int orderId) {
+			        int quantity = 0;
+			        String sql = "SELECT SUM(quantity) AS totalQuantity FROM orderdetails WHERE orderId = ?";
+			        try {
+			            PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(sql);
+			            preparedStatement.setInt(1, orderId);
+			            ResultSet resultSet = preparedStatement.executeQuery();
+			            if (resultSet.next()) {
+			                quantity = resultSet.getInt("totalQuantity");
+			            }
+			        } catch (Exception e) {
+			            e.printStackTrace();
+			        } finally {
+			            ConnectDB.disconnect();
+			        }
+			        return quantity;
+			    }
+			 /// so luong ctdh theo tung loai: 
+			 public int quantityByCategory(int orderId, int categoryId) {
+			        int quantity = 0;
+			        String sql = "SELECT SUM(quantity) AS totalQuantity FROM orderdetails " +
+			                     "JOIN pets ON orderdetails.petId = pets.id WHERE orderId = ? AND categoryId = ?";
+			        try {
+			            PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(sql);
+			            preparedStatement.setInt(1, orderId);
+			            preparedStatement.setInt(2, categoryId);
+			            ResultSet resultSet = preparedStatement.executeQuery();
+			            if (resultSet.next()) {
+			                quantity = resultSet.getInt("totalQuantity");
+			            }
+			        } catch (Exception e) {
+			            e.printStackTrace();
+			        } finally {
+			            ConnectDB.disconnect();
+			        }
+			        return quantity;
+			    }
 }

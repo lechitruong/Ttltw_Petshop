@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.demo.entities.Address;
 import com.demo.entities.Bills;
+import com.demo.entities.Orders;
 import com.demo.models.AddressModel;
 import com.demo.models.BillModel;
 import com.demo.models.OrderModel;
@@ -44,15 +46,19 @@ public class ShowBillServlet extends HttpServlet {
 
     protected void doGetIndex(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String billIdParam = request.getParameter("id");
-
+    	String billIdParam = request.getParameter("id");
         if (billIdParam != null) {
             int billId = Integer.parseInt(billIdParam);
             BillModel billModel = new BillModel();
             AddressModel addressModel = new AddressModel();
             OrderModel orderModel = new OrderModel();
             Bills bill = billModel.findBillByOrderId(billId);
+            Orders order = orderModel.findOrderById(bill.getOrderId());
+            Address address = addressModel.findAddressById(order.getAddressId());
+            // Set attributes for the JSP
             request.setAttribute("bill", bill);
+            request.setAttribute("order", order);
+            request.setAttribute("address", address);
             request.getRequestDispatcher("/WEB-INF/views/user/showbill.jsp").forward(request, response);
         }
     }
