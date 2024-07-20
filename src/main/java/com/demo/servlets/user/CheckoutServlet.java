@@ -75,6 +75,7 @@ public class CheckoutServlet extends HttpServlet {
 // khi nguoi dung dat hang
 	protected void doPost_Dathang(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    // String fullName = request.getParameter("fullName");
+		HttpSession session = request.getSession();
 	    String phoneNumber = request.getParameter("phoneNumber");
 	    String email = request.getParameter("email");
 	    String country = request.getParameter("country_checkout");
@@ -122,7 +123,7 @@ public class CheckoutServlet extends HttpServlet {
 	        int orderId = orderModel.getLastOrder().getId(); 
 	        Bills bill = new Bills();
 	        bill.setOrderId(orderId);
-	        bill.setPaymentMethod(paymentMethod.equals("Thanh toán VNPay")? 2: 1); 
+	        bill.setPaymentMethod(paymentMethod.equals("2")? 2: 1); 
 	        bill.setCreateDate(new Timestamp(new Date().getTime()));
 	        bill.setStatus(false);
 	        if(billModel.create(bill)) {
@@ -146,8 +147,15 @@ public class CheckoutServlet extends HttpServlet {
 		                System.out.println("false - orderdetails");
 		            }
 		        }
-		        System.out.println("true - order");
-		        response.sendRedirect("orderstatus");
+		        if ("1".equals(paymentMethod)) {
+		        	 response.sendRedirect("orderstatus");
+		        } else if ("2".equals(paymentMethod)) {
+		        	double totalAmountInMillion = itemModel.total(cart); // Tổng tiền tính bằng triệu đồng
+		        	int totalAmountInDong = (int) (totalAmountInMillion * 1000000); // Chuyển đổi thành đồng
+		        	// Lưu số tiền vào session
+		        	session.setAttribute("totalhidden", totalAmountInDong);
+		            response.sendRedirect("payment");
+		        }
 		    } else {
 		        response.sendRedirect("checkout");
 		    

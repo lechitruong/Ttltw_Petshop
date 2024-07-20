@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.demo.entities.Bills;
+import com.demo.models.AddressModel;
 import com.demo.models.BillModel;
+import com.demo.models.OrderModel;
 
 /**
  * Servlet implementation class ShowBillServlet
@@ -42,11 +44,13 @@ public class ShowBillServlet extends HttpServlet {
 
     protected void doGetIndex(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	String billIdParam = request.getParameter("billId");
+    	String billIdParam = request.getParameter("id");
         if (billIdParam != null) {
             int billId = Integer.parseInt(billIdParam);
             BillModel billModel = new BillModel();
-            Bills bill = billModel.findBillById(billId);
+            AddressModel addressModel = new AddressModel();
+            OrderModel orderModel = new OrderModel();
+            Bills bill = billModel.findBillByOrderId(billId);
             request.setAttribute("bill", bill);
             request.getRequestDispatcher("/WEB-INF/views/user/showbill.jsp").forward(request, response);
         }

@@ -63,8 +63,8 @@ int w =0;
                 <th>Địa chỉ</th>
                 <th>Thời gian đặt</th>
                 <th>Trạng thái đơn hàng</th>
-                <th>Trạng thái thanh toán</th>
                 <th>Phương thức thanh toán</th>
+                <th>Trạng thái thanh toán</th>
                 <th>Hoá đơn</th>
             </tr>
         </thead>
@@ -82,16 +82,29 @@ int w =0;
                 <td><%= addressModel.findAddressById(orders.get(i).getAddressId()).getAddress()+", "+ addressModel.findAddressById(orders.get(i).getAddressId()).getWard()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getDistrict()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getCountry() %></td>
                 <td><%= orders.get(i).getOrderDate() %></td>
                 <td><%= orders.get(i).getStatus() == 1? "Đang xác nhận": "Chưa xác nhận"%></td>
-                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == false %>">
-                <td>Chưa thanh toán(Vui lòng thanh toán để xác nhận đơn hàng)</td>
-                <td><%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 2? "Thanh toán khi nhận hàng":"Thanh toán bằng VNPay"%></td>
+                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 2 %>">
+                <td>Thanh toán bằng VNPay</td>
+                <td>Đã thanh toán</td>
+                <td>
+                <button class="btn btn-danger">
+						<a href="${pageContext.request.contextPath}/showbill?id=<%= orders.get(i).getId() %>">In hoá đơn</a>
+				</button>
+                </td>
                 </c:if>
-                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == true %>">
+                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 1 && billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == true%>">
+                 <td>Thanh toán khi nhận hàng</td>
                  <td>Đã thanh toán</td>
                 <td>
                 <button class="btn btn-danger">
-						<a href="${pageContext.request.contextPath}/showbill?id=<%= orders.get(i).getId() %>">Xem hoá đơn</a>
+						<a href="${pageContext.request.contextPath}/showbill?id=<%= orders.get(i).getId() %>">In hoá đơn</a>
 				</button>
+                </td>
+                </c:if>
+                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 1 && billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == false%>">
+                 <td>Thanh toán khi nhận hàng</td>
+                 <td>Chưa thanh toán</td>
+                <td>
+                Thanh toán khi nhận hàng xong để In hoá đơn
                 </td>
                 </c:if>
             </tr>       

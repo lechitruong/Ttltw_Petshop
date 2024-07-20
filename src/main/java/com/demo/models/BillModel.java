@@ -124,12 +124,12 @@ public class BillModel {
 			}
 			return bill;
 		}
-		public Bills findBillByOrderId(int id) {
+		public Bills findBillByOrderId(int orderId) {
 			Bills bill = null;
 			try {
 				PreparedStatement preparedStatement = ConnectDB.connection()
 						.prepareStatement("select * from bills where orderId = ? ");
-				preparedStatement.setInt(1, id);
+				preparedStatement.setInt(1, orderId);
 				ResultSet resultSet = preparedStatement.executeQuery();
 				while (resultSet.next()) {
 					bill = new Bills();
@@ -200,6 +200,9 @@ public class BillModel {
 		    }
 		    return bills;
 		}
-
+public static void main(String[] args) {
+	BillModel billModel = new BillModel();
+	System.out.println(billModel.findBillById(35));
+}
 
 }
