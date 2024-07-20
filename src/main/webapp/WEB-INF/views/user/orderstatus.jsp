@@ -83,13 +83,8 @@ int w =0;
                 <td><%= orders.get(i).getOrderDate() %></td>
                 <td><%= orders.get(i).getStatus() == 1? "Đang xác nhận": "Chưa xác nhận"%></td>
                 <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == false %>">
-                <td>Chưa thanh toán(Vui lòng thanh toán để xác)</td>
-                <td><%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 1? "Thanh toán khi nhận hàng":"Thanh toán bằng VNPay"%></td>
-                <td>
-                <button class="btn btn-danger">
-						<a href="${pageContext.request.contextPath}/payment?id=<%= orders.get(i).getId() %>">Thanh toán để xem hoá đơn</a>
-				</button>
-                </td>
+                <td>Chưa thanh toán(Vui lòng thanh toán để xác nhận đơn hàng)</td>
+                <td><%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 2? "Thanh toán khi nhận hàng":"Thanh toán bằng VNPay"%></td>
                 </c:if>
                 <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == true %>">
                  <td>Đã thanh toán</td>

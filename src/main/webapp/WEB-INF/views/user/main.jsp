@@ -160,13 +160,13 @@
       							s+= '<div class="single-product">';
       							s+= '<div class="product-img">';
       							s+= '<a href="${pageContext.request.contextPath }/petdetail?id='+pet[i].id+'">';
-      							s+= '<img class="default-img" src="${pageContext.request.contextPath}/assets/user/images/anhcho/'+ pet[i].image+'" alt="#" />';
-      							s+= '<img class="hover-img" src="${pageContext.request.contextPath}/assets/user/images/anhcho/'+ pet[i].image+'" alt="#" />';
+      							s+= '<img class="default-img" src="${pageContext.request.contextPath}/assets/user/images/pet/'+ pet[i].image+'" alt="#" />';
+      							s+= '<img class="hover-img" src="${pageContext.request.contextPath}/assets/user/images/pet/'+ pet[i].image+'" alt="#" />';
       							s+= '<span class="new">New</span>';
       							s+= '</a>';
       							s+= '<div class="button-head">';
       							s+= '<div class="product-action">';
-      							s+= '<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class="ti-eye"></i><span>Xem chi tiết</span></a>';
+      							s+= '<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="${pageContext.request.contextPath }/petdetail?id='+pet[i].id+'"><i class="ti-eye"></i><span>Xem chi tiết</span></a>';
       							s+= '<a title="Wishlist" href="${pageContext.request.contextPath }/wishlistpet?action=wishlist&id='+pet[i].id+'"><i class="ti-heart"></i><span>Thêm vào yêu thích</span></a>';
       							s+= '</div>';
       							s+= '<div class="product-action-2">';
@@ -203,13 +203,13 @@
                         <div class="single-product">
                           <div class="product-img">
                             <a href="${pageContext.request.contextPath }/petdetail?id=<%=pet.getId() %>">
-                              <img class="default-img" src="${pageContext.request.contextPath}/assets/user/images/anhcho/<%= pet.getImage() %>" alt="#" />
-                              <img class="hover-img" src="${pageContext.request.contextPath}/assets/user/images/anhcho/<%= pet.getImage() %>" alt="#" />
+                              <img class="default-img" src="${pageContext.request.contextPath}/assets/user/images/pet/<%= pet.getImage() %>" alt="#" />
+                              <img class="hover-img" src="${pageContext.request.contextPath}/assets/user/images/pet/<%= pet.getImage() %>" alt="#" />
                               <span class="new">New</span>
                             </a>
                             <div class="button-head">
                               <div class="product-action">
-                                <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class="ti-eye"></i><span>Xem chi tiết</span></a>
+                                <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="${pageContext.request.contextPath }/petdetail?id=<%=pet.getId() %>"><i class="ti-eye"></i><span>Xem chi tiết</span></a>
                                 <a title="Wishlist" href="${pageContext.request.contextPath }/wishlistpet?action=wishlist&id=<%= pet.getId() %>"><i class="ti-heart"></i><span>Thêm vào yêu thích</span></a>
                               </div>
                               <div class="product-action-2">

@@ -186,7 +186,7 @@ display:none;
                 <label for="paymentMethod2">Thanh toán khi nhận hàng</label><br>
                 
                 <input type="radio" id="paymentMethod3" name="payment_method" value="2">
-                <label for="paymentMethod3">Thanh toán VNPay</label><br>
+                <label for="paymentMethod3">Thanh toán VNPay(Sau khi đặt hàng)</label><br>
             </div>
         </div>
     </div>
