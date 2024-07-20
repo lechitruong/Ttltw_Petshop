@@ -130,9 +130,7 @@ $(document).ready(function () {
 						<div class="right-content">
 							<div class="list-main-right">
 								<span><i class="ti-location-pin"></i>Linh
-									Xuân, Tp.Thủ Đức</span> <span> <i class="ti-alarm-clock"></i> <a
-									href="#">Giảm giá</a>
-								</span>
+									Xuân, Tp.Thủ Đức</span> 
 								<div class="list-main-right-login">
 									<c:if test="${sessionScope.user ==null }">
 										<span class="header-icon-label"> <i
@@ -175,7 +173,7 @@ $(document).ready(function () {
 						<!-- Logo -->
 						<div class="logo">
 							<a href="index.html"><img
-								src="images/logo.png" alt="logo" /></a>
+								src="${pageContext.request.contextPath}/assets/user/images/logopetshop.jpg" alt="logo" style="width:80px; height:80px;" /></a>
 						</div>
 						<!--/ End Logo -->
 					</div>
@@ -202,7 +200,7 @@ $(document).ready(function () {
 									class="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar">
-								<a href="#" class="single-icon"><i
+								<a href="${pageContext.request.contextPath}/personalinformation" class="single-icon"><i
 									class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							</div>
 							<%
@@ -270,64 +268,8 @@ $(document).ready(function () {
 						<div class="col-lg-3">
 							<div class="all-category">
 								<h3 class="cat-heading">
-									<i class="fa fa-bars"></i>DANH MỤC
+									<i class="fa fa-bars" style="margin-right:3px;"></i>DANH MỤC
 								</h3>
-								<ul class="main-category">
-									<li><a href="#">Thú cưng mới
-											<i class="fa fa-angle-right"></i>
-									</a>
-										<ul class="sub-category">
-											<li><a href="#">accessories</a></li>
-											<li><a href="#">best selling</a></li>
-											<li><a href="#">top 100 offer</a></li>
-											<li><a href="#">sunglass</a></li>
-											<li><a href="#">watch</a></li>
-											<li><a href="#">man’s product</a></li>
-											<li><a href="#">ladies</a></li>
-											<li><a href="#">westrn dress</a></li>
-											<li><a href="#">denim </a></li>
-										</ul></li>
-									<li class="main-mega"><a href="#">Giảm
-											giá <i class="fa fa-angle-right" aria-hidden="true"></i>
-									</a>
-										<ul class="mega-menu">
-											<li class="single-menu"><a href="#" class="title-link">Shop
-													Kid's</a>
-												<div class="image">
-													<img src="https://via.placeholder.com/225x155" alt="#" />
-												</div>
-												<div class="inner-link">
-													<a href="#">Kids Toys</a> <a href="#">Kids Travel Car</a> <a
-														href="#">Kids Color Shape</a> <a href="#">Kids Tent</a>
-												</div></li>
-											<li class="single-menu"><a href="#" class="title-link">Shop
-													Men's</a>
-												<div class="image">
-													<img src="https://via.placeholder.com/225x155" alt="#" />
-												</div>
-												<div class="inner-link">
-													<a href="#">Watch</a> <a href="#">T-shirt</a> <a href="#">Hoodies</a>
-													<a href="#">Formal Pant</a>
-												</div></li>
-											<li class="single-menu"><a href="#" class="title-link">Shop
-													Women's</a>
-												<div class="image">
-													<img src="https://via.placeholder.com/225x155" alt="#" />
-												</div>
-												<div class="inner-link">
-													<a href="#">Ladies Shirt</a> <a href="#">Ladies Frog</a> <a
-														href="#">Ladies Sun Glass</a> <a href="#">Ladies Watch</a>
-												</div></li>
-										</ul></li>
-									<li><a href="#">accessories</a></li>
-									<li><a href="#">top 100 offer</a></li>
-									<li><a href="#">sunglass</a></li>
-									<li><a href="#">watch</a></li>
-									<li><a href="#">man’s product</a></li>
-									<li><a href="#">ladies</a></li>
-									<li><a href="#">westrn dress</a></li>
-									<li><a href="#">denim </a></li>
-								</ul>
 							</div>
 						</div>
 						<div class="col-lg-9 col-12">
@@ -343,7 +285,6 @@ $(document).ready(function () {
 												<li><a
 													href="${pageContext.request.contextPath}/shopgrid">Thú
 														cưng</a></li>
-												<li><a href="#">Dịch vụ</a></li>
 												<li><a href="#">Shop<i
 														class="ti-angle-down"></i><span class="new">Mới</span></a>
 													<ul class="dropdown">
@@ -354,13 +295,6 @@ $(document).ready(function () {
 														<li><a
 															href="${pageContext.request.contextPath}/checkout">Thanh
 																toán</a></li>
-													</ul></li>
-												<li><a href="#">Trang</a></li>
-												<li><a href="#">Tin tức<i class="ti-angle-down"></i></a>
-													<ul class="dropdown">
-														<li><a
-															href="${pageContext.request.contextPath}/blogsinglesidebar">Tin
-																tức hot nhất</a></li>
 													</ul></li>
 												<li><a
 													href="${pageContext.request.contextPath}/contact">Liên
@@ -394,7 +328,7 @@ $(document).ready(function () {
 						<div class="single-footer about">
 							<div class="logo">
 								<a href="index.html"><img
-									src="images/logo2.png" alt="#" /></a>
+									src="${pageContext.request.contextPath}/assets/user/images/logopetshop.jpg" alt="#" /></a>
 							</div>
 							<p class="text">Đó là protein, không phải cuộc đua, là cực
 								hình, không cần thiết Anh ấy là một cầu thủ bóng đá tuyệt vời.
@@ -476,11 +410,6 @@ $(document).ready(function () {
 										target="_blank">PetShop</a> - All
 									Rights Reserved.
 								</p>
-							</div>
-						</div>
-						<div class="col-lg-6 col-12">
-							<div class="right">
-								<img src="images/payments.png" alt="#" />
 							</div>
 						</div>
 					</div>
