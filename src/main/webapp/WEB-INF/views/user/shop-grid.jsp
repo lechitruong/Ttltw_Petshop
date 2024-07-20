@@ -4,32 +4,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Lọc sản phẩm</title>
+  <meta charset="UTF-8">
+  <title>Lọc sản phẩm</title>
 </head>
 <body class="js">
- <!-- Breadcrumbs -->
-    <div class="breadcrumbs">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="bread-inner">
-              <ul class="bread-list">
-                <li>
-                  <a href="index1.html">Trang chủ<i class="ti-arrow-right"></i></a>
-                </li>
-                <li class="active"><a href="blog-single.html">Lọc</a></li>
-              </ul>
-            </div>
-          </div>
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="bread-inner">
+          <ul class="bread-list">
+            <li>
+              <a href="index1.html"
+              >Trang chủ<i class="ti-arrow-right"></i
+              ></a>
+            </li>
+            <li class="active"><a href="blog-single.html">Lọc</a></li>
+          </ul>
         </div>
       </div>
     </div>
-    <!-- End Breadcrumbs -->
+  </div>
+</div>
+<!-- End Breadcrumbs -->
 
-    <!-- Product Style -->
-    <section class="product-area shop-sidebar shop section">
-      <div class="container">
+<!-- Product Style -->
+<section class="product-area shop-sidebar shop section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-12">
+        <div class="shop-sidebar">
+          <!-- Single Widget -->
+          <form action="shopgrid" method="get">
+            <!-- Danh mục -->
+            <div class="single-widget category">
+              <h3 class="title">Danh mục</h3>
+              <div class="categor-list">
+                <label><input type="radio" name="category" value="all" checked> Tất cả</label><br>
+                <label><input type="radio" name="category" value="dogs"> Chó</label><br>
+                <label><input type="radio" name="category" value="cats"> Mèo</label><br>
+                <label><input type="radio" name="category" value="others"> Thú cưng khác</label>
+              </div>
+            </div>
+
+            <!-- Mức giá -->
+            <div class="single-widget range">
+              <h3 class="title">Mức giá</h3>
+              <ul class="check-box-list">
+                <li>
+                  <a href="index1.html">Trang chủ<i class="ti-arrow-right"></i></a>
+                  <label class="radio-inline" for="price1">
+                    <input name="price" id="price1" type="radio" value="below_2" /> Dưới 2 triệu
+                  </label>
+                </li>
+                <li>
+                  <label class="radio-inline" for="price2">
+                    <input name="price" id="price2" type="radio" value="2_3_5" /> 2 triệu - 3.5 triệu
+                  </label>
+                </li>
+                <li>
+                  <label class="radio-inline" for="price3">
+                    <input name="price" id="price3" type="radio" value="above_3_5" /> Hơn 3.5 triệu
+                  </label>
+                </li>
+                <li>
+                  <label class="radio-inline" for="priceNone">
+                    <input name="price" id="priceNone" type="radio" value="" checked /> Mọi mức giá
+                  </label>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Nút lọc -->
+            <button type="submit" class="btn" style="margin: 10px; text-align:center;">Lọc</button>
+          </form>
+
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-8 col-12">
         <div class="row">
           <div class="col-lg-3 col-md-4 col-12">
             <div class="shop-sidebar">
@@ -108,7 +161,40 @@
             </div>
             <div class="product-action-2">
               <a title="Add to cart" href="${pageContext.request.contextPath }/cart?action=addToCart&id=${pet.id}">Thêm giỏ hàng</a>
+          <div class="col-12">
+            <!-- Shop Top -->
+            <div class="shop-top">
+              <div class="shop-shorter">
+                <div class="single-shorter">
+                  <label>Hiển thị :</label>
+                  <select>
+                    <option selected="selected">09</option>
+                    <option>15</option>
+                    <option>25</option>
+                    <option>30</option>
+                  </select>
+                </div>
+                <div class="single-shorter">
+                  <label>Sắp xếp theo :</label>
+                  <select>
+                    <option selected="selected">Tên</option>
+                    <option>Giá</option>
+                    <option>Kích thước</option>
+                  </select>
+                </div>
+              </div>
+              <ul class="view-mode">
+                <li class="active">
+                  <a href="shop-grid.html"
+                  ><i class="fa fa-th-large"></i
+                  ></a>
+                </li>
+                <li>
+                  <a href="shop-list.html"><i class="fa fa-th-list"></i></a>
+                </li>
+              </ul>
             </div>
+            <!--/ End Shop Top -->
           </div>
         </div>
         <div class="product-content">
@@ -150,120 +236,44 @@
       </div>
     </section>
     <!-- End Shop Newsletter -->
+   
+<!--/ End Product Style 1  -->
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span class="ti-close" aria-hidden="true"></span>
-            </button>
+<!-- Start Shop Newsletter  -->
+<section class="shop-newsletter section">
+  <div class="container">
+    <div class="inner-top">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2 col-12">
+          <!-- Start Newsletter Inner -->
+          <div class="inner">
+            <h4>Newsletter</h4>
+            <p>
+              Subscribe to our newsletter and get <span>10%</span> off your
+              first purchase
+            </p>
+            <form
+                    action="mail/mail.php"
+                    method="get"
+                    target="_blank"
+                    class="newsletter-inner"
+            >
+              <input
+                      name="EMAIL"
+                      placeholder="Your email address"
+                      required=""
+                      type="email"
+              />
+              <button class="btn">Subscribe</button>
+            </form>
           </div>
-          <div class="modal-body">
-            <div class="row no-gutters">
-              <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                <!-- Product Slider -->
-                <div class="product-gallery">
-                  <div class="quickview-slider-active">
-                    <div class="single-slider">
-                      <img src="https://via.placeholder.com/569x528" alt="#" />
-                    </div>
-                    <div class="single-slider">
-                      <img src="https://via.placeholder.com/569x528" alt="#" />
-                    </div>
-                    <div class="single-slider">
-                      <img src="https://via.placeholder.com/569x528" alt="#" />
-                    </div>
-                    <div class="single-slider">
-                      <img src="https://via.placeholder.com/569x528" alt="#" />
-                    </div>
-                  </div>
-                </div>
-                <!-- End Product slider -->
-              </div>
-              <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                <div class="quickview-content">
-                  <h2>Flared Shift Dress</h2>
-                  <div class="quickview-ratting-review">
-                    <div class="quickview-ratting-wrap">
-                      <div class="quickview-ratting">
-                        <i class="yellow fa fa-star"></i>
-                        <i class="yellow fa fa-star"></i>
-                        <i class="yellow fa fa-star"></i>
-                        <i class="yellow fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                      </div>
-                      <a href="#"> (1 customer review)</a>
-                    </div>
-                    <div class="quickview-stock">
-                      <span><i class="fa fa-check-circle-o"></i> in stock</span>
-                    </div>
-                  </div>
-                  <h3>$29.00</h3>
-                  <div class="quickview-peragraph">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam.</p>
-                  </div>
-                  <div class="size">
-                    <div class="row">
-                      <div class="col-lg-6 col-12">
-                        <h5 class="title">Size</h5>
-                        <select>
-                          <option selected="selected">s</option>
-                          <option>m</option>
-                          <option>l</option>
-                          <option>xl</option>
-                        </select>
-                      </div>
-                      <div class="col-lg-6 col-12">
-                        <h5 class="title">Color</h5>
-                        <select>
-                          <option selected="selected">orange</option>
-                          <option>purple</option>
-                          <option>black</option>
-                          <option>pink</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="quantity">
-                    <!-- Input Order -->
-                    <div class="input-group">
-                      <div class="button minus">
-                        <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-                          <i class="ti-minus"></i>
-                        </button>
-                      </div>
-                      <input type="text" name="quant[1]" class="input-number" data-min="1" data-max="1000" value="1" />
-                      <div class="button plus">
-                        <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-                          <i class="ti-plus"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <!--/ End Input Order -->
-                  </div>
-                  <div class="add-to-cart">
-                    <a href="#" class="btn">Add to cart</a>
-                    <a href="#" class="btn min"><i class="ti-heart"></i></a>
-                    <a href="#" class="btn min"><i class="fa fa-compress"></i></a>
-                  </div>
-                  <div class="default-social">
-                    <h4 class="share-now">Share:</h4>
-                    <ul>
-                      <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                      <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                      <li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                      <li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <!-- End Newsletter Inner -->
         </div>
       </div>
     </div>
-    <!-- Modal end -->
+  </div>
+</section>
+<!-- End Shop Newsletter -->
+<!-- Modal end -->
 </body>
 </html>
