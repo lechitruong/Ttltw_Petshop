@@ -13,6 +13,7 @@
           crossorigin="anonymous">
 </head>
 <body class="js">
+
 <h2>Cảm ơn bạn đã đặt hàng!</h2>
 <p>Đơn hàng của bạn đã được xác nhận. Chúng tôi sẽ liên hệ với bạn sớm nhất.</p>
 <a href="${pageContext.request.contextPath }/orderstatus">Xem thông tin đơn hàng</a>

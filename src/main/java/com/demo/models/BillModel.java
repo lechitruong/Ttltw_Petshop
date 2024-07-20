@@ -124,29 +124,6 @@ public class BillModel {
 		}
 		return bill;
 	}
-	public Bills findBillByOrderId(int orderId) {
-		Bills bill = null;
-		try {
-			PreparedStatement preparedStatement = ConnectDB.connection()
-					.prepareStatement("select * from bills where orderId = ? ");
-			preparedStatement.setInt(1, orderId);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				bill = new Bills();
-				bill.setId(resultSet.getInt("id"));
-				bill.setOrderId(resultSet.getInt("orderId"));
-				bill.setPaymentMethod(resultSet.getInt("paymentMethod"));
-				bill.setStatus(resultSet.getBoolean("status"));
-				bill.setCreateDate(resultSet.getTimestamp("createDate"));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			bill = null;
-		} finally {
-			ConnectDB.disconnect();
-		}
-		return bill;
-	}
 	// ham de lay ra order cuoi cung
 	public Bills getLastOrder() {
 		Bills bill = new Bills();

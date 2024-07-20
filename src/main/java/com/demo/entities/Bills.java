@@ -9,6 +9,7 @@ public class Bills {
 	private boolean status;
 	private Timestamp createDate;
 
+
 	public Bills(int id, int orderId, int paymentMethod, boolean status, Timestamp createDate) {
 		super();
 		this.id = id;

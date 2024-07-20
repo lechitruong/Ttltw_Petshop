@@ -1,7 +1,8 @@
 <%@page import="com.demo.models.OrderModel"%>
 <%@page import="com.demo.models.BillModel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" isELIgnored="false"%>
+pageEncoding="UTF-8" isELIgnored="false"%>
+
 <%@page import="com.demo.entities.*"%>
 <%@page import="com.demo.models.OrderModel"%>
 <%@page import="com.demo.models.AddressModel"%>
@@ -172,6 +173,7 @@
     </style>
 </head>
 <%
+
     AddressModel addressModel = new AddressModel();
     BillModel billModel = new BillModel();
     OrderModel orderModel = new OrderModel();
