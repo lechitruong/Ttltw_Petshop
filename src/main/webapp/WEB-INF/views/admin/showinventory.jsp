@@ -2,11 +2,7 @@
 <%@page import="com.demo.entities.*"%>
 <%@page import="java.util.*"%>
 <link rel="stylesheet"
-<<<<<<< HEAD
     href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
-=======
-	href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css">
->>>>>>> 310c0d33e599b5b2aec630d97f4cd21442fb83ef
 <%@ page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -174,4 +170,3 @@ $(function() {
 <script>
 	new DataTable('#example');
 </script>
->>>>>>> 310c0d33e599b5b2aec630d97f4cd21442fb83ef

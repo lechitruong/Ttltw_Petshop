@@ -69,34 +69,34 @@
         </tr>
         </thead>
         <tbody>
-        <% for(int i=0; i< orders.size(); i++){
-            ++z;
-        %>
-        <tr data-id="<%= orders.get(i).getId() %>" style="cursor: pointer;" class="clickTR">
-            <td><%= z %></td>
-            <td>${sessionScope.user.fullName }</td>
-            <td><%= orders.get(i).getPhoneNumber() %></td>
-            <td><%= orders.get(i).getEmail() %></td>
-            <td><%= orders.get(i).getNote() %></td>
-            <td><%= orders.get(i).getTotalMoney() %> triệu đồng</td>
-            <td><%= addressModel.findAddressById(orders.get(i).getAddressId()).getAddress()+", "+ addressModel.findAddressById(orders.get(i).getAddressId()).getWard()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getDistrict()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getCountry() %></td>
-            <td><%= orders.get(i).getOrderDate() %></td>
-            <td><%= orders.get(i).getStatus() == 1? "Đang xác nhận": "Chưa xác nhận"%></td>
-            <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == false %>">
+            <% for(int i=0; i< orders.size(); i++){ 
+            	++z;
+            %>
+            <tr data-id="<%= orders.get(i).getId() %>" style="cursor: pointer;" class="clickTR">
+                <td><%= z %></td>
+                <td>${sessionScope.user.fullName }</td>
+                <td><%= orders.get(i).getPhoneNumber() %></td>
+                <td><%= orders.get(i).getEmail() %></td>
+                <td><%= orders.get(i).getNote() %></td>
+                <td><%= orders.get(i).getTotalMoney() %> triệu đồng</td>
+                <td><%= addressModel.findAddressById(orders.get(i).getAddressId()).getAddress()+", "+ addressModel.findAddressById(orders.get(i).getAddressId()).getWard()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getDistrict()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getCountry() %></td>
+                <td><%= orders.get(i).getOrderDate() %></td>
+                <td><%= orders.get(i).getStatus() == 1? "Đang xác nhận": "Chưa xác nhận"%></td>
+                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == false %>">
                 <td>Chưa thanh toán(Vui lòng thanh toán để xác nhận đơn hàng)</td>
                 <td><%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 2? "Thanh toán khi nhận hàng":"Thanh toán bằng VNPay"%></td>
-            </c:if>
-            <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == true %>">
-                <td>Đã thanh toán</td>
+                </c:if>
+                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == true %>">
+                 <td>Đã thanh toán</td>
                 <td>
-                    <button class="btn btn-danger">
-                        <a href="${pageContext.request.contextPath}/showbill?id=<%= orders.get(i).getId() %>">Xem hoá đơn</a>
-                    </button>
+                <button class="btn btn-danger">
+						<a href="${pageContext.request.contextPath}/showbill?id=<%= orders.get(i).getId() %>">Xem hoá đơn</a>
+				</button>
                 </td>
-            </c:if>
-        </tr>
-        <% } %>
-        </tbody>
+                </c:if>
+            </tr>       
+                <% } %>
+                </tbody>
     </table>
     <!-- Lớp phủ -->
     <div id="dialog-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 998;"></div>

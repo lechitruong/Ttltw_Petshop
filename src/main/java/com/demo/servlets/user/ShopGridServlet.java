@@ -13,25 +13,40 @@ import java.util.List;
 
 @WebServlet("/shopgrid")
 public class ShopGridServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ShopGridServlet() {
-		super();
-	}
+    public ShopGridServlet() {
+        super();
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String category = request.getParameter("category");
-		String priceRange = request.getParameter("price");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	 String category = request.getParameter("category");
+         String price = request.getParameter("price");
+         String limitParam = request.getParameter("limit");
+         int limit = limitParam != null ? Integer.parseInt(limitParam) : 9; // Mặc định 9 sản phẩm nếu không có limit
 
-		PetModel petModel = new PetModel(); // Thay thế bằng cách khởi tạo hoặc lấy đối tượng PetModel của bạn
-		List<Pets> pets = petModel.findPetsByFilter(category, priceRange);
+         PetModel petModel = new PetModel();
+         List<Pets> pets;
 
-		request.setAttribute("pets", pets);
-		request.setAttribute("p", "../user/shop-grid.jsp");
-		request.getRequestDispatcher("/WEB-INF/views/layout/user.jsp").forward(request, response);
-	}
+         if (category == null && price == null) {
+             // Không có lọc, hiển thị tất cả sản phẩm
+             pets = petModel.findAllByLimit(9);
+         } else {
+             // Có lọc, gọi phương thức findAllByFilter
+             pets = petModel.findAllByFilter(
+                 category != null ? category : "all", 
+                 price != null ? price : "", 
+                 limit
+             );
+         }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+         request.setAttribute("pets", pets);
+        request.setAttribute("p", "../user/shop-grid.jsp");
+        request.getRequestDispatcher("/WEB-INF/views/layout/user.jsp").forward(request, response);
+    }
+    
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
 }

@@ -189,7 +189,24 @@
 								<label for="paymentMethod3">Thanh toán VNPay(Sau khi đặt hàng)</label><br>
 							</div>
 						</div>
+<<<<<<< HEAD
+						<!--/ End Order Widget -->
+						<!-- Order Widget -->
+						<div class="single-widget">
+        <h2>Phương thức thanh toán</h2>
+        <div class="content" style="margin:10px 25px;">
+            <div class="radio">       
+                <input type="radio" id="paymentMethod2" name="payment_method" value="1">
+                <label for="paymentMethod2">Thanh toán khi nhận hàng</label><br>
+                
+                <input type="radio" id="paymentMethod3" name="payment_method" value="2">
+                <label for="paymentMethod3">Thanh toán VNPay(Sau khi đặt hàng)</label><br>
+            </div>
+        </div>
+    </div>
+=======
 					</div>
+>>>>>>> 8070bc18516c46c526ad4ddeadf478601081a2e9
 
 					<!-- Nút Đặt hàng -->
 					<div class="single-widget get-button">

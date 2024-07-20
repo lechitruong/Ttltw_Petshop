@@ -51,95 +51,91 @@ public class PetModel {
 		}
 		return pets;
 	}
-	// loc sp theo gia va danh muc
-	public List<Pets> findPetsByFilter(String category, String priceRange) {
-		List<Pets> pets = new ArrayList<>();
-		StringBuilder query = new StringBuilder("SELECT * FROM pets WHERE 1=1");
+	public List<Pets> findAllByFilter(String category, String priceRange, int limit) {
+	    List<Pets> pets = new ArrayList<>();
+	    StringBuilder query = new StringBuilder("SELECT * FROM pets");
 
-		// Thêm điều kiện lọc theo danh mục
-		if (category != null && !category.equals("all")) {
-			query.append(" AND categoryId = (SELECT id FROM categories WHERE name = ?)");
-		}
+	    boolean hasWhereClause = false;
 
-		// Thêm điều kiện lọc theo mức giá
-		if (priceRange != null && !priceRange.isEmpty()) {
-			switch (priceRange) {
-				case "below_2":
-					query.append(" AND money < ?");
-					break;
-				case "2_3_5":
-					query.append(" AND money BETWEEN ? AND ?");
-					break;
-				case "above_3_5":
-					query.append(" AND money > ?");
-					break;
-			}
-		}
+	    // Xử lý lọc theo danh mục
+	    if (!category.equals("all")) {
+	        query.append(" WHERE categoryId = ?");
+	        hasWhereClause = true;
+	    }
 
-		try (PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(query.toString())) {
-			int index = 1;
+	    // Xử lý lọc theo mức giá
+	    if (!priceRange.isEmpty()) {
+	        if (hasWhereClause) {
+	            query.append(" AND ");
+	        } else {
+	            query.append(" WHERE ");
+	            hasWhereClause = true;
+	        }
+	        query.append(buildPriceCondition(priceRange));
+	    }
 
-			// Cài đặt tham số cho điều kiện lọc theo danh mục
-			if (category != null && !category.equals("all")) {
-				preparedStatement.setString(index++, getCategoryByName(category));
-			}
+	    // Thêm điều kiện giới hạn
+	    query.append(" LIMIT ?");
 
-			// Cài đặt tham số cho điều kiện lọc theo mức giá
-			if (priceRange != null && !priceRange.isEmpty()) {
-				switch (priceRange) {
-					case "below_2":
-						preparedStatement.setDouble(index++, 2.0);
-						break;
-					case "2_3_5":
-						preparedStatement.setDouble(index++, 2.0);
-						preparedStatement.setDouble(index++, 3.5);
-						break;
-					case "above_3_5":
-						preparedStatement.setDouble(index++, 3.5);
-						break;
-				}
-			}
+	    try {
+	        PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(query.toString());
+	        int index = 1;
 
-			ResultSet resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				Pets pet = new Pets();
-				pet.setId(resultSet.getInt("id"));
-				pet.setPetName(resultSet.getString("petName"));
-				pet.setPetType(resultSet.getString("petType"));
-				pet.setPetGender(resultSet.getString("petGender"));
-				pet.setDescription(resultSet.getString("description"));
-				pet.setDetail(resultSet.getString("detail"));
-				pet.setMade(resultSet.getString("made"));
-				pet.setAmount(resultSet.getInt("amount"));
-				pet.setMoney(resultSet.getDouble("money"));
-				pet.setPetBirthday(resultSet.getDate("petBirthday"));
-				pet.setImage(resultSet.getString("image"));
-				pet.setStatus(resultSet.getBoolean("status"));
-				pet.setCategoryId(resultSet.getInt("categoryId"));
-				pet.setCatalogId(resultSet.getInt("catalogId"));
-				pets.add(pet);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			pets = null;
-		} finally {
-			ConnectDB.disconnect();
-		}
-		return pets;
+	        // Thiết lập tham số cho danh mục
+	        if (!category.equals("all")) {
+	            preparedStatement.setInt(index++, getCategoryIdByName(category));
+	        }
+
+	        // Không cần thiết lập tham số cho mức giá vì điều kiện đã được xây dựng trong buildPriceCondition
+
+	        // Thiết lập tham số cho số lượng hiển thị
+	        preparedStatement.setInt(index, limit);
+	        ResultSet resultSet = preparedStatement.executeQuery();
+
+	        while (resultSet.next()) {
+	            Pets pet = new Pets();
+	            pet.setId(resultSet.getInt("id"));
+	            pet.setPetName(resultSet.getString("petName"));
+	            pet.setPetType(resultSet.getString("petType"));
+	            pet.setPetGender(resultSet.getString("petGender"));
+	            pet.setDescription(resultSet.getString("description"));
+	            pet.setDetail(resultSet.getString("detail"));
+	            pet.setMade(resultSet.getString("made"));
+	            pet.setAmount(resultSet.getInt("amount"));
+	            pet.setMoney(resultSet.getDouble("money"));
+	            pet.setPetBirthday(resultSet.getDate("petBirthday"));
+	            pet.setImage(resultSet.getString("image"));
+	            pet.setStatus(resultSet.getBoolean("status"));
+	            pet.setCategoryId(resultSet.getInt("categoryId"));
+	            pet.setCatalogId(resultSet.getInt("catalogId"));
+	            pets.add(pet);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        pets = null;
+	    } finally {
+	        ConnectDB.disconnect();
+	    }
+
+	    return pets;
 	}
 
-	// Hàm trợ giúp để lấy id danh mục từ tên danh mục
-	private String getCategoryByName(String categoryName) {
-		switch (categoryName) {
-			case "dogs":
-				return "Chó";
-			case "cats":
-				return "Mèo";
-			case "others":
-				return "Thú cưng khác";
-			default:
-				return null;
-		}
+	private int getCategoryIdByName(String categoryName) {
+	    switch (categoryName) {
+	        case "dogs": return 1;
+	        case "cats": return 2;
+	        case "others": return 3;
+	        default: return -1; // hoặc ném ngoại lệ nếu cần thiết
+	    }
+	}
+
+	private String buildPriceCondition(String priceRange) {
+	    switch (priceRange) {
+	        case "below_2": return "money < 2.0"; // Đơn vị là triệu đồng
+	        case "2_3_5": return "money BETWEEN 2.0 AND 3.5";
+	        case "above_3_5": return "money > 3.5";
+	        default: return "";
+	    }
 	}
 
 	// ham lay ra danh sach pet con trong kho
