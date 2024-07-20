@@ -93,7 +93,7 @@ public class EditNhaphangServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		if (action.equalsIgnoreCase("editpet")) {
 			doPost_Edit(request, response);
-		}
+		} 
 	}
 
 	protected void doGet_Confirm(HttpServletRequest request, HttpServletResponse response)
@@ -121,13 +121,13 @@ public class EditNhaphangServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		WarehouseInvoiceModel warehouseInvoiceModel = new WarehouseInvoiceModel();
 		WarehouseInvoice warehouseInvoice = warehouseInvoiceModel.findInvoiceByID(id);
-		int petId = Integer.parseInt(request.getParameter("petname"));
-		int quantity = Integer.parseInt(request.getParameter("quantity"));
-		double price = Double.parseDouble(request.getParameter("price"));
+		String petId = request.getParameter("petId");
+		String quantity = request.getParameter("quantity");
+		String price = request.getParameter("price");
 		Date tradeDate = new Date();
-		warehouseInvoice.setPetId(petId);
-		warehouseInvoice.setQuantity(quantity);
-		warehouseInvoice.setPrice(price);
+		warehouseInvoice.setPetId(Integer.parseInt(petId));
+		warehouseInvoice.setQuantity(Integer.parseInt(quantity));
+		warehouseInvoice.setPrice(Double.parseDouble(price));
 		warehouseInvoice.setTradeDate(tradeDate);
 		warehouseInvoice.setStatus(false);
 		if (warehouseInvoiceModel.update(warehouseInvoice)) {

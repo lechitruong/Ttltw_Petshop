@@ -64,7 +64,17 @@ CatalogModel catalogModel = new CatalogModel();
 										<td>
 										<button class="btn btn-danger">
 												<a
-													href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=confirm&id=<%= warehouseInvoice.getId() %>">Xác nhận</a>
+													href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=confirm&id=<%= warehouseInvoice.getId() %>">Chưa xác nhận</a>
+									    </button>
+									     </td>
+									    <td>
+									    <button class="btn btn-warning">
+												<a
+													href="${pageContext.request.contextPath}/admin/editwarehouseinvoice?id=<%= warehouseInvoice.getId() %>">Sửa </a>
+									    </button>
+									     <button class="btn btn-danger">
+												<a
+													href="${pageContext.request.contextPath}/admin/quanlinhaphang?action=remove&id=<%= warehouseInvoice.getId() %>">Xoá</a>
 									    </button>
 									    <button class="btn warning">
 												<a

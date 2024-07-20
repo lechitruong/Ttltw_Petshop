@@ -24,44 +24,45 @@ List<Pets> pets = petModel.findAllByCatalog(pet.getCategoryId(), pet.getCatalogI
           <div class="card-body">
             <div class="card-title">Chỉnh sửa hàng vào kho</div>
             <hr>
-            <form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=editpet&id=<%= warehouseInvoice.getId() %>">
-              <div class="form-group">
-                <label for="categorySelect">Loại thú cưng</label>
-                <select class="form-control valid" id="categorySelect" name="categoryname" required aria-invalid="false">
-                  <% for(Categorys categoryPet: categorys){ %>
-                    <option value="<%=categoryPet.getId()%>" <%= categoryPet.getId() == pet.getCategoryId() ? "selected" : "" %>><%= categoryPet.getName() %></option>
-                  <% } %>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="catalogSelect">Mục thú cưng</label>
-                <select class="form-control valid" id="catalogSelect" name="catalogname" required aria-invalid="false">
-                  <% for(Catalogs catalog: catalogs){ %>
-                    <option value="<%=catalog.getId()%>" <%= catalog.getId() == pet.getCatalogId() ? "selected" : "" %>><%= catalog.getName() %></option>
-                  <% } %>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="petSelect">Tên thú cưng</label>
-                <select class="form-control valid" id="petSelect" name="petname" required aria-invalid="false">
-                  <% for(Pets p: pets){ %>
-                    <option value="<%=p.getId()%>" <%= p.getId() == pet.getId() ? "selected" : "" %>><%= p.getPetName() %></option>
-                  <% } %>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="input-7">Số lượng</label>
-                <input type="text" class="form-control" id="input-7" placeholder="Số lượng" name="quantity" value="<%= warehouseInvoice.getQuantity() %>">
-              </div>
-              <div class="form-group">
-                <label for="input-8">Giá (triệu đồng)</label>
-                <input type="text" class="form-control" id="input-8" placeholder="Giá" name="price" value="<%= warehouseInvoice.getPrice() %>">
-              </div>
-              <div class="form-footer">
-                <button class="btn btn-danger"><i class="fa fa-times"></i><a href="${pageContext.request.contextPath}/admin/quanlinhaphang">Hủy</a></button>
-                <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i>Sửa</button>
-              </div>
-            </form>
+            <form method="post" action="${pageContext.request.contextPath}/admin/editwarehouseinvoice?action=editpet&id=<%= warehouseInvoice.getId() %>">
+  <div class="form-group">
+    <label for="categorySelect">Loại thú cưng</label>
+    <select class="form-control valid" id="categorySelect" name="categoryId" required aria-invalid="false">
+      <% for(Categorys categoryPet: categorys){ %>
+        <option value="<%=categoryPet.getId()%>" <%= categoryPet.getId() == pet.getCategoryId() ? "selected" : "" %>><%= categoryPet.getName() %></option>
+      <% } %>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="catalogSelect">Mục thú cưng</label>
+    <select class="form-control valid" id="catalogSelect" name="catalogId" required aria-invalid="false">
+      <% for(Catalogs catalog: catalogs){ %>
+        <option value="<%=catalog.getId()%>" <%= catalog.getId() == pet.getCatalogId() ? "selected" : "" %>><%= catalog.getName() %></option>
+      <% } %>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="petSelect">Tên thú cưng</label>
+    <select class="form-control valid" id="petSelect" name="petId" required aria-invalid="false">
+      <% for(Pets p: pets){ %>
+        <option value="<%=p.getId()%>" <%= p.getId() == pet.getId() ? "selected" : "" %>><%= p.getPetName() %></option>
+      <% } %>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="input-7">Số lượng</label>
+    <input type="text" class="form-control" id="quantity" placeholder="Số lượng" name="quantity" value="<%= warehouseInvoice.getQuantity() %>">
+  </div>
+  <div class="form-group">
+    <label for="input-8">Giá (triệu đồng)</label>
+    <input type="text" class="form-control" id="price" placeholder="Giá" name="price" value="<%= warehouseInvoice.getPrice() %>">
+  </div>
+  <div class="form-footer">
+    <button class="btn btn-danger"><i class="fa fa-times"></i><a href="${pageContext.request.contextPath}/admin/quanlinhaphang">Hủy</a></button>
+    <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i>Sửa</button>
+  </div>
+</form>
+
           </div>
         </div>
       </div>
