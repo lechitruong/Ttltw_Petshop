@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Config {
 
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://localhost:8080/petshop/payment?action=paymentInfo";
+    public static String vnp_ReturnUrl = "http://localhost:8080/PetShop/payment?action=paymentInfo";
     public static String vnp_TmnCode = "O5RXR3P3";
     public static String secretKey = "H0YQMU2W66847S5QS41EXU25GTL1IT3G";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
@@ -83,7 +83,7 @@ public class Config {
         }
         return hmacSHA512(secretKey,sb.toString());
     }
-    
+
     public static String hmacSHA512(final String key, final String data) {
         try {
 
@@ -106,7 +106,7 @@ public class Config {
             return "";
         }
     }
-    
+
     public static String getIpAddress(HttpServletRequest request) {
         String ipAdress;
         try {

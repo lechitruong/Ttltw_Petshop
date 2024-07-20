@@ -1,9 +1,11 @@
 <%@page import="com.demo.models.OrderModel"%>
 <%@page import="com.demo.models.BillModel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isELIgnored="false"%>
-    <%@page import="com.demo.models.AddressModel"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+         pageEncoding="UTF-8" isELIgnored="false"%>
+<%@page import="com.demo.entities.*"%>
+<%@page import="com.demo.models.OrderModel"%>
+<%@page import="com.demo.models.AddressModel"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -170,71 +172,61 @@
     </style>
 </head>
 <%
-AddressModel addressModel = new AddressModel();
-BillModel billModel = new BillModel();
-OrderModel orderModel = new OrderModel();
+    AddressModel addressModel = new AddressModel();
+    BillModel billModel = new BillModel();
+    OrderModel orderModel = new OrderModel();
+    int id =Integer.parseInt(request.getParameter("id"));
+    Bills bill = billModel.findBillById(id);
+    Orders order = orderModel.findOrderById(bill.getOrderId());
+    Address address = addressModel.findAddressById(order.getAddressId());
 %>
 <body onload="window.print();">
-    <div id="page" class="page">
-        <div class="header">
-            <div class="logo"><img src="../images/logo.jpg" alt="Logo PetShop"/></div>
-            <div class="company">C.Ty TNHH PetShop</div>
-        </div>
-        <br/>
-        <div class="title">
-            HÓA ĐƠN THANH TOÁN
-            <br/>
-            -------oOo-------
-        </div>
-        <br/>
-        <br/>
-        <table class="TableData">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Tên khách hàng</th>
-                    <th>Địa chỉ</th>
-                    <th>Tổng tiền</th>
-                    <th>Phương thức thanh toán</th>
-                    <th>Trạng thái thanh toán</th>
-                </tr>
-            </thead>
-           <tbody>
-    <c:forEach var="b" items="${bill}">
-        <tr>
-            <td>${b.id}</td>
-            <td>${sessionScope.user.fullName}</td> <!-- Thay sessionScope.user.fullName bằng thông tin thực tế của khách hàng -->
-            <td>
-                ${addressModel.findAddressById(orderModel.findOrderById(b.orderId).getAddressId()).getAddress()},
-                ${addressModel.findAddressById(orderModel.findOrderById(b.orderId).getAddressId()).getWard()},
-                ${addressModel.findAddressById(orderModel.findOrderById(b.orderId).getAddressId()).getDistrict()},
-                ${addressModel.findAddressById(orderModel.findOrderById(b.orderId).getAddressId()).getCountry()}
-            </td>
-            <td>${orderModel.findfindOrderById(b.orderId).getTotalMoney() }</td> <!-- Thay bằng dữ liệu tổng tiền thực tế -->
-            <td>
-                <c:choose>
-                    <c:when test="${b.paymentMethod == 1}">Chuyển khoản ngân hàng</c:when>
-                    <c:when test="${b.paymentMethod == 2}">Tiền mặt</c:when>
-                    <c:when test="${b.paymentMethod == 3}">VNPay</c:when>
-                    <!-- Thêm các phương thức thanh toán khác nếu cần thiết -->
-                </c:choose>
-            </td>
-            <td>
-                <c:choose>
-                    <c:when test="${b.status}">Đã thanh toán</c:when>
-                    <c:otherwise>Chưa thanh toán</c:otherwise>
-                </c:choose>
-            </td>
-        </tr>
-    </c:forEach>
-</tbody>
-
-
-        </table>
-        <div class="footer-left"> Tp.HCM, ngày 16 tháng 12 năm 2014<br/>
-            Khách hàng </div>
-        <div class="footer-right"> Tp.HCM, ngày 16 tháng 12 năm 2014<br/>
-            Nhân viên </div>
+<div id="page" class="page">
+    <div class="header">
+        <div class="logo"><img src="../images/logo.jpg" alt="Logo PetShop"/></div>
+        <div class="company">C.Ty TNHH PetShop</div>
     </div>
+    <br/>
+    <div class="title">
+        HÓA ĐƠN THANH TOÁN
+        <br/>
+        -------oOo-------
+    </div>
+    <br/>
+    <br/>
+    <table class="TableData">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên khách hàng</th>
+            <th>Địa chỉ</th>
+            <th>Tổng tiền</th>
+            <th>Phương thức thanh toán</th>
+            <th>Trạng thái thanh toán</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>${sessionScope.user.fullName}</td>
+            <td>
+                ${address.getAddress()},
+                ${address.getWard()},
+                ${address.getDistrict()},
+                ${address.getCountry()}
+            </td>
+            <td>${order.getTotalMoney()}</td>
+            <td>${bill.getPaymentMethod()}</td>
+            <td>${order.getStatus()}</td>
+        </tr>
+        </tbody>
+
+
+    </table>
+    <div class="footer-left"> Tp.HCM, ngày 16 tháng 12 năm 2014<br/>
+        Khách hàng </div>
+    <div class="footer-right"> Tp.HCM, ngày 16 tháng 12 năm 2014<br/>
+        Nhân viên </div>
+</div>
 </body>
 </html>
