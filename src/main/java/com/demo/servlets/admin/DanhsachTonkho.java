@@ -26,14 +26,20 @@ public class DanhsachTonkho extends HttpServlet {
 
         String startDateStr = request.getParameter("startDate");
         String endDateStr = request.getParameter("endDate");
+        String filterStatus = request.getParameter("filterStatus");
 
         List<Pets> pets;
-        if (startDateStr != null && endDateStr != null && !startDateStr.isEmpty() && !endDateStr.isEmpty()) {
+        if (startDateStr != null && endDateStr != null && filterStatus != null &&
+                !startDateStr.isEmpty() && !endDateStr.isEmpty() && !filterStatus.isEmpty()) {
             Date startDate = Date.valueOf(startDateStr);
             Date endDate = Date.valueOf(endDateStr);
-            pets = petModel.findInactivePetsInRange(startDate, endDate);
+            if ("no-orders".equals(filterStatus)) {
+                pets = petModel.findInactivePetsInRange(startDate, endDate);
+            } else {
+                pets = petModel.findActivePetsInRange(startDate, endDate);
+            }
         } else {
-            pets = petModel.findAllWithPositiveQuantity();
+            pets = petModel.findAll();
         }
 
         request.setAttribute("petinventory", pets);
