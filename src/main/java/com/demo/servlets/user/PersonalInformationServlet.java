@@ -1,6 +1,7 @@
 package com.demo.servlets.user;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,9 +15,13 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.demo.entities.Address;
+import com.demo.entities.Log;
 import com.demo.entities.Users;
+import com.demo.helpers.ConfigIP;
+import com.demo.helpers.IPAddressUtil;
 import com.demo.helpers.UploadFileHelper;
 import com.demo.models.AddressModel;
+import com.demo.models.LogModel;
 import com.demo.models.UserModel;
 
 /**
@@ -63,6 +68,7 @@ public class PersonalInformationServlet extends HttpServlet {
 		}
 	}
 	protected void doPost_Update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		LogModel logModel = new LogModel();
 	    // Set character encoding
 	    request.setCharacterEncoding("UTF-8");
 	    response.setCharacterEncoding("UTF-8");
@@ -115,6 +121,7 @@ public class PersonalInformationServlet extends HttpServlet {
 	        request.getSession().removeAttribute("user");
 	        request.getSession().setAttribute("user", userModel.findUserById(user.getId()));
 	        request.getSession().setAttribute("msg-if", "Cập nhật thành công");
+	        logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "info", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Xem thông tin người dùng", "Cập nhật thông tin người dùng thành công", user.getId()));
 	    } else {
 	        request.getSession().setAttribute("msg-if", "Cập nhật thất bại");
 	    }

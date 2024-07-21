@@ -61,7 +61,7 @@ public class DanhsachBill extends HttpServlet {
 	    Bills bill = billModel.findBillById(id);
 	    bill.setStatus(true);
 	    if(billModel.update(bill)) {
-	    	response.sendRedirect("danhsachbill");	    	
+	    	response.sendRedirect("quanlibill");	    	
 	    }
 
 	}

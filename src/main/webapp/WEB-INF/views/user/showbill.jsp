@@ -171,6 +171,15 @@
         }
     </style>
 </head>
+<%
+    AddressModel addressModel = new AddressModel();
+    BillModel billModel = new BillModel();
+    OrderModel orderModel = new OrderModel();
+    int id =Integer.parseInt(request.getParameter("id"));
+    Bills bill = billModel.findBillById(id);
+    Orders order = orderModel.findOrderById(bill.getOrderId());
+    Address address = addressModel.findAddressById(order.getAddressId());
+%>
 <body onload="window.print();">
     <div id="page" class="page">
         <div class="header">
@@ -201,15 +210,15 @@
                 <td>1</td>
                 <td>${sessionScope.user.fullName}</td>
                 <td>
-                    ${address.getAddress()}, 
-                    ${address.getWard()}, 
-                    ${address.getDistrict()}, 
+                    ${address.getAddress()},
+                    ${address.getWard()},
+                    ${address.getDistrict()},
                     ${address.getCountry()}
                 </td>
                 <td>${order.getTotalMoney()} triệu đồng</td>
                 <td>${bill.getPaymentMethod() == 2? "Thanh toán bằng VNPay":"Thanh toán khi nhận hàng"}</td>
                 <td>${order.getStatus() == 1? "Đã xác nhận":"Chưa xác nhận"}</td>
-            </tr> 
+            </tr>
 </tbody>
 
 

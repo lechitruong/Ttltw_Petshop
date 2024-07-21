@@ -17,6 +17,7 @@ import com.demo.entities.Log;
 import com.demo.entities.Users;
 import com.demo.helpers.ConfigIP;
 import com.demo.helpers.IPAddressUtil;
+import com.demo.helpers.LoginAttemptTracker;
 import com.demo.helpers.MailHelper;
 import com.demo.helpers.RandomStringHelper;
 import com.demo.models.AddressModel;
@@ -82,6 +83,8 @@ public class LoginServlet extends HttpServlet {
 		if (user.getSecurityCode().equalsIgnoreCase(securityCode) && user.getUserName().equalsIgnoreCase(username)) {
 				user.setStatus(true);	
 				if (userModel.update(user)) {
+					LogModel logModel = new LogModel();
+					logModel.create(new Log(IPAddressUtil.getPublicIPAddress(),"info",ConfigIP.ipconfig(request).getCountryLong(),new Timestamp(new Date().getTime()), "Đang đăng ký", "Đã đăng ký tài khoản thành công", user.getId()));
 					response.sendRedirect("login");
 				}	
 		} else {
@@ -130,31 +133,49 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void doPost_Login(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		UserModel userModel = new UserModel();
-		AddressModel addressModel = new AddressModel();
-		LogModel logModel = new LogModel();
-		Users user = userModel.findUserByUserName(username);
-		if (userModel.checkLogin(username, password)) {
-			logModel.create(new Log(IPAddressUtil.getPublicIPAddress(),"info",ConfigIP.ipconfig(request).getCountryLong(),new Timestamp(new Date().getTime()), "Chưa đăng nhập", "Đã đăng nhập", user.getId()));
-			if (user.getRoleId() == 1) {
-				request.getSession().setAttribute("user", userModel.findUserByUserName(username));
-				System.out.println("1");
-				response.sendRedirect("admin/home");
-			} else {
-				if(addressModel.findAddressByIdUser(userModel.findUserByUserName(username).getId()) == null) {
-					addressModel.create(new Address("", "", "", "", userModel.findUserByUserName(username).getId()));
-				}
-				request.getSession().setAttribute("user", userModel.findUserByUserName(username));
-				System.out.println("2");
-				response.sendRedirect("home");
-			}
-		} else {
-			request.getSession().setAttribute("msg", "Tai khoan hoac mat khau khong dung!");
-			response.sendRedirect("login");
-		}
+	        throws ServletException, IOException {
+	    String username = request.getParameter("username");
+	    String password = request.getParameter("password");
+
+	    // Check if the user is locked
+	    if (LoginAttemptTracker.isLocked(username)) {
+	        long secondsRemaining = LoginAttemptTracker.getLockoutTimeRemaining(username);
+	        request.getSession().setAttribute("error", "Bạn đã nhập sai quá nhiều lần. Vui lòng chờ " + secondsRemaining + " giây.");
+	        response.sendRedirect("login");
+	        return;
+	    }
+
+	    UserModel userModel = new UserModel();
+	    AddressModel addressModel = new AddressModel();
+	    LogModel logModel = new LogModel();
+	    Users user = userModel.findUserByUserName(username);
+
+	    if (userModel.checkLogin(username, password)) {
+	        LoginAttemptTracker.loginSuccessful(username); 
+
+	        logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "info", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Chưa đăng nhập", "Đã đăng nhập", user.getId()));
+	        if (user.getRoleId() == 1) {
+	            request.getSession().setAttribute("user", userModel.findUserByUserName(username));
+	            response.sendRedirect("admin/home");
+	        } else {
+	            if (addressModel.findAddressByIdUser(userModel.findUserByUserName(username).getId()) == null) {
+	                addressModel.create(new Address("", "", "", "", userModel.findUserByUserName(username).getId()));
+	            }
+	            request.getSession().setAttribute("user", userModel.findUserByUserName(username));
+	            response.sendRedirect("home");
+	        }
+	    } else {
+	        LoginAttemptTracker.loginFailed(username); // Increment failed attempts on login failure
+	        long secondsRemaining = LoginAttemptTracker.getLockoutTimeRemaining(username);
+	        if (secondsRemaining > 0) {
+	            request.getSession().setAttribute("error", "Bạn đã nhập sai quá nhiều lần. Vui lòng chờ " + secondsRemaining + " giây.");
+	            logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "error", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Đang đăng nhập", "Đăng nhập sai thông tin nhiều lần", user.getId()));
+	        } else {
+	            request.getSession().setAttribute("error", "Tài khoản hoặc mật khẩu không đúng!");
+	            logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "warning", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Đang đăng nhập", "Đăng nhập sai thông tin", user.getId()));
+	        }
+	        response.sendRedirect("login");
+	    }
 	}
 	
 

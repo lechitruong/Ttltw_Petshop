@@ -1,5 +1,4 @@
-package com.demo.servlets.admin;
-
+package com.demo.entities;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,20 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.demo.entities.Users;
-
+@WebFilter("/admin/*")
 /**
  * Servlet Filter implementation class AdminFilter
  */
-@WebFilter("/admin/*")
 public class AdminFilter extends HttpFilter implements Filter {
-
-	/**
-	 * @see HttpFilter#HttpFilter()
-	 */
-	public AdminFilter() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+        
+    /**
+     * @see HttpFilter#HttpFilter()
+     */
+    public AdminFilter() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see Filter#destroy()
@@ -39,17 +37,16 @@ public class AdminFilter extends HttpFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		HttpSession session = httpRequest.getSession();
 		Users user = (Users) session.getAttribute("user");
-		if (user != null && user.getRoleId() == 1) {
+		if(user != null && (user.getRoleId() == 1)) {
 			chain.doFilter(request, response);
-		} else if (user != null && user.getRoleId() != 1) {
-			httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
+		} else {
+			httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
 		}
 	}
 

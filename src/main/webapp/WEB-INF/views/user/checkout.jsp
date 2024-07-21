@@ -163,34 +163,34 @@
 				List<Item> cart = (List<Item>) session2.getAttribute("cart");
 				ItemModel itemModel = new ItemModel();
 				%>
-			<div class="col-lg-4 col-12">
-				<div class="order-details">
-					<!-- Order Widget -->
-					<div class="single-widget">
-						<h2>Tổng giỏ hàng</h2>
-						<div class="content">
-							<ul>
-								<li>Tổng hàng<span id="totalAmount"><%= itemModel.total(cart) %></span> (triệu đồng)</li>
-								<input type="hidden" name="totalhidden" value="<%= itemModel.total(cart) %>" />
-								<!--  <li>(+) Giao hàng<span id="shippingFee">0.1</span> (triệu đồng)</li>  -->
-								<li class="last">Tổng<span class="finalAmount">0.00</span> (triệu đồng)</li>
-							</ul>
-						</div>
-					</div>
-					<!--/ End Order Widget -->
-					<!-- Order Widget -->
-					<div class="single-widget">
-						<h2>Phương thức thanh toán</h2>
-						<div class="content" style="margin:10px 25px;">
-							<div class="radio">
-								<input type="radio" id="paymentMethod2" name="payment_method" value="1">
-								<label for="paymentMethod2">Thanh toán khi nhận hàng</label><br>
-
-								<input type="radio" id="paymentMethod3" name="payment_method" value="2">
-								<label for="paymentMethod3">Thanh toán VNPay(Sau khi đặt hàng)</label><br>
+				<div class="col-lg-4 col-12">
+					<div class="order-details">
+						<!-- Order Widget -->
+						<div class="single-widget">
+							<h2>Tổng giỏ hàng</h2>
+							<div class="content">
+								<ul>
+									 <li>Tổng hàng<span id="totalAmount"><%= itemModel.total(cart) %></span> (triệu đồng)</li>
+									 <input type="hidden" name="totalhidden" value="<%= itemModel.total(cart) %>" />
+    <!--  <li>(+) Giao hàng<span id="shippingFee">0.1</span> (triệu đồng)</li>  -->
+      <li class="last">Tổng<span class="finalAmount"><%= itemModel.total(cart) %></span> (triệu đồng)</li>
+								</ul>
 							</div>
 						</div>
-					</div>
+						<!--/ End Order Widget -->
+						<!-- Order Widget -->
+						<div class="single-widget">
+        <h2>Phương thức thanh toán</h2>
+        <div class="content" style="margin:10px 25px;">
+            <div class="radio">
+                <input type="radio" id="paymentMethod2" name="payment_method" value="1">
+                <label for="paymentMethod2">Thanh toán khi nhận hàng</label><br>
+
+                <input type="radio" id="paymentMethod3" name="payment_method" value="2">
+                <label for="paymentMethod3">Thanh toán VNPay(Sau khi đặt hàng)</label><br>
+            </div>
+        </div>
+    </div>
 
 					<!-- Nút Đặt hàng -->
 					<div class="single-widget get-button">

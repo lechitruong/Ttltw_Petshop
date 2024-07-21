@@ -9,32 +9,31 @@ public class Bills {
 	private boolean status;
 	private Timestamp createDate;
 
+public Bills(int id, int orderId, int paymentMethod, boolean status, Timestamp createDate) {
+	super();
+	this.id = id;
+	this.orderId = orderId;
+	this.paymentMethod = paymentMethod;
+	this.status = status;
+	this.createDate = createDate;
+}
 
-	public Bills(int id, int orderId, int paymentMethod, boolean status, Timestamp createDate) {
-		super();
-		this.id = id;
-		this.orderId = orderId;
-		this.paymentMethod = paymentMethod;
-		this.status = status;
-		this.createDate = createDate;
-	}
+public Bills() {
+	super();
+}
 
-	public Bills() {
-		super();
-	}
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getOrderId() {
-		return orderId;
-	}
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
+public int getId() {
+	return id;
+}
+public void setId(int id) {
+	this.id = id;
+}
+public int getOrderId() {
+	return orderId;
+}
+public void setOrderId(int orderId) {
+	this.orderId = orderId;
+}
 
 	public int getPaymentMethod() {
 		return paymentMethod;

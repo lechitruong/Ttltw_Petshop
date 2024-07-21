@@ -3,24 +3,76 @@
 <%@page import="com.demo.models.CategoryModel"%>
 <%@page import="com.demo.models.PetModel"%>
 <%@page import="com.demo.entities.Pets"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
-    <%
+<%
     CategoryModel categoryModel = new CategoryModel();
-    CatalogModel catalogModel = new CatalogModel();
     PetModel petModel = new PetModel();
-    %>
+    int currentPage = 1; // Default page
+    int pageSize = 12; // Number of items per page
+    int categoryId = 1; // Default category id
+    int totalPages = 0;
+    
+    if (request.getParameter("page") != null) {
+        currentPage = Integer.parseInt(request.getParameter("page"));
+    }
+    if (request.getParameter("categoryId") != null) {
+        categoryId = Integer.parseInt(request.getParameter("categoryId"));
+    }
+    
+    // Retrieve paginated pets
+    List<Pets> petsList = petModel.findPaginatedByCategory(categoryId, currentPage, pageSize);
+    totalPages = petModel.getTotalPagesByCategory(categoryId, pageSize); // Total pages based on the number of pets
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Trang chủ</title>
+<style>
+/* Styles for pagination container */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.pagination-container li {
+    margin: 0 5px;
+}
+
+.pagination-container .page-link {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #007bff;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.pagination-container .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination-container .page-link:hover {
+    background-color: #ddd;
+}
+</style>
 </head>
 <body class="js">
 <!-- Slider Area -->
-	<!-- Slider Area -->
     <section class="hero-slider">
-      <!-- Single Slider -->
       <div class="single-slider">
         <div class="container">
           <div class="row no-gutters">
@@ -46,7 +98,6 @@
           </div>
         </div>
       </div>
-      <!--/ End Single Slider -->
     </section>
     <!--/ End Slider Area -->
 
@@ -54,7 +105,6 @@
     <section class="small-banner section">
       <div class="container-fluid">
         <div class="row">
-          <!-- Single Banner  -->
           <div class="col-lg-4 col-md-6 col-12">
             <div class="single-banner">
               <img src="${pageContext.request.contextPath}/assets/user/images/anhdaidienalaska.jpg" alt="#" />
@@ -68,8 +118,6 @@
               </div>
             </div>
           </div>
-          <!-- /End Single Banner  -->
-          <!-- Single Banner  -->
           <div class="col-lg-4 col-md-6 col-12">
             <div class="single-banner">
               <img src="${pageContext.request.contextPath}/assets/user/images/anhdaidienmeo.jpg" alt="#" />
@@ -83,8 +131,6 @@
               </div>
             </div>
           </div>
-          <!-- /End Single Banner  -->
-          <!-- Single Banner  -->
           <div class="col-lg-4 col-12">
             <div class="single-banner tab-height">
               <img src="${pageContext.request.contextPath}/assets/user/images/anhdaidienchim.jpg" alt="#" />
@@ -98,7 +144,6 @@
               </div>
             </div>
           </div>
-          <!-- /End Single Banner  -->
         </div>
       </div>
     </section>
@@ -106,382 +151,135 @@
 
     <!-- Start Product Area -->
     <div class="product-area section">
-      <div class="container">
+    <div class="container">
         <div class="row">
-          <div class="col-12">
-            <div class="section-title">
-              <h2>Thú cưng hot</h2>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="product-info">
-              <div class="nav-main">
-                <!-- Tab Nav -->
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <% 
-                for(Categorys category : categoryModel.findAll()){
-                %>
-                  <li class="nav-item">
-                    <input type="button" class="filterByCategory" value="<%= category.getName() %>" id="<%= category.getId() %>"></li>
-                  </li> 
-                  <%
-                  }
-                  %>
-                </ul>
-                <!--/ End Tab Nav -->
-              </div>
-              <script>
-              $(document).ready(function() {
-      			$('.filterByCategory').click(function() {
-      				var idcategory = $(this).attr('id');
-      				console.log(idcategory);
-      				var s = '';
-      				$.ajax({
-      					type: 'GET',
-      					url: '${pageContext.request.contextPath}/home',
-      					dataType: 'json',
-      					contentType: 'application/json; charset=utf-8',
-      					data: {
-      						action: 'filterByCategory',
-      						idcategory : idcategory
-      					},
-      					success: function(pet) {
-      						for(var i = 0; i < pet.length ;i++) {
-      							if(pet[i].categoryId == 1) {
-      								categoryName = 'Chó';
-      							} else if(pet[i].categoryId == 2) {
-      								categoryName = 'Mèo';
-      							} else if(pet[i].categoryId == 3) {
-      								categoryName = 'Thú cưng khác';
-      							} 	
-      							s+= '<div class="col-xl-3 col-lg-4 col-md-4 col-12">';
-      							s+= '<div class="single-product">';
-      							s+= '<div class="product-img">';
-      							s+= '<a href="${pageContext.request.contextPath }/petdetail?id='+pet[i].id+'">';
-      							s+= '<img class="default-img" src="${pageContext.request.contextPath}/assets/user/images/pet/'+ pet[i].image+'" alt="#" />';
-      							s+= '<img class="hover-img" src="${pageContext.request.contextPath}/assets/user/images/pet/'+ pet[i].image+'" alt="#" />';
-      							s+= '</a>';
-      							s+= '<div class="button-head">';
-      							s+= '<div class="product-action">';
-      							s+= '<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="${pageContext.request.contextPath }/petdetail?id='+pet[i].id+'"><i class="ti-eye"></i><span>Xem chi tiết</span></a>';
-      							s+= '<a title="Wishlist" href="${pageContext.request.contextPath }/wishlistpet?action=wishlist&id='+pet[i].id+'"><i class="ti-heart"></i><span>Thêm vào yêu thích</span></a>';
-      							s+= '</div>';
-      							s+= '<div class="product-action-2">';
-      							s+= '<a title="Add to cart" href="${pageContext.request.contextPath}/cart?action=addToCart&id='+pet[i].id+'">Thêm vào giỏ hàng</a>';
-      							s+= '</div>';
-      							s+= '</div>';
-      							s+= '</div>';	
-      							s+= '<div class="product-content">';
-      							s+= '<h3>';
-      							s+= '<a href="${pageContext.request.contextPath}/petdetail">'+pet[i].petName+'</a>';
-      							s+= '</h3>';	
-      							s+= '<div class="product-price">';	
-      							s+= '<span>'+pet[i].money+' triệu đồng</span>';
-      							s+= '</div>';
-      							s+= '</div>';
-      							s+= '</div>';
-      							s+= '</div>';
-      						}	
-      						$('.tab-single .row').html(s);
-      					}
-      				});
-      			});
-      		});
-              </script>
-              <div class="tab-content" id="myTabContent">
-                <!-- Start Single Tab -->
-                <!-- Cho -->
-                <div class="tab-pane fade show active" id="man" role="tabpanel">
-                  <div class="tab-single">
-                    <div class="row">
-                    <% for(Pets pet: petModel.findAllByCategory(1)){ 
-                    %>
-                      <div class="col-xl-3 col-lg-4 col-md-4 col-12">
-                        <div class="single-product">
-                          <div class="product-img">
-                            <a href="${pageContext.request.contextPath }/petdetail?id=<%=pet.getId() %>">
-                              <img class="default-img" src="${pageContext.request.contextPath}/assets/user/images/pet/<%= pet.getImage() %>" alt="#" />
-                              <img class="hover-img" src="${pageContext.request.contextPath}/assets/user/images/pet/<%= pet.getImage() %>" alt="#" />
-                            </a>
-                            <div class="button-head">
-                              <div class="product-action">
-                                <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="${pageContext.request.contextPath }/petdetail?id=<%=pet.getId() %>"><i class="ti-eye"></i><span>Xem chi tiết</span></a>
-                                <a title="Wishlist" href="${pageContext.request.contextPath }/wishlistpet?action=wishlist&id=<%= pet.getId() %>"><i class="ti-heart"></i><span>Thêm vào yêu thích</span></a>
-                              </div>
-                              <div class="product-action-2">
-                                <a title="Add to cart" href="${pageContext.request.contextPath }/cart?action=addToCart&id=<%= pet.getId() %>">Thêm vào giỏ hàng</a>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="product-content">
-                            <h3>
-                              <a href="product-details.html"><%= pet.getPetName() %></a>
-                            </h3>
-                            <div class="product-price">
-                              <span><%= pet.getMoney() %> triệu đồng</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-   <%
-                    }
-   %>
-                      </div>
-                    </div>
-                  </div>
+            <div class="col-12">
+                <div class="section-title">
+                    <h2>Thú cưng hot</h2>
                 </div>
-                <!--/ End Single Tab -->
-                
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-    <!-- End Product Area -->
-   
-    <!-- Start Shop Services Area -->
-    <section class="shop-services section home">
-      <div class="container">
         <div class="row">
-          <div class="col-lg-3 col-md-6 col-12">
-            <!-- Start Single Service -->
-            <div class="single-service">
-              <i class="ti-rocket"></i>
-              <h4>Miễn phí giao hàng</h4>
-              <p>Đơn hàng trên 3 triệu</p>
-            </div>
-            <!-- End Single Service -->
-          </div>
-          <div class="col-lg-3 col-md-6 col-12">
-            <!-- Start Single Service -->
-            <div class="single-service">
-              <i class="ti-reload"></i>
-              <h4>Miễn phí hoàn trả hàng</h4>
-              <p>Trong 10 ngày</p>
-            </div>
-            <!-- End Single Service -->
-          </div>
-          <div class="col-lg-3 col-md-6 col-12">
-            <!-- Start Single Service -->
-            <div class="single-service">
-              <i class="ti-lock"></i>
-              <h4>Thanh toán an toàn</h4>
-              <p>100% thanh toán thành công</p>
-            </div>
-            <!-- End Single Service -->
-          </div>
-          <div class="col-lg-3 col-md-6 col-12">
-            <!-- Start Single Service -->
-            <div class="single-service">
-              <i class="ti-tag"></i>
-              <h4>Giá tốt nhất</h4>
-              <p>Đảm bảo giá</p>
-            </div>
-            <!-- End Single Service -->
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End Shop Services Area -->
+            <div class="col-12">
+                <div class="product-info">
+                    <div class="nav-main">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <% 
+                        for(Categorys category : categoryModel.findAll()){
+                        %>
+                            <li class="nav-item">
+                                <button class="filterByCategory" id="<%= category.getId() %>"><%= category.getName() %></button>
+                            </li> 
+                            <%
+                            }
+                            %>
+                        </ul>
+                    </div>
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                    $(document).ready(function() {
+                        function loadPets(categoryId, page) {
+                            $.ajax({
+                                type: 'GET',
+                                url: '${pageContext.request.contextPath}/home',
+                                dataType: 'json',
+                                data: {
+                                    action: 'filterByCategory',
+                                    idcategory: categoryId,
+                                    page: page
+                                },
+                                success: function(response) {
+                                    var pets = response.pets;
+                                    var totalPages = response.totalPages;
+                                    var html = '';
+                                    for (var i = 0; i < pets.length; i++) {
+                                        html += '<div class="col-xl-3 col-lg-4 col-md-4 col-12">';
+                                        html += '<div class="single-product">';
+                                        html += '<div class="product-img">';
+                                        html += '<a href="${pageContext.request.contextPath}/petdetail?id=' + pets[i].id + '">';
+                                        html += '<img class="default-img" src="${pageContext.request.contextPath}/assets/user/images/pet/' + pets[i].image + '" alt="#" />';
+                                        html += '<img class="hover-img" src="${pageContext.request.contextPath}/assets/user/images/pet/' + pets[i].image + '" alt="#" />';
+                                        html += '</a>';
+                                        html += '<div class="button-head">';
+                                        html += '<div class="product-action">';
+                                        html += '<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="${pageContext.request.contextPath}/petdetail?id=' + pets[i].id + '"><i class="ti-eye"></i><span>Xem chi tiết</span></a>';
+                                        html += '<a title="Wishlist" href="${pageContext.request.contextPath}/wishlistpet?action=wishlist&id=' + pets[i].id + '"><i class="ti-heart"></i><span>Thêm vào yêu thích</span></a>';
+                                        html += '</div>';
+                                        html += '<div class="product-action-2">';
+                                        html += '<a title="Add to cart" href="${pageContext.request.contextPath}/cart?action=addToCart&id=' + pets[i].id + '">Thêm vào giỏ hàng</a>';
+                                        html += '</div>';
+                                        html += '</div>';
+                                        html += '</div>';
+                                        html += '<div class="product-content">';
+                                        html += '<h3><a href="${pageContext.request.contextPath}/petdetail?id=' + pets[i].id + '">' + pets[i].petName + '</a></h3>';
+                                        html += '<div class="product-price">';
+                                        html += '<span>' + pets[i].money + ' triệu đồng</span>';
+                                        html += '</div>';
+                                        html += '</div>';
+                                        html += '</div>';
+                                        html += '</div>';
+                                    }
+                                    $('#product-container').html(html);
+                                    updatePagination(page, totalPages);
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    console.log('Error:', textStatus, errorThrown);
+                                }
+                            });
+                        }
 
-    <!-- Start Shop Newsletter  -->
-    <section class="shop-newsletter section">
-      <div class="container">
-        <div class="inner-top">
-          <div class="row">
-            <div class="col-lg-8 offset-lg-2 col-12">
-              <!-- Start Newsletter Inner -->
-              <div class="inner">
-                <h4>Bản tin</h4>
-                <p>
-                  Đăng ký nhận bản tin của chúng tôi và nhận được
-                  <span>10%</span> giảm giá trong lần mua đầu tiên
-                </p>
-                <form
-                  action="mail/mail.php"
-                  method="get"
-                  target="_blank"
-                  class="newsletter-inner"
-                >
-                  <input
-                    name="EMAIL"
-                    placeholder="Nhập địa chỉ Email"
-                    required=""
-                    type="email"
-                  />
-                  <button class="btn">Đăng ký</button>
-                </form>
-              </div>
-              <!-- End Newsletter Inner -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End Shop Newsletter -->
+                        function updatePagination(currentPage, totalPages) {
+                            var paginationHtml = '';
+                            if (totalPages > 1) {
+                                paginationHtml += '<ul>';
+                                if (currentPage > 1) {
+                                    paginationHtml += '<li class="page-item"><button class="page-link" data-page="' + (currentPage - 1) + '">&laquo; Prev</button></li>';
+                                }
+                                for (var i = 1; i <= totalPages; i++) {
+                                    paginationHtml += '<li class="page-item ' + (i === currentPage ? 'active' : '') + '">';
+                                    paginationHtml += '<button class="page-link" data-page="' + i + '">' + i + '</button>';
+                                    paginationHtml += '</li>';
+                                }
+                                if (currentPage < totalPages) {
+                                    paginationHtml += '<li class="page-item"><button class="page-link" data-page="' + (currentPage + 1) + '">Next &raquo;</button></li>';
+                                }
+                                paginationHtml += '</ul>';
+                            }
+                            $('#pagination-container').html(paginationHtml);
+                        }
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span class="ti-close" aria-hidden="true"></span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row no-gutters">
-              <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                <!-- Product Slider -->
-                <div class="product-gallery">
-                  <div class="quickview-slider-active">
-                    <div class="single-slider">
-                      <img src="https://via.placeholder.com/569x528" alt="#" />
+                        function changePage(pageNumber) {
+                            var categoryId = $('.filterByCategory.active').attr('id');
+                            loadPets(categoryId, pageNumber);
+                        }
+
+                        $(document).on('click', '.filterByCategory', function() {
+                            $('.filterByCategory').removeClass('active');
+                            $(this).addClass('active');
+                            var categoryId = $(this).attr('id');
+                            loadPets(categoryId, 1);
+                        });
+
+                        $(document).on('click', '.page-link', function() {
+                            var page = $(this).data('page');
+                            changePage(page);
+                        });
+
+                        // Initial load
+                        loadPets(1, 1);
+                    });
+                    </script>
+                    <div id="product-container" class="row">
+                        <!-- Product items will be loaded here by JavaScript -->
                     </div>
-                    <div class="single-slider">
-                      <img src="https://via.placeholder.com/569x528" alt="#" />
+                    <div id="pagination-container" class="pagination-container">
+                        <!-- Pagination buttons will be loaded here by JavaScript -->
                     </div>
-                    <div class="single-slider">
-                      <img src="https://via.placeholder.com/569x528" alt="#" />
-                    </div>
-                    <div class="single-slider">
-                      <img src="https://via.placeholder.com/569x528" alt="#" />
-                    </div>
-                  </div>
                 </div>
-                <!-- End Product slider -->
-              </div>
-              <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                <div class="quickview-content">
-                  <h2>Flared Shift Dress</h2>
-                  <div class="quickview-ratting-review">
-                    <div class="quickview-ratting-wrap">
-                      <div class="quickview-ratting">
-                        <i class="yellow fa fa-star"></i>
-                        <i class="yellow fa fa-star"></i>
-                        <i class="yellow fa fa-star"></i>
-                        <i class="yellow fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                      </div>
-                      <a href="#"> (1 customer review)</a>
-                    </div>
-                    <div class="quickview-stock">
-                      <span><i class="fa fa-check-circle-o"></i> in stock</span>
-                    </div>
-                  </div>
-                  <h3>$29.00</h3>
-                  <div class="quickview-peragraph">
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Mollitia iste laborum ad impedit pariatur esse optio
-                      tempora sint ullam autem deleniti nam in quos qui nemo
-                      ipsum numquam.
-                    </p>
-                  </div>
-                  <div class="size">
-                    <div class="row">
-                      <div class="col-lg-6 col-12">
-                        <h5 class="title">Size</h5>
-                        <select>
-                          <option selected="selected">s</option>
-                          <option>m</option>
-                          <option>l</option>
-                          <option>xl</option>
-                        </select>
-                      </div>
-                      <div class="col-lg-6 col-12">
-                        <h5 class="title">Color</h5>
-                        <select>
-                          <option selected="selected">orange</option>
-                          <option>purple</option>
-                          <option>black</option>
-                          <option>pink</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="quantity">
-                    <!-- Input Order -->
-                    <div class="input-group">
-                      <div class="button minus">
-                        <button
-                          type="button"
-                          class="btn btn-primary btn-number"
-                          disabled="disabled"
-                          data-type="minus"
-                          data-field="quant[1]"
-                        >
-                          <i class="ti-minus"></i>
-                        </button>
-                      </div>
-                      <input
-                        type="text"
-                        name="quant[1]"
-                        class="input-number"
-                        data-min="1"
-                        data-max="1000"
-                        value="1"
-                      />
-                      <div class="button plus">
-                        <button
-                          type="button"
-                          class="btn btn-primary btn-number"
-                          data-type="plus"
-                          data-field="quant[1]"
-                        >
-                          <i class="ti-plus"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <!--/ End Input Order -->
-                  </div>
-                  <div class="add-to-cart">
-                    <a href="#" class="btn">Add to cart</a>
-                    <a href="#" class="btn min"><i class="ti-heart"></i></a>
-                    <a href="#" class="btn min"
-                      ><i class="fa fa-compress"></i
-                    ></a>
-                  </div>
-                  <div class="default-social">
-                    <h4 class="share-now">Share:</h4>
-                    <ul>
-                      <li>
-                        <a class="facebook" href="#"
-                          ><i class="fa fa-facebook"></i
-                        ></a>
-                      </li>
-                      <li>
-                        <a class="twitter" href="#"
-                          ><i class="fa fa-twitter"></i
-                        ></a>
-                      </li>
-                      <li>
-                        <a class="youtube" href="#"
-                          ><i class="fa fa-pinterest-p"></i
-                        ></a>
-                      </li>
-                      <li>
-                        <a class="dribbble" href="#"
-                          ><i class="fa fa-google-plus"></i
-                        ></a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-    <!-- Modal end -->
-	
+</div>
+<!-- End Product Area -->
 </body>
 </html>

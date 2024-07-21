@@ -58,7 +58,7 @@ OrderModel orderModel = new OrderModel();
 						<c:if test="<%= bill.isStatus() == false %>">
 										 <td>
                          <button class="btn btn-danger">
-												<a href="${pageContext.request.contextPath}/admin/quanlibill?action=confirm&id=<%= bill.getId() %>">Chưa Xác nhận</a>
+												<a href="${pageContext.request.contextPath}/admin/quanlibill?action=confirm&id=<%= bill.getId() %>">Chưa thanh toán</a>
 						</button>
                         </td>  
 						</c:if> 	
