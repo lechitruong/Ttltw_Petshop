@@ -17,18 +17,25 @@ int i =0;
 %>
 <!-- Start header section -->
 <div class="content-wrapper">
+<div class="container-fluid">
+<form action="${pageContext.request.contextPath}/admin/quanliuser" method="get">
+    <div class="row">
+        <div class="col-lg-3">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate">
+        </div>
+        <div class="col-lg-3">
+           <label for="endDate">End Date:</label>
+                    <input type="date" id="endDate" name="endDate">
+        </div>
+        <div class="col-lg-3">
+             <button type="submit">Lọc sản phẩm không xuất hiện đơn hàng</button>
+        </div>
+    </div>
+</form>
+    </div>
     <div class="container-fluid">
         <div class="row mt-3">
-            <div class="col-lg-12">
-            <span></span>
-                <form action="${pageContext.request.contextPath}/admin/quanlitonkho" method="get">
-                    <label for="startDate">Start Date:</label>
-                    <input type="date" id="startDate" name="startDate">
-                    <label for="endDate">End Date:</label>
-                    <input type="date" id="endDate" name="endDate">
-                    <button type="submit">Lọc sản phẩm không xuất hiện đơn hàng</button>
-                </form>
-            </div>
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
