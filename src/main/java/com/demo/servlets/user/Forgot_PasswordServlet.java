@@ -1,6 +1,9 @@
 package com.demo.servlets.user;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,9 +13,13 @@ import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.demo.entities.Log;
 import com.demo.entities.Users;
+import com.demo.helpers.ConfigIP;
+import com.demo.helpers.IPAddressUtil;
 import com.demo.helpers.MailHelper;
 import com.demo.helpers.RandomStringHelper;
+import com.demo.models.LogModel;
 import com.demo.models.UserModel;
 
 /**
@@ -86,6 +93,7 @@ public class Forgot_PasswordServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		System.out.println(email);
 		UserModel userModel = new UserModel();
+		LogModel logModel = new LogModel();
 		Users user = userModel.findUserByEmail(email);
 		if (user != null) {
 			HttpSession session = request.getSession();
@@ -94,6 +102,7 @@ public class Forgot_PasswordServlet extends HttpServlet {
 			MailHelper.MailHelper(email, "Lấy lại mật khẩu của bạn", "Đây là mã xác thực để lấy lại mật khẩu của bạn /n"
 					+ otp + "/n Vui Lòng không cung cấp cho bất kì ai");
 			session.setAttribute("otp", otp);
+			logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "info", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Người dùng vào gmail", "Người dùng nhận được OTP từ mail", user.getId()));
 			response.sendRedirect("forgotpassword?action=verifyotp");
 		} else {
 			request.getSession().setAttribute("msg", "Khong tim thay email!");
@@ -105,6 +114,7 @@ public class Forgot_PasswordServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// day la code nhap vao
 		HttpSession session = request.getSession();
+		LogModel logModel = new LogModel();
 		String otp = request.getParameter("otp");
 		Users user = (Users) session.getAttribute("userforgot");
 		// day la code khi lay ma
@@ -113,8 +123,10 @@ public class Forgot_PasswordServlet extends HttpServlet {
 			session.setAttribute("msg", "Vui long nhap ma xac thuc");
 		}
 		if(otp.equals(verifyOtp)) {
+			logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "info", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Người dùng nhập mã OTP", "Nhập đúng mã OTP", user.getId()));
 			response.sendRedirect("forgotpassword?action=forgotpassword");
 		}else {
+			logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "warning", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Người dùng nhập mã OTP", "Nhập sai mã OTP", user.getId()));
 		session.setAttribute("msg", "Ma xac thuc khong dung, vui long kiem tra lai");
 		response.sendRedirect("forgotpassword?action=verifyotp");
 		}
@@ -126,6 +138,7 @@ public class Forgot_PasswordServlet extends HttpServlet {
 
             HttpSession session = request.getSession();
             UserModel userModel = new UserModel();
+            LogModel logModel = new LogModel();
             Users user = (Users) session.getAttribute("userforgot");
             if(user != null) {
             	String password = request.getParameter("newpass");
@@ -133,9 +146,11 @@ public class Forgot_PasswordServlet extends HttpServlet {
             	if(password.equals(password2)) {
             		user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
             		if(userModel.update(user)) {
+            			logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "info", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Người dùng vào trang đổi mật khẩu", "Người dùng đổi mật khẩu thành công", user.getId()));
             			response.sendRedirect("login");
             		}
             	}else {
+            		logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "warning", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Người dùng vào trang đổi mật khẩu", "Người dùng nhập sai mật khẩu", user.getId()));
             		session.setAttribute("msg", "Mat khau moi khong trung khop! Vui long thu lai");
             		response.sendRedirect("forgotpassword?action=forgotpassword");
             	}

@@ -41,7 +41,86 @@ public class OrderModel {
 			}
 			return orders;
 		}
+		// ham tra ve danh sach user co phat sinh don hang trong khoang thoi gian
+		public List<Users> findUsersWithOrdersByDateRange(Timestamp startDate, Timestamp endDate) {
+		    List<Users> usersWithOrders = new ArrayList<>();
+		    try {
+		         PreparedStatement stmt = ConnectDB.connection().prepareStatement("SELECT DISTINCT u.* FROM Users u JOIN Orders o ON u.id = o.userId WHERE o.orderDate BETWEEN ? AND ?") ;
+		        stmt.setTimestamp(1, startDate);
+		        stmt.setTimestamp(2, endDate);
 
+		        ResultSet resultSet = stmt.executeQuery();
+		        while (resultSet.next()) {
+		            Users user = new Users();
+		            user.setId(resultSet.getInt("id"));
+					user.setUserName(resultSet.getString("userName"));
+					user.setFullName(resultSet.getString("fullName"));
+					user.setEmail(resultSet.getString("email"));
+					user.setPhoneNumber(resultSet.getString("phoneNumber"));
+					user.setImage(resultSet.getString("image"));
+					user.setPassword(resultSet.getString("password"));
+					user.setRoleId(resultSet.getInt("roleId"));
+					user.setStatus(resultSet.getBoolean("status"));
+					user.setGender(resultSet.getString("gender"));
+					user.setBirthday(resultSet.getDate("birthday"));
+		            // Set other properties as needed
+		            usersWithOrders.add(user);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+
+		    return usersWithOrders;
+		}
+// ham tra ve danh sach order theo khoang thoi gian
+		 public List<Orders> findOrdersByDateRange(Timestamp startDate, Timestamp endDate) {
+		        List<Orders> orders = new ArrayList<>();
+		        try {
+		            PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement("SELECT * FROM orders WHERE orderDate BETWEEN ? AND ?");
+		            preparedStatement.setTimestamp(1, startDate);
+		            preparedStatement.setTimestamp(2, endDate);
+		            ResultSet resultSet = preparedStatement.executeQuery();
+
+		            while (resultSet.next()) {
+		                Orders order = new Orders();
+		                order.setId(resultSet.getInt("id"));
+		                order.setPhoneNumber(resultSet.getString("phoneNumber"));
+		                order.setEmail(resultSet.getString("email"));
+		                order.setNote(resultSet.getString("note"));
+		                order.setOrderDate(resultSet.getTimestamp("orderDate"));
+		                order.setTotalMoney(resultSet.getDouble("totalMoney"));
+		                order.setStatus(resultSet.getInt("status"));
+		                order.setUserId(resultSet.getInt("userId"));
+		                order.setAddressId(resultSet.getInt("addressId"));
+		                orders.add(order);
+		            }
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		            orders = null;
+		        } finally {
+		            ConnectDB.disconnect();
+		        }
+		        return orders;
+		    }
+		 // ham tinh tong tien theo khoang thoi gian
+		 public double calculateTotalMoney(Timestamp startDate, Timestamp endDate) {
+		        double total = 0.0;
+		        try {
+		            PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement("SELECT SUM(totalMoney) FROM orders WHERE orderDate BETWEEN ? AND ?");
+		            preparedStatement.setTimestamp(1, startDate);
+		            preparedStatement.setTimestamp(2, endDate);
+		            ResultSet resultSet = preparedStatement.executeQuery();
+
+		            if (resultSet.next()) {
+		                total = resultSet.getDouble(1);
+		            }
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        } finally {
+		            ConnectDB.disconnect();
+		        }
+		        return total;
+		    }
 	// ham dang ky
 		public boolean create(Orders order) {
 			boolean result = true;
@@ -73,7 +152,7 @@ public class OrderModel {
 			try {
 				PreparedStatement preparedStatement = ConnectDB.connection()
 						.prepareStatement("update orders set phoneNumber = ?, email = ?, "
-								+ "note = ?, orderDate = ?, totalMoney = ?, status = ? ,userId = ?,address =?"
+								+ "note = ?, orderDate = ?, totalMoney = ?, status = ? ,userId = ?,addressId =?"
 								+ " where id = ? ");
 				preparedStatement.setString(1, order.getPhoneNumber());
 				preparedStatement.setString(2, order.getEmail());
@@ -215,5 +294,8 @@ public class OrderModel {
 			}
 			return ordersList;
 		}
-
+public static void main(String[] args) {
+	OrderModel orderModel = new OrderModel();
+	System.out.println(orderModel.calculateTotalMoney(Timestamp.valueOf("2024-07-14 00:00:00"), Timestamp.valueOf("2024-07-20 23:59:59")));
+}
 }

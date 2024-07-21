@@ -1,5 +1,6 @@
 package com.demo.models;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
@@ -51,10 +52,120 @@ public class PetModel {
 		}
 		return pets;
 	}
+	// Trả về danh sách pet từng trang
+	public List<Pets> findPaginatedByCategory(int categoryId, int page, int pageSize) {
+	    List<Pets> petsList = new ArrayList<>();
+	    String sql = "SELECT * FROM pets WHERE categoryId = ? LIMIT ?, ?";
+	    try (Connection con = ConnectDB.connection();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setInt(1, categoryId);
+	        ps.setInt(2, (page - 1) * pageSize); // Vị trí bắt đầu cho phân trang
+	        ps.setInt(3, pageSize); // Số bản ghi cần lấy
+	        try (ResultSet resultSet = ps.executeQuery()) {
+	            while (resultSet.next()) {
+	                Pets pet = new Pets();
+	                pet.setId(resultSet.getInt("id"));
+	                pet.setPetName(resultSet.getString("petName"));
+	                pet.setPetType(resultSet.getString("petType"));
+	                pet.setPetGender(resultSet.getString("petGender"));
+	                pet.setDescription(resultSet.getString("description"));
+	                pet.setDetail(resultSet.getString("detail"));
+	                pet.setMade(resultSet.getString("made"));
+	                pet.setAmount(resultSet.getInt("amount"));
+	                pet.setMoney(resultSet.getDouble("money"));
+	                pet.setPetBirthday(resultSet.getDate("petBirthday"));
+	                pet.setImage(resultSet.getString("image"));
+	                pet.setStatus(resultSet.getBoolean("status"));
+	                pet.setCategoryId(resultSet.getInt("categoryId"));
+	                pet.setCatalogId(resultSet.getInt("catalogId"));
+	                petsList.add(pet);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return petsList;
+	}
+
+	// Trả về số lượng pet từng trang
+	public int getTotalPagesByCategory(int categoryId, int pageSize) {
+	    int totalRecords = 0;
+	    String sql = "SELECT COUNT(*) FROM pets WHERE categoryId = ?";
+	    try (Connection con = ConnectDB.connection();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setInt(1, categoryId);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                totalRecords = rs.getInt(1);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return (int) Math.ceil(totalRecords * 1.0 / pageSize); // Tính toán tổng số trang
+	}
+	// ham tra ve danh sach pet tung category cho tung trang
+	public List<Pets> findAllByCategoryWithPagination(int categoryId, int offset, int limit) {
+        List<Pets> pets = new ArrayList<>();
+        String sql = "SELECT * FROM pets WHERE categoryId = ? LIMIT ?, ?";
+
+        try (Connection connection = ConnectDB.connection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, categoryId);
+            statement.setInt(2, offset);
+            statement.setInt(3, limit);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Pets pet = new Pets();
+                pet.setId(resultSet.getInt("id"));
+                pet.setPetName(resultSet.getString("petName"));
+                pet.setPetType(resultSet.getString("petType"));
+                pet.setPetGender(resultSet.getString("petGender"));
+                pet.setDescription(resultSet.getString("description"));
+                pet.setDetail(resultSet.getString("detail"));
+                pet.setMade(resultSet.getString("made"));
+                pet.setAmount(resultSet.getInt("amount"));
+                pet.setMoney(resultSet.getDouble("money"));
+                pet.setPetBirthday(resultSet.getDate("petBirthday"));
+                pet.setImage(resultSet.getString("image"));
+                pet.setStatus(resultSet.getBoolean("status"));
+                pet.setCategoryId(resultSet.getInt("categoryId"));
+                pet.setCatalogId(resultSet.getInt("catalogId"));
+
+                pets.add(pet);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pets;
+    }
+
+    public int getTotalCountByCategory(int categoryId) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM pets WHERE categoryId = ?";
+
+        try (Connection connection = ConnectDB.connection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, categoryId);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+	// tra ve so luong pet cu the gioi han
 	public List<Pets> findAllByLimit(int limit) {
 		List<Pets> pets = new ArrayList<>();
 		try {
-			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement("select * from pets LIMIT ? ");
+			PreparedStatement preparedStatement = ConnectDB.connection()
+					.prepareStatement("select * from pets LIMIT ? ");
 			preparedStatement.setInt(1, limit);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -86,94 +197,100 @@ public class PetModel {
 	}
 
 	public List<Pets> findAllByFilter(String category, String priceRange, int limit) {
-	    List<Pets> pets = new ArrayList<>();
-	    StringBuilder query = new StringBuilder("SELECT * FROM pets");
+		List<Pets> pets = new ArrayList<>();
+		StringBuilder query = new StringBuilder("SELECT * FROM pets");
 
-	    boolean hasWhereClause = false;
+		boolean hasWhereClause = false;
 
-	    // Xử lý lọc theo danh mục
-	    if (!category.equals("all")) {
-	        query.append(" WHERE categoryId = ?");
-	        hasWhereClause = true;
-	    }
+		// Xử lý lọc theo danh mục
+		if (!category.equals("all")) {
+			query.append(" WHERE categoryId = ?");
+			hasWhereClause = true;
+		}
 
-	    // Xử lý lọc theo mức giá
-	    if (!priceRange.isEmpty()) {
-	        if (hasWhereClause) {
-	            query.append(" AND ");
-	        } else {
-	            query.append(" WHERE ");
-	            hasWhereClause = true;
-	        }
-	        query.append(buildPriceCondition(priceRange));
-	    }
+		// Xử lý lọc theo mức giá
+		if (!priceRange.isEmpty()) {
+			if (hasWhereClause) {
+				query.append(" AND ");
+			} else {
+				query.append(" WHERE ");
+				hasWhereClause = true;
+			}
+			query.append(buildPriceCondition(priceRange));
+		}
 
-	    // Thêm điều kiện giới hạn
-	    query.append(" LIMIT ?");
+		// Thêm điều kiện giới hạn
+		query.append(" LIMIT ?");
 
-	    try {
-	        PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(query.toString());
-	        int index = 1;
+		try {
+			PreparedStatement preparedStatement = ConnectDB.connection().prepareStatement(query.toString());
+			int index = 1;
 
-	        // Thiết lập tham số cho danh mục
-	        if (!category.equals("all")) {
-	            preparedStatement.setInt(index++, getCategoryIdByName(category));
-	        }
+			// Thiết lập tham số cho danh mục
+			if (!category.equals("all")) {
+				preparedStatement.setInt(index++, getCategoryIdByName(category));
+			}
 
-	        // Không cần thiết lập tham số cho mức giá vì điều kiện đã được xây dựng trong buildPriceCondition
+			// Không cần thiết lập tham số cho mức giá vì điều kiện đã được xây dựng trong
+			// buildPriceCondition
 
-	        // Thiết lập tham số cho số lượng hiển thị
-	        preparedStatement.setInt(index, limit);
-	        ResultSet resultSet = preparedStatement.executeQuery();
+			// Thiết lập tham số cho số lượng hiển thị
+			preparedStatement.setInt(index, limit);
+			ResultSet resultSet = preparedStatement.executeQuery();
 
-	        while (resultSet.next()) {
-	            Pets pet = new Pets();
-	            pet.setId(resultSet.getInt("id"));
-	            pet.setPetName(resultSet.getString("petName"));
-	            pet.setPetType(resultSet.getString("petType"));
-	            pet.setPetGender(resultSet.getString("petGender"));
-	            pet.setDescription(resultSet.getString("description"));
-	            pet.setDetail(resultSet.getString("detail"));
-	            pet.setMade(resultSet.getString("made"));
-	            pet.setAmount(resultSet.getInt("amount"));
-	            pet.setMoney(resultSet.getDouble("money"));
-	            pet.setPetBirthday(resultSet.getDate("petBirthday"));
-	            pet.setImage(resultSet.getString("image"));
-	            pet.setStatus(resultSet.getBoolean("status"));
-	            pet.setCategoryId(resultSet.getInt("categoryId"));
-	            pet.setCatalogId(resultSet.getInt("catalogId"));
-	            pets.add(pet);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        pets = null;
-	    } finally {
-	        ConnectDB.disconnect();
-	    }
+			while (resultSet.next()) {
+				Pets pet = new Pets();
+				pet.setId(resultSet.getInt("id"));
+				pet.setPetName(resultSet.getString("petName"));
+				pet.setPetType(resultSet.getString("petType"));
+				pet.setPetGender(resultSet.getString("petGender"));
+				pet.setDescription(resultSet.getString("description"));
+				pet.setDetail(resultSet.getString("detail"));
+				pet.setMade(resultSet.getString("made"));
+				pet.setAmount(resultSet.getInt("amount"));
+				pet.setMoney(resultSet.getDouble("money"));
+				pet.setPetBirthday(resultSet.getDate("petBirthday"));
+				pet.setImage(resultSet.getString("image"));
+				pet.setStatus(resultSet.getBoolean("status"));
+				pet.setCategoryId(resultSet.getInt("categoryId"));
+				pet.setCatalogId(resultSet.getInt("catalogId"));
+				pets.add(pet);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			pets = null;
+		} finally {
+			ConnectDB.disconnect();
+		}
 
-	    return pets;
+		return pets;
 	}
 
 	private int getCategoryIdByName(String categoryName) {
-	    switch (categoryName) {
-	        case "dogs": return 1;
-	        case "cats": return 2;
-	        case "others": return 3;
-	        default: return -1; // hoặc ném ngoại lệ nếu cần thiết
-	    }
+		switch (categoryName) {
+		case "dogs":
+			return 1;
+		case "cats":
+			return 2;
+		case "others":
+			return 3;
+		default:
+			return -1; // hoặc ném ngoại lệ nếu cần thiết
+		}
 	}
 
 	private String buildPriceCondition(String priceRange) {
-	    switch (priceRange) {
-	        case "below_2": return "money < 2.0"; // Đơn vị là triệu đồng
-	        case "2_3_5": return "money BETWEEN 2.0 AND 3.5";
-	        case "above_3_5": return "money > 3.5";
-	        default: return "";
-	    }
+		switch (priceRange) {
+		case "below_2":
+			return "money < 2.0"; // Đơn vị là triệu đồng
+		case "2_3_5":
+			return "money BETWEEN 2.0 AND 3.5";
+		case "above_3_5":
+			return "money > 3.5";
+		default:
+			return "";
+		}
 	}
-
-
-
 
 	// ham lay ra danh sach pet con trong kho
 	public List<Pets> findAllWithPositiveQuantity() {
@@ -436,7 +553,7 @@ public class PetModel {
 		return -1;
 	}
 
-	// ham tra ve danh sach cho cho
+	// ham tra ve danh sach cho cua vao id category
 	public static List<Pets> findAllByCategory(int categoryId) {
 		List<Pets> pets = new ArrayList<>();
 		try {
@@ -644,6 +761,6 @@ public class PetModel {
 //			System.out.println(petModel.findAllByCatalog(3, 16));
 //			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //			System.out.println(petModel.create(new Pets(1,"test1", "Lớn","Nhỏ","Oke", "Ổn", "Việt Nam", 1, 1.1, new Date(), "pet.png", 3, 4)));
-		System.out.println(petModel.lastPets());
+		System.out.println(petModel.findPaginatedByCategory(1,2,12));
 	}
 }

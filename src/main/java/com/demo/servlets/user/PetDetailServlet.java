@@ -14,8 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.demo.entities.Comments;
+import com.demo.entities.Log;
 import com.demo.entities.Pets;
+import com.demo.entities.Users;
+import com.demo.helpers.ConfigIP;
+import com.demo.helpers.IPAddressUtil;
 import com.demo.models.CommentModel;
+import com.demo.models.LogModel;
 import com.demo.models.PetModel;
 import com.demo.models.UserModel;
 import com.google.gson.Gson;
@@ -52,6 +57,9 @@ public class PetDetailServlet extends HttpServlet {
 		PetModel petModel = new PetModel();
 		String id = request.getParameter("id");
 		Pets pet = petModel.findPetById(Integer.parseInt(id));
+		LogModel logModel = new LogModel();
+		Users user =(Users) request.getSession().getAttribute("user");
+		logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "info", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Chưa xem sản phẩm", "Xem chi tiết sản phẩm " + pet.getPetName(), user.getId()));
 		request.setAttribute("pet", pet);
 		request.setAttribute("p", "../user/pet-detail.jsp");
 		request.getRequestDispatcher("/WEB-INF/views/layout/user.jsp").forward(request, response);
@@ -59,6 +67,11 @@ public class PetDetailServlet extends HttpServlet {
 	protected void doGet_AddComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 		int petId = Integer.parseInt(request.getParameter("petId"));
+		PetModel petModel = new PetModel();
+		Pets pet = petModel.findPetById(petId);
+		LogModel logModel = new LogModel();
+		Users user =(Users) request.getSession().getAttribute("user");
+		logModel.create(new Log(IPAddressUtil.getPublicIPAddress(), "info", ConfigIP.ipconfig(request).getCountryLong(), new Timestamp(new Date().getTime()), "Xem sản phẩm", "Để lại bình luận về " + pet.getPetName(), user.getId()));
 		CommentModel commentModel = new CommentModel();
 		UserModel userModel = new UserModel();
 		PrintWriter printWriter = response.getWriter();
