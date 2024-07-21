@@ -3,11 +3,11 @@ package com.demo.entities;
 import java.sql.Timestamp;
 
 public class Bills {
-private int id;
-private int orderId;
-private int paymentMethod;
-private boolean status;
-private Timestamp createDate;
+	private int id;
+	private int orderId;
+	private int paymentMethod;
+	private boolean status;
+	private Timestamp createDate;
 
 public Bills(int id, int orderId, int paymentMethod, boolean status, Timestamp createDate) {
 	super();

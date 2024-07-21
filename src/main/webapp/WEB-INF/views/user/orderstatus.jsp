@@ -7,51 +7,51 @@
 <%@page import="com.demo.entities.Orders"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isELIgnored="false"%>
+         pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Tình trạng đơn hàng</title>
-<link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
-<style>
-/* Lớp phủ toàn màn hình */
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Màu nền nửa trong suốt */
-    z-index: 998; /* Đảm bảo lớp phủ ở trên các phần tử khác nhưng dưới hộp thoại */
-}
+    <meta charset="UTF-8">
+    <title>Tình trạng đơn hàng</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
+    <style>
+        /* Lớp phủ toàn màn hình */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Màu nền nửa trong suốt */
+            z-index: 998; /* Đảm bảo lớp phủ ở trên các phần tử khác nhưng dưới hộp thoại */
+        }
 
-#btnClose {
-    float: right;
-    margin: 5px;
-    background: transparent;
-    border: none;
-    font-size: 25px;
-    cursor: pointer;
-}
-</style>
+        #btnClose {
+            float: right;
+            margin: 5px;
+            background: transparent;
+            border: none;
+            font-size: 25px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <section class="container_status">
-<h3 style="text-align:center; position: relative;">Đơn hàng của bạn</h3>
-<% 
-OrderDetailModel orderDetailModel = new OrderDetailModel();
-OrderModel orderModel = new OrderModel();
-AddressModel addressModel = new AddressModel();
-Users user = (Users) request.getSession().getAttribute(("user"));
-List<Orders> orders =(List<Orders>) orderModel.findAllByUserId(user.getId());
-BillModel billModel = new BillModel();
-int z =0;
-int w =0;
-%>
-<table id="example" class="display" style="width:100%">
+    <h3 style="text-align:center; position: relative;">Đơn hàng của bạn</h3>
+    <%
+        OrderDetailModel orderDetailModel = new OrderDetailModel();
+        OrderModel orderModel = new OrderModel();
+        AddressModel addressModel = new AddressModel();
+        Users user = (Users) request.getSession().getAttribute(("user"));
+        List<Orders> orders =(List<Orders>) orderModel.findAllByUserId(user.getId());
+        BillModel billModel = new BillModel();
+        int z =0;
+        int w =0;
+    %>
+    <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>STT</th>

@@ -37,7 +37,7 @@ import java.sql.Timestamp;
  * @author CTT VNPAY
  */
 public class PaymentServlet extends HttpServlet {
-	
+
     @Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String action = req.getParameter("action");
@@ -49,7 +49,7 @@ public class PaymentServlet extends HttpServlet {
 	}
     protected void doGet_Index(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     	req.getRequestDispatcher("/WEB-INF/views/user/payment.jsp").forward(req, resp);
-		
+
 	}
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
