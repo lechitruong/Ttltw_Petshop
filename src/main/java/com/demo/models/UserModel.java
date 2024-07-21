@@ -1,7 +1,9 @@
 package com.demo.models;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,6 +80,62 @@ public class UserModel {
 	        }
 
 	        return users;
+	    }
+ // ham tra ve danh sach nguoi dung co hoac k co order trong khoang thoi gian nhat dinh
+	 public List<Users> findUsersByDateRangeAndStatus(Timestamp startDate, Timestamp endDate, String filterStatus) {
+	        List<Users> userList = new ArrayList<>();
+	        try {
+	            // Tạo câu lệnh SQL với điều kiện lọc theo trạng thái
+	            String sql = "SELECT u.* FROM users u " +
+	                         "LEFT JOIN orders o ON u.id = o.userId " +
+	                         "WHERE o.orderDate BETWEEN ? AND ? " +
+	                         "AND (o.status = ? OR o.status IS NULL) " +
+	                         "GROUP BY u.id";
+	            
+	            Connection conn = ConnectDB.connection();
+	            PreparedStatement pstmt = conn.prepareStatement(sql);
+	            
+	            // Set giá trị cho các tham số trong câu lệnh SQL
+	            pstmt.setTimestamp(1, startDate);
+	            pstmt.setTimestamp(2, endDate);
+	            
+	            // Xử lý giá trị trạng thái
+	            Integer status = null; // Sử dụng Integer thay vì int
+	            if (filterStatus != null) {
+	                if (filterStatus.equals("has-orders")) {
+	                    status = 1; // Có đơn hàng
+	                } else if (filterStatus.equals("no-orders")) {
+	                    status = 0; // Không có đơn hàng
+	                }
+	            }
+	            
+	            if (status != null) {
+	                pstmt.setInt(3, status);
+	            } else {
+	                // Xử lý trường hợp filterStatus là null
+	                pstmt.setNull(3, java.sql.Types.INTEGER);
+	            }
+	            
+	            ResultSet resultSet = pstmt.executeQuery();
+	            while (resultSet.next()) {
+	                Users user = new Users();
+	                user.setId(resultSet.getInt("id"));
+	                user.setUserName(resultSet.getString("userName"));
+	                user.setFullName(resultSet.getString("fullName"));
+	                user.setEmail(resultSet.getString("email"));
+	                user.setPhoneNumber(resultSet.getString("phoneNumber"));
+	                user.setImage(resultSet.getString("image"));
+	                user.setPassword(resultSet.getString("password"));
+	                user.setRoleId(resultSet.getInt("roleId"));
+	                user.setStatus(resultSet.getBoolean("status"));
+	                user.setGender(resultSet.getString("gender"));
+	                user.setBirthday(resultSet.getDate("birthday"));
+	                userList.add(user);
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return userList;
 	    }
 
 	public List<Users> findAllRole(int roleId) {
@@ -346,6 +404,7 @@ public class UserModel {
 //		System.out.println(BCrypt.hashpw("123", BCrypt.gensalt()));
 //		System.out.println(userModel.findUsersByPetId(1));
 //System.out.println(userModel.isExistEmail("21130591@st.hcmuaf.edu.v"));
+//		System.out.println(userModel.findUsersByDateRangeAndStatus(Timestamp.valueOf("2024-07-14 00:00:00"), Timestamp.valueOf("2024-07-20 23:59:59"), "has-orders"));
 
 	}
 }

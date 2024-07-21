@@ -83,7 +83,8 @@ public class HomeServlet extends HttpServlet {
                 }
             }
         }
-
+        request.setAttribute("startDate", startDateStr);
+        request.setAttribute("endDate", endDateStr);
         request.setAttribute("total", total);
         request.setAttribute("dog", dog);
         request.setAttribute("cat", cat);

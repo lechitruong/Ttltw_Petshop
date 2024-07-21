@@ -26,9 +26,12 @@
  Integer other = (Integer) request.getAttribute("other");
  Integer totalOrders = (Integer) request.getAttribute("totalOrders");
  Integer totalProductsSold = (Integer) request.getAttribute("totalProductsSold");
+ 
+ String startDate = request.getParameter("startDate");
+ String endDate = request.getParameter("endDate");
 
- DecimalFormat decimalFormatter = new DecimalFormat("#,##0.00");
- String formattedNumber = decimalFormatter.format(total) + " triệu đồng";
+ // DecimalFormat decimalFormatter = new DecimalFormat("#,##0.00");
+ // String formattedNumber = decimalFormatter.format(total) + " triệu đồng";
 %>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -75,6 +78,10 @@ $(function() {
    // Datepicker
    $("#startDate").datepicker({ dateFormat: 'yy-mm-dd' });
    $("#endDate").datepicker({ dateFormat: 'yy-mm-dd' });
+   $("#loadDefault").click(function() {
+       $("#startDate").val('');
+       $("#endDate").val('');
+   });
 });
 </script>
 
@@ -84,10 +91,11 @@ $(function() {
        <!-- Form để chọn khoảng thời gian -->
        <form id="filterForm" method="get" action="${pageContext.request.contextPath}/admin/home">
            <label for="startDate">Từ ngày:</label>
-           <input type="text" id="startDate" name="startDate" required>
+           <input type="text" id="startDate" name="startDate" value="${startDate }" required>
            <label for="endDate">Đến ngày:</label>
-           <input type="text" id="endDate" name="endDate" required>
+           <input type="text" id="endDate" name="endDate" value="${endDate}" required>
            <button type="submit">Lọc</button>
+            <button type="button" id="loadDefault">Load</button>
        </form>
        <div class="card mt-3">
            <div class="card-content">
@@ -103,7 +111,7 @@ $(function() {
                    </div>
                    <div class="col-12 col-lg-6 col-xl-3 border-light">
                        <div class="card-body">
-                           <h5 class="text-white mb-0">${formattedNumber}</h5>
+                           <h5 class="text-white mb-0">${total} triệu đồng</h5>
                            <div class="progress my-3" style="height:3px;">
                                <div class="progress-bar" style="width:100%"></div>
                            </div>
@@ -145,18 +153,18 @@ $(function() {
                            <tbody>
                                <tr>
                                    <td><i class="fa fa-circle text-white mr-2"></i>Chó</td>
-                                   <td>${dog}</td>
-                                   <td>${(dog / (dog + cat + other) * 100)} %</td>
+                                   <td>${dog }</td>
+                                   <td>${Double.isNaN(dog / (dog + cat + other) * 100) ? 0:(dog / (dog + cat + other) * 100) } %</td>
                                </tr>
                                <tr>
                                    <td><i class="fa fa-circle text-light-1 mr-2"></i>Mèo</td>
                                    <td>${cat}</td>
-                                   <td>${(cat / (dog + cat + other) * 100)} %</td>
+                                   <td>${Double.isNaN(cat / (dog + cat + other) * 100) ? 0:(cat / (dog + cat + other) * 100) } %</td>
                                </tr>
                                <tr>
                                    <td><i class="fa fa-circle text-light-1 mr-2"></i>Thú cưng khác</td>
                                    <td>${other}</td>
-                                   <td>${(other / (dog + cat + other) * 100)} %</td>
+                                   <td>${Double.isNaN(other / (dog + cat + other) * 100) ? 0:(other / (dog + cat + other) * 100)} %</td>
                                </tr>
                            </tbody>
                        </table>
