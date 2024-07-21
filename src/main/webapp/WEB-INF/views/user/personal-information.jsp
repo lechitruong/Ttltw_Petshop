@@ -26,8 +26,9 @@
 							<li><a href="${pageContext.request.contextPath }/home">Trang
 									chủ<i class="ti-arrow-right"></i>
 							</a></li>
-							<li class="active"><a href="blog-single.html">Thông tin
-									cá nhân</a></li>
+							<li class="active"><a
+								href="${pageContext.request.contextPath }/personalinformation">Thông
+									tin cá nhân</a></li>
 						</ul>
 					</div>
 				</div>
@@ -52,7 +53,8 @@
 						<!-- Form -->
 						<form style="display: flex" class="form" method="post"
 							enctype="multipart/form-data"
-							action="${pageContext.request.contextPath }/personalinformation?action=update" onsubmit="return validateForm()">
+							action="${pageContext.request.contextPath }/personalinformation?action=update"
+							onsubmit="return validateForm()">
 							<div class="row col-8">
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
@@ -159,10 +161,11 @@
 									<div class="card-body text-center">
 										<!-- Profile picture image-->
 										<img id="imgAvatar"
-											style="width: 324px; height: 324px; object-fit: contain"
-											class="img-account-profile rounded-circle mb-2"
-											src="${pageContext.request.contextPath }/assets/user/images/${sessionScope.user.image != null?sessionScope.user.image:"" }"
-											alt="" />
+											style="width: 324px; height: 324px; border-radius: 50%;"
+											class="img-account-profile mb-2"
+											src="${pageContext.request.contextPath }/assets/user/images/${sessionScope.user.image != null ? sessionScope.user.image : "
+											" }"
+     alt="" />
 										<!-- Profile picture help block-->
 										<div class="small font-italic text-muted mb-4"></div>
 										<!-- Profile picture upload button-->
@@ -172,12 +175,21 @@
 											class="fa-solid fa-arrow-up-from-bracket"></i> &nbsp;Tải lên</label>
 										<!-- Profile picture image-->
 										<script>
-											$(document).ready(function() {
-																$("#inputAvatar").change(
-																	function() {
-																		var tmppath = URL.createObjectURL(event.target.files[0]);
-																			$("#imgAvatar").attr("src",tmppath);
-																			});
+											$(document)
+													.ready(
+															function() {
+																$(
+																		"#inputAvatar")
+																		.change(
+																				function() {
+																					var tmppath = URL
+																							.createObjectURL(event.target.files[0]);
+																					$(
+																							"#imgAvatar")
+																							.attr(
+																									"src",
+																									tmppath);
+																				});
 															});
 										</script>
 									</div>
@@ -197,43 +209,43 @@ input[type="file"] {
 		</div>
 	</section>
 	<!--/ End Checkout -->
-<script>
-function validateForm() {
-    var gender = document.getElementById("gender").value;
-    var country = document.getElementById("country").value;
-    var district = document.getElementById("district").value;
-    var ward = document.getElementById("ward").value;
-    var avatar = document.getElementById("inputAvatar").value; // Lấy giá trị của trường input file
+	<script>
+		function validateForm() {
+			var gender = document.getElementById("gender").value;
+			var country = document.getElementById("country").value;
+			var district = document.getElementById("district").value;
+			var ward = document.getElementById("ward").value;
+			var avatar = document.getElementById("inputAvatar").value; // Lấy giá trị của trường input file
 
-    // Kiểm tra giá trị của các trường select
-    if (gender === "" || gender === "Chọn giới tính") {
-        alert("Vui lòng chọn giới tính.");
-        return false;
-    }
+			// Kiểm tra giá trị của các trường select
+			if (gender === "" || gender === "Chọn giới tính") {
+				alert("Vui lòng chọn giới tính.");
+				return false;
+			}
 
-    if (country === "") {
-        alert("Vui lòng chọn Tỉnh/Thành Phố.");
-        return false;
-    }
+			if (country === "") {
+				alert("Vui lòng chọn Tỉnh/Thành Phố.");
+				return false;
+			}
 
-    if (district === "") {
-        alert("Vui lòng chọn Quận/Huyện.");
-        return false;
-    }
+			if (district === "") {
+				alert("Vui lòng chọn Quận/Huyện.");
+				return false;
+			}
 
-    if (ward === "") {
-        alert("Vui lòng chọn Xã/Phường.");
-        return false;
-    }
+			if (ward === "") {
+				alert("Vui lòng chọn Xã/Phường.");
+				return false;
+			}
 
-    // Kiểm tra trường input file
-    if (avatar === "") {
-        alert("Vui lòng chọn ảnh đại diện.");
-        return false;
-    }
+			// Kiểm tra trường input file
+			if (avatar === "") {
+				alert("Vui lòng chọn ảnh đại diện.");
+				return false;
+			}
 
-    return true; // Cho phép submit form nếu đã được validate thành công
-}
-</script>
+			return true; // Cho phép submit form nếu đã được validate thành công
+		}
+	</script>
 </body>
 </html>

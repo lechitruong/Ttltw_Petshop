@@ -82,13 +82,19 @@ int w =0;
                 <td><%= addressModel.findAddressById(orders.get(i).getAddressId()).getAddress()+", "+ addressModel.findAddressById(orders.get(i).getAddressId()).getWard()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getDistrict()+", "+addressModel.findAddressById(orders.get(i).getAddressId()).getCountry() %></td>
                 <td><%= orders.get(i).getOrderDate() %></td>
                 <td><%= orders.get(i).getStatus() == 1? "Đang xác nhận": "Chưa xác nhận"%></td>
-                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 2 %>">
+                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 2 && orders.get(i).getStatus() == 1  %>">
                 <td>Thanh toán bằng VNPay</td>
                 <td>Đã thanh toán</td>
                 <td>
                 <button class="btn btn-danger">
 						<a href="${pageContext.request.contextPath}/showbill?id=<%= orders.get(i).getId() %>">In hoá đơn</a>
 				</button>
+                </td>
+                </c:if>
+                <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 2 && orders.get(i).getStatus() == 0  %>">
+                <td>Thanh toán bằng VNPay</td>
+                <td>Đã thanh toán</td>
+                <td>
                 </td>
                 </c:if>
                 <c:if test="<%= billModel.findBillByOrderId(orders.get(i).getId()).getPaymentMethod() == 1 && billModel.findBillByOrderId(orders.get(i).getId()).isStatus() == true%>">

@@ -173,7 +173,7 @@ display:none;
 									 <li>Tổng hàng<span id="totalAmount"><%= itemModel.total(cart) %></span> (triệu đồng)</li>
 									 <input type="hidden" name="totalhidden" value="<%= itemModel.total(cart) %>" />
     <!--  <li>(+) Giao hàng<span id="shippingFee">0.1</span> (triệu đồng)</li>  --> 
-      <li class="last">Tổng<span class="finalAmount">0.00</span> (triệu đồng)</li>
+      <li class="last">Tổng<span class="finalAmount"><%= itemModel.total(cart) %></span> (triệu đồng)</li>
 								</ul>
 							</div>
 						</div>

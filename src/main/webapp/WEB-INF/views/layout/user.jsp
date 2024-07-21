@@ -27,8 +27,9 @@
 <!-- StyleSheet -->
 
 <!-- Font Awasome -->
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -73,8 +74,8 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/user/css/responsive.css">
 
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
 <script>
 $(document).ready(function () {
 	$('#datepicker').datepicker({
@@ -129,8 +130,8 @@ $(document).ready(function () {
 						<!-- Top Right -->
 						<div class="right-content">
 							<div class="list-main-right">
-								<span><i class="ti-location-pin"></i>Linh
-									Xuân, Tp.Thủ Đức</span> 
+								<span><i class="ti-location-pin"></i>Linh Xuân, Tp.Thủ
+									Đức</span>
 								<div class="list-main-right-login">
 									<c:if test="${sessionScope.user ==null }">
 										<span class="header-icon-label"> <i
@@ -140,7 +141,8 @@ $(document).ready(function () {
 										</span>
 									</c:if>
 									<c:if test="${sessionScope.user !=null }">
-										<a href="${pageContext.request.contextPath}/thongtintaikhoan">
+										<a
+											href="${pageContext.request.contextPath}/personalinformation">
 											<span class="header-icon-label"> <i
 												class="ti-power-off"></i> ${sessionScope.user.fullName }
 										</span>
@@ -172,36 +174,40 @@ $(document).ready(function () {
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="index.html"><img
-								src="${pageContext.request.contextPath}/assets/user/images/logopetshop.jpg" alt="logo" style="width:80px; height:80px;" /></a>
+							<a href="${pageContext.request.contextPath}/home"><img
+								src="${pageContext.request.contextPath}/assets/user/images/logopetshop.jpg"
+								alt="logo" style="width: 80px; height: 80px;" /></a>
 						</div>
 						<!--/ End Logo -->
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
-					<form action="${pageContext.request.contextPath }/showlistsearch" method="GET">
-						<div class="search-bar-top">
-							<div class="search-bar">
-								<span style="margin-right:30px;">Tìm kiếm</span>
-									<input name="search" id="timkiem" placeholder="Nhập tên thú cưng....."
-										type="search" />
+						<form action="${pageContext.request.contextPath }/showlistsearch"
+							method="GET">
+							<div class="search-bar-top">
+								<div class="search-bar">
+									<span style="margin-right: 30px;">Tìm kiếm</span> <input
+										name="search" id="timkiem"
+										placeholder="Nhập tên thú cưng....." type="search" />
 									<button class="btnn">
 										<i class="ti-search"></i>
 									</button>
-								
+
+								</div>
 							</div>
-						</div>
 						</form>
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a href="${pageContext.request.contextPath }/wishlistpet" class="single-icon"><i
-									class="fa fa-heart-o" aria-hidden="true"></i></a>
+								<a href="${pageContext.request.contextPath }/wishlistpet"
+									class="single-icon"><i class="fa fa-heart-o"
+									aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar">
-								<a href="${pageContext.request.contextPath}/personalinformation" class="single-icon"><i
-									class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+								<a href="${pageContext.request.contextPath}/personalinformation"
+									class="single-icon"><i class="fa fa-user-circle-o"
+									aria-hidden="true"></i></a>
 							</div>
 							<%
 							HttpSession session2 = request.getSession();
@@ -213,8 +219,8 @@ $(document).ready(function () {
 							%>
 							<div class="sinlge-bar shopping">
 								<a href="${pageContext.request.contextPath}/cart"
-									class="single-icon"><i class="ti-bag"></i>
-									<span class="total-count"><%=cart == null ? 0 : cart.size()%></span></a>
+									class="single-icon"><i class="ti-bag"></i> <span
+									class="total-count"><%=cart == null ? 0 : cart.size()%></span></a>
 
 								<!-- Shopping Item -->
 								<div class="shopping-item">
@@ -268,7 +274,7 @@ $(document).ready(function () {
 						<div class="col-lg-3">
 							<div class="all-category">
 								<h3 class="cat-heading">
-									<i class="fa fa-bars" style="margin-right:3px;"></i>DANH MỤC
+									<i class="fa fa-bars" style="margin-right: 3px;"></i>DANH MỤC
 								</h3>
 							</div>
 						</div>
@@ -285,8 +291,8 @@ $(document).ready(function () {
 												<li><a
 													href="${pageContext.request.contextPath}/shopgrid">Thú
 														cưng</a></li>
-												<li><a href="#">Shop<i
-														class="ti-angle-down"></i><span class="new">Mới</span></a>
+												<li><a href="#">Shop<i class="ti-angle-down"></i><span
+														class="new">Mới</span></a>
 													<ul class="dropdown">
 														<li><a
 															href="${pageContext.request.contextPath}/shopgrid">Lọc</a></li>
@@ -328,7 +334,8 @@ $(document).ready(function () {
 						<div class="single-footer about">
 							<div class="logo">
 								<a href="index.html"><img
-									src="${pageContext.request.contextPath}/assets/user/images/logopetshop.jpg" alt="#" /></a>
+									src="${pageContext.request.contextPath}/assets/user/images/logopetshop.jpg"
+									alt="#" /></a>
 							</div>
 							<p class="text">Đó là protein, không phải cuộc đua, là cực
 								hình, không cần thiết Anh ấy là một cầu thủ bóng đá tuyệt vời.
@@ -407,8 +414,7 @@ $(document).ready(function () {
 							<div class="left">
 								<p>
 									Copyright © 2020 <a href="http://www.wpthemesgrid.com"
-										target="_blank">PetShop</a> - All
-									Rights Reserved.
+										target="_blank">PetShop</a> - All Rights Reserved.
 								</p>
 							</div>
 						</div>
@@ -424,7 +430,7 @@ $(document).ready(function () {
 		src="${pageContext.request.contextPath}/assets/user/js/jquery.min.js"></script> --%>
 	<script
 		src="${pageContext.request.contextPath}/assets/user/js/jquery-migrate-3.0.0.js"></script>
-<%-- 	<script
+	<%-- 	<script
 		src="${pageContext.request.contextPath}/assets/user/js/jquery-ui.min.js"></script> --%>
 	<!-- Popper JS -->
 	<script
@@ -469,7 +475,7 @@ $(document).ready(function () {
 	<script
 		src="${pageContext.request.contextPath}/assets/user/js/active.js"></script>
 	<!-- Jquery -->
-<!-- 	<script
+	<!-- 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
 		integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->

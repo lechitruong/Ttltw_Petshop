@@ -8,6 +8,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Đăng nhập</title>
+<script>
+	function startCountdown(seconds) {
+		var countdownElement = document.getElementById('countdown');
+		var interval = setInterval(
+				function() {
+					if (seconds <= 0) {
+						clearInterval(interval);
+						countdownElement.innerHTML = "Bạn có thể đăng nhập lại.";
+					} else {
+						countdownElement.innerHTML = "Bạn có thể đăng nhập lại sau "
+								+ seconds + " giây.";
+						seconds--;
+					}
+				}, 1000);
+	}
+
+	window.onload = function() {
+		var error = "${error}";
+		if (error && error.includes("chờ")) {
+			var seconds = parseInt(error.match(/(\d+) giây/)[1]);
+			startCountdown(seconds);
+		} else if (error) {
+			document.getElementById('countdown').innerHTML = error;
+		}
+	};
+</script>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/user/css/login__register.css">
 </head>
@@ -15,15 +41,14 @@
 	<div class="container">
 		<div class="login form">
 			<header>Đăng nhập</header>
-			<%
-			HttpSession session2 = request.getSession();
-			String msg = (String) (session2.getAttribute("msg"));
-			String msg1 = msg;
-			session2.removeAttribute("msg");
-			%>
+			<div id="countdown" style="color: red;">
+				<c:if test="${not empty error}">
+					<p style="color: red;">${error}</p>
+				</c:if>
+			</div>
 			<form action="${pageContext.request.contextPath}/login?action=login"
 				method="post" class="login">
-				<span style="color: red"> <%=msg1 == null ? "" : msg1%>
+				
 				</span> <input type="text" name="username"
 					placeholder="Vui lòng nhập Username"> <input
 					type="password" name="password"
@@ -41,9 +66,16 @@
 						ký</a>
 				</span>
 			</div>
-			<a
-				href="#">Login
-				bằng Google</a>
+			<a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
+
+&redirect_uri=http://localhost:8080/PetShop/logingoogle
+
+&response_type=code
+
+&client_id=349360172934-997frvlao1s88f7ji7f87tqdt4mocilo.apps.googleusercontent.com
+
+&approval_prompt=force
+			">Login bằng Google</a>
 		</div>
 	</div>
 	<script
