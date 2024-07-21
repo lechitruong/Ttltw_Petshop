@@ -71,9 +71,11 @@ public class EditOrderServlet extends HttpServlet {
 				pet.setAmount(pet.getAmount() - orDetails.getQuantity());
 				if (petModel.update(pet)) {
 					request.getSession().setAttribute("msg-order", "Đặt hàng thành công");
+					System.out.println("Thanh cong");
 					response.sendRedirect("donhang");
 				} else {
 					request.getSession().setAttribute("msg-order", "Đặt hàng không thành công");
+					System.out.println("Khong Thanh cong");
 					response.sendRedirect("donhang");
 				}
 			}
