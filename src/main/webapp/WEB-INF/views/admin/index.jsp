@@ -87,16 +87,31 @@ $(function() {
 
 <!-- Start header section -->
 <div class="content-wrapper">
+<div class="container-fluid">
+        <form action="${pageContext.request.contextPath}/admin/home" method="get">
+    <div class="row">
+        <div class="col-lg-3">
+            <label for="startDate">Từ ngày:</label>
+            <input type="text" name="startDate" id="startDate" class="form-control" value="<%= request.getParameter("startDate") == null ? "" : request.getParameter("startDate") %>" />
+        </div>
+        <div class="col-lg-3">
+            <label for="endDate">Đến ngày:</label>
+            <input type="text" name="endDate" id="endDate" class="form-control" value="<%= request.getParameter("endDate") == null ? "" : request.getParameter("endDate") %>" />
+        </div>
+        <div class="col-lg-3">
+            <label for="filterStatus">Lọc theo:</label>
+            <select name="filterStatus" id="filterStatus" class="form-control">
+                <option value="has-orders" <%= "has-orders".equals(request.getParameter("filterStatus")) ? "selected" : "" %>>Có đơn hàng</option>
+                <option value="no-orders" <%= "no-orders".equals(request.getParameter("filterStatus")) ? "selected" : "" %>>Không có đơn hàng</option>
+            </select>
+        </div>
+        <div class="col-lg-3">
+            <button type="submit" class="btn btn-primary" style="margin-top: 28px;">Lọc</button>
+        </div>
+    </div>
+</form>
+    </div>
    <div class="container-fluid">
-       <!-- Form để chọn khoảng thời gian -->
-       <form id="filterForm" method="get" action="${pageContext.request.contextPath}/admin/home">
-           <label for="startDate">Từ ngày:</label>
-           <input type="text" id="startDate" name="startDate" value="${startDate }" required>
-           <label for="endDate">Đến ngày:</label>
-           <input type="text" id="endDate" name="endDate" value="${endDate}" required>
-           <button type="submit">Lọc</button>
-            <button type="button" id="loadDefault">Load</button>
-       </form>
        <div class="card mt-3">
            <div class="card-content">
                <div class="row row-group m-0">

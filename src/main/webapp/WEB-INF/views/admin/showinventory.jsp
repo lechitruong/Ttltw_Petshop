@@ -13,26 +13,33 @@ List<Pets> pets = (List<Pets>) request.getAttribute("petinventory");
 CategoryModel categoryModel = new CategoryModel();
 List<Categorys> categorys = categoryModel.findAll();
 CatalogModel catalogModel = new CatalogModel();
-int i =0;
+int i = 0;
 %>
 <!-- Start header section -->
 <div class="content-wrapper">
-<div class="container-fluid">
-<form action="${pageContext.request.contextPath}/admin/quanliuser" method="get">
-    <div class="row">
-        <div class="col-lg-3">
-            <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate">
-        </div>
-        <div class="col-lg-3">
-           <label for="endDate">End Date:</label>
-                    <input type="date" id="endDate" name="endDate">
-        </div>
-        <div class="col-lg-3">
-             <button type="submit">Lọc sản phẩm không xuất hiện đơn hàng</button>
-        </div>
-    </div>
-</form>
+    <div class="container-fluid">
+        <form action="${pageContext.request.contextPath}/admin/quanlitonkho" method="get">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label for="startDate">Từ ngày:</label>
+                    <input type="date" name="startDate" id="startDate" class="form-control" value="<%= request.getParameter("startDate") == null ? "" : request.getParameter("startDate") %>" />
+                </div>
+                <div class="col-lg-3">
+                    <label for="endDate">Đến ngày:</label>
+                    <input type="date" name="endDate" id="endDate" class="form-control" value="<%= request.getParameter("endDate") == null ? "" : request.getParameter("endDate") %>" />
+                </div>
+                <div class="col-lg-3">
+                    <label for="filterStatus">Lọc theo:</label>
+                    <select name="filterStatus" id="filterStatus" class="form-control">
+                        <option value="has-orders" <%= "has-orders".equals(request.getParameter("filterStatus")) ? "selected" : "" %>>Có đơn hàng</option>
+                        <option value="no-orders" <%= "no-orders".equals(request.getParameter("filterStatus")) ? "selected" : "" %>>Không có đơn hàng</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <button type="submit" style="margin-top: 28px;">Lọc</button>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="container-fluid">
         <div class="row mt-3">
@@ -61,25 +68,24 @@ int i =0;
                             <tbody>
                                 <%
                                 for (Pets pet : pets) {
-                                    
+                                    i++;
                                 %>
                                 <tr>
-                                    <td><%=++i%></td>
-                                    <td><%=pet.getPetName()%></td>
-                                    <td><%=pet.getPetType()%></td>
-                                    <td><%=pet.getPetGender()%></td>
-                                    <td><%=pet.getDescription()%></td>
-                                    <td><%=pet.getDetail()%></td>
-                                    <td><%=pet.getMade()%></td>
-                                    <td><%=pet.getAmount()%></td>
-                                    <td><%=pet.getMoney()%></td>
-                                    <td><%=pet.getPetBirthday()%></td>
+                                    <td><%= i %></td>
+                                    <td><%= pet.getPetName() %></td>
+                                    <td><%= pet.getPetType() %></td>
+                                    <td><%= pet.getPetGender() %></td>
+                                    <td><%= pet.getDescription() %></td>
+                                    <td><%= pet.getDetail() %></td>
+                                    <td><%= pet.getMade() %></td>
+                                    <td><%= pet.getAmount() %></td>
+                                    <td><%= pet.getMoney() %></td>
+                                    <td><%= pet.getPetBirthday() %></td>
                                     <td>
-                                        <img alt="Ảnh thú cưng" src="${pageContext.request.contextPath}/assets/user/images/pet/<%=pet.getImage() %>" width="100" height="100">
+                                        <img alt="Ảnh thú cưng" src="${pageContext.request.contextPath}/assets/user/images/pet/<%= pet.getImage() %>" width="100" height="100">
                                     </td>
-                                    <td><%=categoryModel.findCategoryById(pet.getCategoryId()).getName()%></td>
-                                    <td><%=catalogModel.findCatalogById(pet.getCatalogId()).getName()%></td>
-                                    
+                                    <td><%= categoryModel.findCategoryById(pet.getCategoryId()).getName() %></td>
+                                    <td><%= catalogModel.findCatalogById(pet.getCatalogId()).getName() %></td>
                                 </tr>
                                 <%
                                 }
@@ -100,5 +106,5 @@ $(function() {
         dateFormat: "yy-mm-dd"
     });
 });
-    new DataTable('#example');
+new DataTable('#example');
 </script>
