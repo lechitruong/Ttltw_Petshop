@@ -45,9 +45,10 @@ public class DonhangServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setAttribute("p", "../admin/showorder.jsp");
+		int id = (Integer.parseInt(request.getParameter("id")));
 		OrderModel orderModel = new OrderModel();
-		List<Orders> orders = orderModel.findAll();
-		request.setAttribute("orders", orders);
+		Orders order = orderModel.findOrderById(id);
+		request.setAttribute("order", order);
 		request.getRequestDispatcher("/WEB-INF/views/layout/admin.jsp").forward(request, response);
 	}
 

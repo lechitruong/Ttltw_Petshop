@@ -13,7 +13,7 @@
   if (session.getAttribute("admin-username") == null){
 	  response.sendRedirect(request.getContextPath() + "/admin/login");
   }
-  List<Orders> orders = (List<Orders>)request.getAttribute("orders");
+  Orders order = (Orders)request.getAttribute("order");
   UserModel userModel = new UserModel();
   AddressModel addressModel = new AddressModel();
   %>
@@ -28,7 +28,7 @@
           <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Danh sách đơn hàng</h5>
+                <h5 class="card-title"></h5>
                 <div class="table-responsive">
                   <table class="table table-striped">
                     <thead>
@@ -49,8 +49,6 @@
                       </tr>
                     </thead>
                     <tbody>
-                    
-                    <% for(Orders order: orders){ %>
                       <tr>
                         <td scope="row"><%= order.getId() %></td>
                          <td><%= order.getUserId() %></td>
@@ -82,7 +80,6 @@
                         </td>  
 						</c:if> 				
                      </tr>
-                    <% } %>
                     </tbody>
                   </table>
                 </div>
